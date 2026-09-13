@@ -2,19 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { IconArrowBoxLeft } from "@central-icons-react/round-outlined-radius-2-stroke-2/IconArrowBoxLeft";
-import { IconCheckmark1Small } from "@central-icons-react/round-outlined-radius-2-stroke-2/IconCheckmark1Small";
-import { IconChevronDownSmall } from "@central-icons-react/round-outlined-radius-2-stroke-2/IconChevronDownSmall";
-import { IconCrossSmall } from "@central-icons-react/round-outlined-radius-2-stroke-2/IconCrossSmall";
-import { IconChatBubbles } from "@central-icons-react/round-outlined-radius-2-stroke-2/IconChatBubbles";
-import { IconEditBig } from "@central-icons-react/round-outlined-radius-2-stroke-2/IconEditBig";
-import { IconHome } from "@central-icons-react/round-outlined-radius-2-stroke-2/IconHome";
-import { IconMagnifyingGlass } from "@central-icons-react/round-outlined-radius-2-stroke-2/IconMagnifyingGlass";
-import { IconPlusMedium } from "@central-icons-react/round-outlined-radius-2-stroke-2/IconPlusMedium";
-
-import { IconSettingsGear1 } from "@central-icons-react/round-outlined-radius-2-stroke-2/IconSettingsGear1";
-import { IconSidebarLeftArrow } from "@central-icons-react/round-outlined-radius-2-stroke-2/IconSidebarLeftArrow";
-import { IconUserAdd } from "@central-icons-react/round-outlined-radius-2-stroke-2/IconUserAdd";
+import { LogOut, Check, ChevronDown, X, MessagesSquare, SquarePen, Home, Search, Plus, Settings, PanelLeftClose, UserPlus } from "lucide-react";
 import GlideMenu from "@/components/primitives/GlideMenu";
 import { Switch } from "@/components/atoms/Switch";
 
@@ -28,9 +16,9 @@ import { Switch } from "@/components/atoms/Switch";
 const WORKSPACE = { key: "clinical", name: "Atrium Labs", monogram: "C" };
 
 const NAV_ITEMS = [
-  { key: "home", label: "Home", icon: <IconHome size={18} /> },
-  { key: "messages", label: "Messages", icon: <IconChatBubbles size={18} /> },
-  { key: "invite", label: "Invite users", icon: <IconUserAdd size={18} />, count: "3/10" },
+  { key: "home", label: "Home", icon: <Home size={18} /> },
+  { key: "messages", label: "Messages", icon: <MessagesSquare size={18} /> },
+  { key: "invite", label: "Invite users", icon: <UserPlus size={18} />, count: "3/10" },
 ];
 
 export type SidebarRecent = {
@@ -207,13 +195,13 @@ function WorkspaceMenu({
             <img src="/Scape.svg" alt="" className="size-6" />
           </span>
           <span className="min-w-0 flex-1 truncate text-[13.5px] font-medium text-ink">{WORKSPACE.name}</span>
-          <span className="shrink-0 text-ink"><IconCheckmark1Small size={18} /></span>
+          <span className="shrink-0 text-ink"><Check size={18} /></span>
         </button>
         <div className="my-1 h-px bg-line" />
         {[
-          { label: "New workspace", icon: <IconPlusMedium size={16} /> },
-          { label: "Workspace settings", icon: <IconSettingsGear1 size={16} /> },
-          { label: "Invite team members", icon: <IconUserAdd size={16} /> },
+          { label: "New workspace", icon: <Plus size={16} /> },
+          { label: "Workspace settings", icon: <Settings size={16} /> },
+          { label: "Invite team members", icon: <UserPlus size={16} /> },
         ].map((item) => (
           <button
             key={item.label}
@@ -248,7 +236,7 @@ function WorkspaceMenu({
           onClick={onClose}
           className="relative z-10 flex h-9 w-full items-center gap-1.5 rounded-[8px] px-2 text-left"
         >
-          <span className="flex size-5 shrink-0 items-center justify-center text-ink-2"><IconArrowBoxLeft size={16} /></span>
+          <span className="flex size-5 shrink-0 items-center justify-center text-ink-2"><LogOut size={16} /></span>
           <span className="min-w-0 flex-1 truncate text-[13.5px] text-ink">Sign out</span>
         </button>
       </GlideMenu>
@@ -351,7 +339,7 @@ export default function SidebarNav({
               {WORKSPACE.name}
             </span>
             <span className="sidebar-copy ml-1 flex shrink-0 text-ink-3">
-              <IconChevronDownSmall size={16} />
+              <ChevronDown size={16} />
             </span>
           </button>
 
@@ -365,7 +353,7 @@ export default function SidebarNav({
             onClick={collapse}
             className="sidebar-collapse-control absolute right-2 top-1 flex size-8 items-center justify-center rounded-[8px] text-ink-3 transition-[opacity,background-color,color,transform] duration-150 hover:bg-hover-2 hover:text-ink active:scale-[0.96]"
           >
-            <IconSidebarLeftArrow size={18} className="transition-transform duration-150" />
+            <PanelLeftClose size={18} className="transition-transform duration-150" />
           </button>
           <button
             type="button"
@@ -376,13 +364,13 @@ export default function SidebarNav({
             className="sidebar-expand-control absolute left-2 top-0.5 flex size-9 items-center justify-center rounded-[8px] text-ink-3 transition-[opacity,background-color,color] duration-150 hover:bg-hover-2 hover:text-ink group"
           >
             <img src="/Scape.svg" alt="" className="size-6 transition-opacity duration-150 group-hover:opacity-0" />
-            <IconSidebarLeftArrow size={18} className="rotate-180 absolute transition-opacity duration-150 opacity-0 group-hover:opacity-100" />
+            <PanelLeftClose size={18} className="rotate-180 absolute transition-opacity duration-150 opacity-0 group-hover:opacity-100" />
           </button>
         </div>
 
         <GlideGroup>
           <RailButton
-            icon={<IconEditBig size={18} />}
+            icon={<SquarePen size={18} />}
             label="New chat"
             hoverBg="var(--color-new-chat-hover)"
             hoverColor="#FF4206"
@@ -418,7 +406,7 @@ export default function SidebarNav({
                 className="flex items-center gap-1.5 transition-transform duration-150"
               >
                 <span className={`transition-transform duration-150 ${chatsExpanded ? "" : "-rotate-90"}`}>
-                  <IconChevronDownSmall size={16} />
+                  <ChevronDown size={16} />
                 </span>
                 <span>Chats</span>
               </button>
@@ -432,7 +420,7 @@ export default function SidebarNav({
               className={`absolute right-0 top-0 z-10 flex size-8 items-center justify-center rounded-[8px] text-ink-3 transition-[opacity,background-color,color,transform] hover:bg-hover-2 hover:text-ink active:scale-[0.96] ${searchOpen ? "pointer-events-none opacity-0" : "opacity-100"}`}
               style={{ transitionDuration: `${CHAT_SEARCH_MOTION.duration}ms` }}
             >
-              <IconMagnifyingGlass size={16} />
+              <Search size={16} />
             </button>
 
             <div
@@ -444,7 +432,7 @@ export default function SidebarNav({
               }}
             >
               <span className="ml-2 flex shrink-0 items-center justify-center">
-                <IconMagnifyingGlass size={15} />
+                <Search size={15} />
               </span>
               <input
                 ref={searchRef}
@@ -469,7 +457,7 @@ export default function SidebarNav({
                 }}
                 className="flex size-8 shrink-0 items-center justify-center rounded-[8px] text-ink-3 transition-[background-color,color,transform] duration-150 hover:bg-hover-2 hover:text-ink active:scale-[0.96]"
               >
-                <IconCrossSmall size={16} />
+                <X size={16} />
               </button>
             </div>
           </div>
