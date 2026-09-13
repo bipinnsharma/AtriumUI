@@ -1,9 +1,6 @@
 # Atrium UI
 
-Crafted, copy-paste interface primitives for AI-native products — thinking and
-reasoning states, streaming answers, human-in-the-loop approvals, tool-call and
-task status, records and diff tables, prompt bars, and more — plus a live
-**harness** that arranges them into a working agent chat.
+Crafted, copy-paste interface primitives for AI-native Medical professionals products
 
 Everything is one self-contained component per primitive, built on a small
 design-token layer. MIT licensed. Take it, wire it to your own agent, ship it.
@@ -82,7 +79,7 @@ light and dark from the same source:
 
 A single component is **not** self-contained on its own — it renders on this
 shared foundation stylesheet. Before pasting any primitive, drop
-[`app/globals.css`](https://github.com/slev12397/atrium-ui/blob/main/app/globals.css)
+[`app/globals.css`](https://github.com/bipinnsharma/atrium-ui/blob/main/app/globals.css)
 into your project **in full, once**. It contains everything the components rely on:
 
 - `@import "tailwindcss"` and `@import "shadow-plugin/unprefixed"` (the smooth
