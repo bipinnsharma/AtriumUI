@@ -903,7 +903,7 @@ export default function AtriumLabs() {
         }
       />
 
-      <div className="flex min-w-0 flex-1 flex-col gap-2.5">
+      <div className="flex min-w-0 flex-1 flex-col gap-2.5 [box-shadow:#09090912_0px_0px_0px_1px,#00000005_0px_26px_15px,#00000008_0px_11px_11px,#00000008_0px_3px_6px] rounded-xl">
         {activeNav === "messages" ? (
           /* Messages view */
           <section className="flex min-h-0 flex-1 flex-row overflow-hidden rounded-[14px] bg-page">
