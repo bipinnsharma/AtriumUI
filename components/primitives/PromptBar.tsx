@@ -408,7 +408,7 @@ export default function PromptBar({
       {menu && (
         <div
           onMouseLeave={() => setEngaged(false)}
-          className="absolute inset-x-0 bottom-full z-10 mb-2 rounded-[10px] bg-surface p-1 shadow-raised"
+          className="absolute inset-x-0 bottom-full z-10 mb-2 max-h-[40dvh] overflow-y-auto overscroll-contain rounded-[10px] bg-surface p-1 shadow-raised"
           style={{ animation: "pop-in 180ms cubic-bezier(0.23,1,0.32,1) both", transformOrigin: "bottom center" }}
         >
           {/* single gliding highlight — appears once a row is hovered */}
@@ -482,7 +482,7 @@ export default function PromptBar({
       {modelOpen && (
         <div
           onMouseLeave={() => setModelHovered(null)}
-          className="absolute z-10 w-44 rounded-[10px] bg-surface p-1 shadow-raised"
+          className="absolute z-10 max-h-[50dvh] w-44 overflow-y-auto overscroll-contain rounded-[10px] bg-surface p-1 shadow-raised"
           style={{ left: modelMenuLeft, bottom: modelMenuBottom, animation: "pop-in 180ms cubic-bezier(0.23,1,0.32,1) both", transformOrigin: "bottom left" }}
         >
           {/* single gliding highlight — floats to the hovered / selected row */}
@@ -591,7 +591,7 @@ export default function PromptBar({
               setPlusOpen((current) => !current);
               inputRef.current?.focus();
             }}
-            className={`flex size-7 shrink-0 items-center justify-center justify-self-start text-ink-3 transition-[background-color,color,transform] duration-150 hover:bg-hover hover:text-ink active:scale-[0.94] ${
+            className={`flex size-7 shrink-0 items-center justify-center justify-self-start text-ink-3 transition-[background-color,color,transform] duration-150 hover:bg-hover hover:text-ink active:scale-[0.96] ${
               pill ? "rounded-full" : "rounded-[8px]"
             } ${plusOpen ? "bg-hover text-ink" : ""} ${wide ? "col-start-1 row-start-2" : "col-start-1 row-start-1"}`}
           >
@@ -716,7 +716,7 @@ export default function PromptBar({
                 type="button"
                 aria-label="Start dictation"
                 onClick={() => setListening(true)}
-                className={`flex size-7 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-150 active:scale-[0.94] ${
+                className={`flex size-7 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-150 active:scale-[0.96] ${
                   pill ? "rounded-full" : "rounded-[8px]"
                 } text-ink-3 hover:bg-hover hover:text-ink ${wide ? "col-start-4 row-start-2" : "col-start-4 row-start-1"}`}
               >
@@ -731,7 +731,7 @@ export default function PromptBar({
                 aria-label="Send"
                 disabled={!canSend}
                 onClick={send}
-                className={`flex size-7 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-200 enabled:active:scale-[0.94] ${
+                className={`flex size-7 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-200 enabled:active:scale-[0.96] ${
                   pill ? "rounded-full" : "rounded-[8px]"
                 } ${wide ? "col-start-5 row-start-2" : "col-start-5 row-start-1"}`}
                 style={{

@@ -122,7 +122,7 @@ export default function LoadingState({
                 src={videoSrc}
                 alt="Dancing baby"
                 onError={() => setVideoOk(false)}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10"
               />
             ) : (
               <div className="flex h-full w-full flex-col items-center justify-center gap-1.5">

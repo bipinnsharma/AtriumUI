@@ -529,7 +529,7 @@ export default function SelectionActions({
                   style={{
                     maxWidth: hasPrompt ? 30 : 0,
                     opacity: hasPrompt ? 1 : 0,
-                    transform: hasPrompt ? "scale(1)" : "scale(0.88)",
+                    transform: hasPrompt ? "scale(1)" : "scale(0.96)",
                     transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)",
                   }}
                 >
@@ -537,7 +537,7 @@ export default function SelectionActions({
                     type="button"
                     aria-label="Send edit instruction"
                     onClick={() => run(prompt.trim())}
-                    className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink text-surface transition-[opacity,transform] duration-200 active:scale-[0.94]"
+                    className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink text-surface transition-[opacity,transform] duration-200 active:scale-[0.96]"
                   >
                     {icons.send}
                   </button>

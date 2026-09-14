@@ -315,7 +315,7 @@ export default function SidebarNav({
       } as CSSProperties}
     >
       <div className="flex min-h-0 w-[224px] shrink-0 flex-col">
-        <div className="relative mb-2.5 h-10 shrink-0">
+        <div className="sidebar-header relative mb-2.5 h-10 shrink-0">
           <button
             ref={workspaceButtonRef}
             data-workspace-trigger

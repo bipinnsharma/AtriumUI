@@ -6,6 +6,14 @@ import ApprovalCard from "@/components/primitives/ApprovalCard";
 import ChatComposer from "@/components/primitives/ChatComposer";
 import CodeBlock from "@/components/primitives/CodeBlock";
 import ContextCards from "@/components/primitives/ContextCards";
+import {
+  DrawerRoot,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerBody,
+  DrawerClose,
+} from "@/components/primitives/Drawer";
 import DiffTable from "@/components/primitives/DiffTable";
 import FilterTable from "@/components/primitives/FilterTable";
 import FineTuneCard from "@/components/primitives/FineTuneCard";
@@ -116,18 +124,42 @@ function ContextRail() {
 
 export default function ChatExperience() {
   const [runOpen, setRunOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <main className="min-h-screen bg-page p-3 text-ink sm:p-5 lg:p-7">
       <div className="mx-auto flex min-h-[calc(100vh-2rem)] max-w-[1500px] overflow-hidden rounded-window bg-page shadow-overlay sm:min-h-[calc(100vh-2.5rem)] lg:min-h-[calc(100vh-3.5rem)]">
+        {/* Desktop sidebar */}
         <div className="hidden shrink-0 border-r border-line bg-canvas/35 lg:block">
           <SidebarNav fill />
         </div>
 
+        {/* Mobile sidebar drawer */}
+        <DrawerRoot open={sidebarOpen} onOpenChange={setSidebarOpen}>
+          <DrawerContent className="max-h-[75dvh]">
+            <DrawerHeader>
+              <DrawerTitle>Navigation</DrawerTitle>
+              <DrawerClose asChild>
+                <button type="button" aria-label="Close navigation" className="flex size-10 items-center justify-center rounded-control text-ink-3 transition-colors duration-150 hover:bg-hover hover:text-ink">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden><path d="M18 6L6 18M6 6l12 12" /></svg>
+                </button>
+              </DrawerClose>
+            </DrawerHeader>
+            <DrawerBody className="p-0">
+              <SidebarNav fill onPick={() => setSidebarOpen(false)} onNewChat={() => setSidebarOpen(false)} />
+            </DrawerBody>
+          </DrawerContent>
+        </DrawerRoot>
+
         <section className="flex min-w-0 flex-1 flex-col bg-page">
           <header className="flex h-[68px] shrink-0 items-center justify-between border-b border-line px-4 sm:px-7">
             <div className="flex min-w-0 items-center gap-3">
-              <button type="button" aria-label="Open workspace navigation" className="flex size-8 items-center justify-center rounded-control text-ink-3 transition-colors duration-150 hover:bg-hover hover:text-ink lg:hidden">
+              <button
+                type="button"
+                aria-label="Open workspace navigation"
+                onClick={() => setSidebarOpen(true)}
+                className="flex size-8 items-center justify-center rounded-control text-ink-3 transition-colors duration-150 hover:bg-hover hover:text-ink lg:hidden"
+              >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden><path d="M4 6h16M4 12h16M4 18h16" /></svg>
               </button>
               <div className="min-w-0">

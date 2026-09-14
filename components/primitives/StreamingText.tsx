@@ -63,7 +63,7 @@ function SourceChip({ source }: { source?: StreamingSource }) {
         transition-colors duration-150 hover:bg-hover hover:text-ink"
       style={{ animation: "pop-in 250ms cubic-bezier(0.23,1,0.32,1) both" }}
     >
-      <img src={sourceImage(source)} alt="" className="source-avatar size-3 rounded-[3px]" />
+      <img src={sourceImage(source)} alt="" className="source-avatar size-3 rounded-[3px] outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10" />
       <span>{source.domain}</span>
     </a>
   );
@@ -183,7 +183,7 @@ export default function StreamingText({
                 key={source.domain}
                 src={sourceImage(source)}
                 alt=""
-                className="source-avatar size-3.5 rounded-full bg-surface shadow-[0_0_0_1.5px_var(--canvas)]"
+                className="source-avatar size-3.5 rounded-full bg-surface shadow-[0_0_0_1.5px_var(--canvas)] outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10"
               />
             ))}
           </span>
@@ -209,7 +209,7 @@ export default function StreamingText({
                 rel="noreferrer"
                 className="flex items-center gap-2 rounded-[6px] px-1.5 py-1 text-[12px] text-ink-2 transition-colors duration-150 hover:bg-hover hover:text-ink"
               >
-                <img src={sourceImage(source)} alt="" className="source-avatar size-4 rounded-[4px]" />
+                <img src={sourceImage(source)} alt="" className="source-avatar size-4 rounded-[4px] outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10" />
                 <span className="animated-underline">{source.name}</span>
                 <span className="ml-auto font-mono text-[10.5px] text-ink-3">{source.domain}</span>
               </a>

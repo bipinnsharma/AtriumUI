@@ -101,7 +101,7 @@ export default function ContextCards({
                 transition-[opacity,transform,background-color] duration-300 hover:bg-hover"
               style={{
                 opacity: chipsShown ? 1 : 0,
-                transform: chipsShown ? "scale(1)" : "scale(0.95)",
+                transform: chipsShown ? "scale(1)" : "scale(0.96)",
                 transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)",
                 transitionDelay: `${i * 80}ms`,
               }}

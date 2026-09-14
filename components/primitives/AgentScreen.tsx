@@ -82,7 +82,7 @@ function Screen({ streamSrc, cursor = true }: { streamSrc?: string; cursor?: boo
           <video src={streamSrc} autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover" />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={streamSrc} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          <img src={streamSrc} alt="" className="absolute inset-0 h-full w-full object-cover outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10" />
         )
       ) : (
         <FauxWindow />

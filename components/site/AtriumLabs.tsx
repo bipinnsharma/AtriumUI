@@ -4,7 +4,18 @@ import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 
 import { useDialKit, type DialConfig } from "dialkit";
 import posthog from "posthog-js";
 import ApprovalCard from "@/components/primitives/ApprovalCard";
+import { CenteredHeader } from "@/components/primitives/MobileHeaders";
 import ContextCards from "@/components/primitives/ContextCards";
+import {
+  DrawerRoot,
+  DrawerTrigger,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerBody,
+  DrawerClose,
+} from "@/components/primitives/Drawer";
 import DiffTable from "@/components/primitives/DiffTable";
 import InsightCards from "@/components/primitives/InsightCards";
 import LoadingState from "@/components/primitives/LoadingState";
@@ -19,10 +30,12 @@ import StreamingText from "@/components/primitives/StreamingText";
 import TaskRows from "@/components/primitives/TaskRows";
 import ThinkingState from "@/components/primitives/ThinkingState";
 import ToolChips from "@/components/primitives/ToolChips";
+import { Switch } from "@/components/atoms/Switch";
+import { useIsMobile } from "@/components/hooks/useIsMobile";
 import { UseThisModal } from "@/components/site/UseThisHarness";
 
 /* ─────────────────────────────────────────────────────────
- * ICE CREAM HARNESS
+ * Atrium Labs
  * An interactive chat window that shows every Atrium UI
  * primitive in its natural habitat. Ask a question (or tap a
  * suggestion) and the agent replies — thinking, then building
@@ -633,6 +646,7 @@ function PropertyConfig({ view, onClose }: { view: string; onClose: () => void }
 }
 
 export default function AtriumLabs() {
+  const mobile = useIsMobile();
   const [chats, setChats] = useState<Chat[]>([{ id: 1, title: null, messages: [] }]);
   const [activeId, setActiveId] = useState(1);
   const [offset, setOffset] = useState(0);
@@ -643,6 +657,30 @@ export default function AtriumLabs() {
   /* sidebar navigation: which section is active */
   const [activeNav, setActiveNav] = useState<string | undefined>(undefined);
   const [showAiPanel, setShowAiPanel] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [workspaceOptionsOpen, setWorkspaceOptionsOpen] = useState(false);
+  const [artifactSheetOpen, setArtifactSheetOpen] = useState(false);
+  const [dark, setDark] = useState(false);
+
+  /* hydrate dark mode from localStorage after mount (avoids SSR document error) */
+  useEffect(() => {
+    try {
+      setDark(localStorage.getItem("bui-theme") !== "light");
+    } catch {}
+  }, []);
+
+  const toggleTheme = () => {
+    const next = !dark;
+    setDark(next);
+    const root = document.documentElement;
+    root.classList.add("theme-switching");
+    root.classList.toggle("dark", next);
+    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("theme-switching")));
+    try {
+      localStorage.setItem("bui-theme", next ? "dark" : "light");
+    } catch {}
+  };
+
   const chatIdRef = useRef(1);
   const msgIdRef = useRef(0);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -887,7 +925,131 @@ export default function AtriumLabs() {
   );
 
   return (
-    <main className="flex h-[100dvh] gap-0 bg-canvas p-2.5 text-ink lg:pl-0">
+    <main className="flex h-[100dvh] flex-col gap-0 bg-canvas text-ink lg:flex-row lg:p-2.5 lg:pl-0">
+      {/* ── Mobile header (below lg) ── */}
+      <div className="shrink-0 lg:hidden">
+        <CenteredHeader
+          title={chat.title ?? "Atrium Labs"}
+          logo={<img src="/Scape.svg" alt="" className="size-6" />}
+          leftAction={
+            <button
+              type="button"
+              aria-label="Open navigation"
+              onClick={() => setSidebarOpen(true)}
+              className="flex size-10 items-center justify-center rounded-control text-ink-3 transition-colors duration-150 hover:bg-hover hover:text-ink"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden>
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          }
+          rightAction={
+            <button
+              type="button"
+              aria-label="Workspace options"
+              onClick={() => setWorkspaceOptionsOpen(true)}
+              className="flex size-10 items-center justify-center rounded-control text-ink-3 transition-colors duration-150 hover:bg-hover hover:text-ink"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="1" />
+                <circle cx="19" cy="12" r="1" />
+                <circle cx="5" cy="12" r="1" />
+              </svg>
+            </button>
+          }
+        />
+      </div>
+
+      {/* ── Mobile sidebar drawer ── */}
+      <DrawerRoot open={sidebarOpen} onOpenChange={setSidebarOpen}>
+        <DrawerContent className="max-h-[75dvh]">
+          <DrawerHeader>
+            <DrawerTitle>Navigation</DrawerTitle>
+            <DrawerClose asChild>
+              <button type="button" aria-label="Close navigation" className="flex size-10 items-center justify-center rounded-control text-ink-3 transition-colors duration-150 hover:bg-hover hover:text-ink">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden><path d="M18 6L6 18M6 6l12 12" /></svg>
+              </button>
+            </DrawerClose>
+          </DrawerHeader>
+          <DrawerBody className="p-0">
+            <SidebarNav
+              fill
+              recents={RECENTS}
+              activeTitle={chat.title}
+              activeNav={activeNav}
+              onNavigate={(key) => {
+                setActiveNav(key);
+                setSidebarOpen(false);
+              }}
+              onPick={(id, label, prompt) => {
+                pickRecent(id as ScenarioId, label, prompt);
+                setSidebarOpen(false);
+              }}
+              onNewChat={() => {
+                newChat();
+                setSidebarOpen(false);
+              }}
+              footerLabel="Upgrade plan"
+              footerIcon={
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16V8M8 12l4-4 4 4" /></svg>
+              }
+            />
+          </DrawerBody>
+        </DrawerContent>
+      </DrawerRoot>
+
+      {/* ── Mobile workspace options drawer ── */}
+      <DrawerRoot open={workspaceOptionsOpen} onOpenChange={setWorkspaceOptionsOpen}>
+        <DrawerContent className="max-h-[60dvh]">
+          <DrawerHeader>
+            <DrawerTitle>Workspace</DrawerTitle>
+            <DrawerClose asChild>
+              <button type="button" aria-label="Close" className="flex size-10 items-center justify-center rounded-control text-ink-3 transition-colors duration-150 hover:bg-hover hover:text-ink">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden><path d="M18 6L6 18M6 6l12 12" /></svg>
+              </button>
+            </DrawerClose>
+          </DrawerHeader>
+          <DrawerBody className="p-0">
+            <div className="flex flex-col gap-0.5 p-2">
+              <div className="flex items-center gap-2.5 rounded-[10px] px-3 py-2.5">
+                <span className="flex size-7 items-center justify-center rounded-[7px]">
+                  <img src="/Scape.svg" alt="" className="size-6" />
+                </span>
+                <span className="min-w-0 flex-1 truncate text-[14px] font-medium text-ink">Atrium Labs</span>
+              </div>
+              <div className="mx-3 my-1 h-px bg-line" />
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="flex items-center gap-2.5 rounded-[10px] px-3 py-2.5 text-left transition-colors duration-100 hover:bg-hover"
+              >
+                <span className="flex size-7 shrink-0 items-center justify-center text-ink-2">
+                  {dark ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+                  ) : (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
+                  )}
+                </span>
+                <span className="min-w-0 flex-1 truncate text-[14px] text-ink">{dark ? "Dark" : "Light"} mode</span>
+                <Switch checked={dark} onChange={toggleTheme} label="Toggle dark mode" />
+              </button>
+              <div className="mx-3 my-1 h-px bg-line" />
+              <button
+                type="button"
+                onClick={() => { newChat(); setWorkspaceOptionsOpen(false); }}
+                className="flex items-center gap-2.5 rounded-[10px] px-3 py-2.5 text-left transition-colors duration-100 hover:bg-hover"
+              >
+                <span className="flex size-7 shrink-0 items-center justify-center text-ink-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14" /></svg>
+                </span>
+                <span className="min-w-0 flex-1 truncate text-[14px] text-ink">New chat</span>
+              </button>
+            </div>
+          </DrawerBody>
+        </DrawerContent>
+      </DrawerRoot>
+
+      {/* ── Desktop sidebar (lg+) ── */}
       <SidebarNav
         fill
         className="hidden lg:flex"
@@ -903,10 +1065,10 @@ export default function AtriumLabs() {
         }
       />
 
-      <div className="flex min-w-0 flex-1 flex-col gap-2.5">
+      <div className="flex min-w-0 flex-1 flex-col gap-2.5 rounded-xl p-2.5 lg:p-0">
         {activeNav === "messages" ? (
           /* Messages view */
-          <section className="flex min-h-0 flex-1 flex-row overflow-hidden rounded-[14px] bg-page [box-shadow:#09090912_0px_0px_0px_1px,#00000005_0px_26px_15px,#00000008_0px_11px_11px,#00000008_0px_3px_6px]">
+          <section className="flex min-h-0 flex-1 flex-row overflow-hidden rounded-[14px] bg-page">
             <MessagesView 
               showAiPanel={showAiPanel} 
               onShowAiPanelChange={setShowAiPanel} 
@@ -986,8 +1148,10 @@ export default function AtriumLabs() {
                 )}
               </section>
 
-              {/* artifact pane — its own rounded container */}
+              {/* artifact pane — desktop: side panel, mobile: bottom sheet */}
               {active && paneMsg && paneScenario?.Pane && (
+                <>
+                  {/* Desktop: side panel */}
                   <aside
                     key={`${paneMsg.id}-${replay[chat.id] ?? 0}`}
                     className="hidden w-[360px] shrink-0 flex-col overflow-hidden rounded-[14px] border border-line bg-page lg:flex"
@@ -1019,6 +1183,37 @@ export default function AtriumLabs() {
                       <PaneBody beat={paneScenario.beat}>{paneScenario.Pane()}</PaneBody>
                     </div>
                   </aside>
+
+                  {/* Mobile: floating pill that opens a bottom sheet */}
+                  <DrawerRoot open={artifactSheetOpen} onOpenChange={setArtifactSheetOpen}>
+                    <div className="fixed bottom-[calc(env(safe-area-inset-bottom,0px)+80px)] left-1/2 z-40 -translate-x-1/2 lg:hidden" style={{ animation: "fade-up 300ms cubic-bezier(0.23,1,0.32,1) both" }}>
+                      <DrawerTrigger asChild>
+                        <button
+                          type="button"
+                          className="flex items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-[13px] font-medium text-surface shadow-overlay transition-transform duration-150 active:scale-[0.96]"
+                        >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                          </svg>
+                          View {paneScenario.paneTitle}
+                        </button>
+                      </DrawerTrigger>
+                    </div>
+                    <DrawerContent>
+                      <DrawerHeader>
+                        <DrawerTitle>{paneScenario.paneTitle}</DrawerTitle>
+                        <DrawerClose asChild>
+                          <button type="button" aria-label="Close" className="flex size-10 items-center justify-center rounded-control text-ink-3 transition-colors duration-150 hover:bg-hover hover:text-ink">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden><path d="M18 6L6 18M6 6l12 12" /></svg>
+                          </button>
+                        </DrawerClose>
+                      </DrawerHeader>
+                      <DrawerBody>
+                        <PaneBody beat={paneScenario.beat}>{paneScenario.Pane()}</PaneBody>
+                      </DrawerBody>
+                    </DrawerContent>
+                  </DrawerRoot>
+                </>
               )}
             </>
           )}

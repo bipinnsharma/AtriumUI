@@ -30,7 +30,7 @@ function Avatar({ name, size = 40, className = "" }: { name: string; size?: numb
         alt={name}
         width={size}
         height={size}
-        className={`shrink-0 rounded-full object-cover ${className}`}
+        className={`shrink-0 rounded-full object-cover outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10 ${className}`}
       />
     );
   }
@@ -377,7 +377,7 @@ export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick
   }, []);
 
   return (
-    <div className="flex h-full w-[360px] shrink-0 flex-col border-l border-line bg-page" style={{ animation: "fade-in 200ms ease both" }}>
+    <div className="flex h-full w-full shrink-0 flex-col border-l border-line bg-page sm:w-[360px]" style={{ animation: "fade-in 200ms ease both" }}>
       {/* Header */}
       <div className="flex items-center justify-between border-b border-line px-4 py-2">
         <div className="flex items-center gap-2">
@@ -544,7 +544,7 @@ export default function MessagesView({
   return (
     <div className="flex h-full bg-page">
       {/* Left Panel — Inbox */}
-      <div className="flex w-[380px] shrink-0 flex-col border-r border-line">
+      <div className="flex w-full shrink-0 flex-col border-r border-line sm:w-[380px]">
         {/* Header */}
         <div className="shrink-0 border-b border-line px-5 py-3">
           <h1 className="text-[13px] font-semibold text-ink">Messages</h1>

@@ -126,12 +126,13 @@ function Card({
         )}
         <div
           className="absolute top-3 right-3 flex gap-1 opacity-0 transition-opacity
-            duration-150 group-hover:opacity-100 group-focus-within:opacity-100"
+            duration-150 group-hover:opacity-100 group-focus-within:opacity-100
+            max-sm:opacity-100"
         >
           <button
             aria-label="Copy code"
             onClick={copy}
-            className={`flex size-7 items-center justify-center rounded-control bg-surface
+            className={`flex size-7 min-h-[44px] min-w-[44px] items-center justify-center rounded-control bg-surface
               shadow-btn transition-colors duration-100 hover:bg-hover
               ${copied ? "text-green" : "text-ink-3 hover:text-ink"}`}
           >
@@ -140,7 +141,7 @@ function Card({
           <button
             aria-label="View code"
             onClick={onOpen}
-            className="flex size-7 items-center justify-center rounded-control bg-surface
+            className="flex size-7 min-h-[44px] min-w-[44px] items-center justify-center rounded-control bg-surface
               text-ink-3 shadow-btn transition-colors duration-100
               hover:bg-hover hover:text-ink"
           >

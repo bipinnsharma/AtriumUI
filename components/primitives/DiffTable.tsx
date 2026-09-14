@@ -52,7 +52,7 @@ function IncludedMark({ included, tone }: { included: boolean; tone: "red" | "gr
           ? tone === "red" ? "bg-red text-white" : "bg-green text-white"
           : "bg-inset text-ink-3 shadow-hairline"
       }`}
-      style={{ transform: included ? "scale(1)" : "scale(0.92)" }}
+      style={{ transform: included ? "scale(1)" : "scale(0.96)" }}
     >
       {included ? (
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
