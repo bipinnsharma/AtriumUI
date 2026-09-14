@@ -57,10 +57,14 @@ function GmailIcon({ size = 14 }: { size?: number }) {
   );
 }
 
-function LinkedInIcon({ size = 14 }: { size?: number }) {
+function OutlookIcon({ size = 14 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="#0077b5">
-      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <rect x="1" y="4" width="11" height="16" rx="2" fill="#0078D4" />
+      <text x="6.5" y="15.5" textAnchor="middle" fill="white" fontSize="9" fontWeight="600" fontFamily="Inter, sans-serif">O</text>
+      <path d="M14 8.5h8a1 1 0 0 1 1 1v11a2 2 0 0 1-2 2H14V8.5Z" fill="#0078D4" opacity="0.3" />
+      <path d="M14 4h8l-8 8V4Z" fill="#28A8EA" />
+      <path d="M14 12l8 4-8 4V12Z" fill="#50D9FF" opacity="0.5" />
     </svg>
   );
 }
@@ -242,11 +246,11 @@ const STATUS_COLORS: Record<Conversation["status"][0]["color"], string> = {
 };
 
 const SOURCE_BADGES: Record<string, { icon: React.ReactNode; color: string }> = {
-  martin: { icon: <LinkedInIcon size={10} />, color: "bg-[#0077b5] text-white" },
-  alex: { icon: <LinkedInIcon size={10} />, color: "bg-[#0077b5] text-white" },
+  martin: { icon: <OutlookIcon size={10} />, color: "bg-[#0078D4] text-white" },
+  alex: { icon: <OutlookIcon size={10} />, color: "bg-[#0078D4] text-white" },
   laura: { icon: <GmailIcon size={10} />, color: "bg-[#ea4335] text-white" },
   maria: { icon: <GmailIcon size={10} />, color: "bg-[#ea4335] text-white" },
-  david: { icon: <LinkedInIcon size={10} />, color: "bg-[#0077b5] text-white" },
+  david: { icon: <OutlookIcon size={10} />, color: "bg-[#0078D4] text-white" },
   sophie: { icon: <GmailIcon size={10} />, color: "bg-[#00897b] text-white" },
   fabian: { icon: <GmailIcon size={10} />, color: "bg-[#ea4335] text-white" },
 };
@@ -279,15 +283,15 @@ function ConversationRow({
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center justify-between gap-2">
-          <span className={`text-[13px] truncate ${conversation.unread ? "font-semibold text-ink" : "font-medium text-ink"}`}>
+          <span className={`text-[13px] truncate font-medium ${conversation.unread ? "text-ink" : "text-ink"}`}>
             {conversation.name}
           </span>
-          <span className="shrink-0 text-[11px] text-ink-3 tabular-nums">{conversation.time}</span>
+          <span className="shrink-0 text-[11px] text-ink-3 tabular-nums font-mono">{conversation.time}</span>
         </div>
         <p className="mt-0.5 text-[12px] text-ink-2 truncate">{conversation.preview}</p>
         <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
           {conversation.status.map((s) => (
-            <span key={s.label} className={`inline-flex h-5 items-center rounded-full px-2 text-[10px] font-medium ${STATUS_COLORS[s.color]}`}>
+            <span key={s.label} className={`inline-flex h-5 items-center rounded-full px-2 text-[10px] font-medium uppercase font-mono ${STATUS_COLORS[s.color]}`}>
               {s.label}
             </span>
           ))}
@@ -510,18 +514,18 @@ export default function MessagesView({
         {/* Filter Bar */}
         <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-2">
           <div className="flex items-center gap-2">
-            <Button variant="secondary" size="xs">
+            <Button variant="secondary" size="xs" className="shadow-[#E0E2E5_0px_0px_0px_1px,#0000000A_0px_0px_4px]">
               <GmailIcon size={13} />
-              <span>Email</span>
+              <span>Gmail</span>
             </Button>
-            <Button variant="secondary" size="xs">
-              <LinkedInIcon size={13} />
-              <span>LinkedIn</span>
+            <Button variant="secondary" size="xs" className="shadow-[#E0E2E5_0px_0px_0px_1px,#0000000A_0px_0px_4px]">
+              <OutlookIcon size={13} />
+              <span>Outlook</span>
             </Button>
           </div>
           <div className="flex items-center gap-1.5">
-            <Button variant="secondary" size="xs"><SearchIcon size={15} /></Button>
-            <Button variant="secondary" size="xs"><FilterIcon size={15} /></Button>
+            <Button variant="secondary" size="xs" className="shadow-[#E0E2E5_0px_0px_0px_1px,#0000000A_0px_0px_4px]"><SearchIcon size={15} /></Button>
+            <Button variant="secondary" size="xs" className="shadow-[#E0E2E5_0px_0px_0px_1px,#0000000A_0px_0px_4px]"><FilterIcon size={15} /></Button>
           </div>
         </div>
 

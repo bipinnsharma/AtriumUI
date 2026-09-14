@@ -48,5 +48,5 @@ export function EmailNudge() {
     }
   };
 
-  return <EmailModal open={open} onClose={close} />;
+  return null;
 }
