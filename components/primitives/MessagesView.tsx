@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { Button } from "@/components/atoms/Button";
 import PromptBar from "@/components/primitives/PromptBar";
 import LoadingState from "@/components/primitives/LoadingState";
@@ -357,7 +357,12 @@ function StreamingText({ text }: { text: string }) {
 
   return (
     <span>
-      {displayed}
+      {displayed.split("\n").map((line, idx, arr) => (
+        <Fragment key={idx}>
+          {line}
+          {idx < arr.length - 1 && <br />}
+        </Fragment>
+      ))}
       {!done && <span className="inline-block size-[2px] animate-pulse bg-ink ml-0.5" />}
     </span>
   );
@@ -408,21 +413,23 @@ export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick
             </div>
           )}
 
-          {/* AI response with streaming */}
-          <div className="flex gap-2.5">
-            <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-orange-tint text-orange">
-              <span className="text-[11px]">✦</span>
-            </div>
-            <div className="min-w-0 max-w-[280px]">
-              <div className="rounded-card rounded-tl-[4px] bg-inset px-4 py-3 text-[13px] leading-relaxed text-ink shadow-hairline">
-                <StreamingText text={`Hi ${conversation.name.split(" ")[0]},\n\nThank you for the follow-up. I've reviewed the lab results and agree that a joint consultation is the right approach.\n\nThursday at 2 PM works well for me. I'll have the patient's imaging and history ready for review.\n\nBest,\nDr. Höller`} />
+          {/* AI response with streaming — only show after composing animation */}
+          {!showTyping && (
+            <div className="flex gap-2.5">
+              <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-orange-tint text-orange">
+                <span className="text-[11px]">✦</span>
               </div>
-              <div className="mt-2 flex items-center gap-1.5">
-                <Button variant="primary" size="xs">Use this draft</Button>
-                <Button variant="secondary" size="xs">Regenerate</Button>
+              <div className="min-w-0 max-w-[280px]">
+                <div className="rounded-card rounded-tl-[4px] bg-inset px-4 py-3 text-[13px] leading-relaxed text-ink shadow-hairline">
+                  <StreamingText text={`Hi ${conversation.name.split(" ")[0]},\n\nThank you for the follow-up. I've reviewed the lab results and agree that a joint consultation is the right approach.\n\nThursday at 2 PM works well for me. I'll have the patient's imaging and history ready for review.\n\nBest,\nDr. Höller`} />
+                </div>
+                <div className="mt-2 flex items-center gap-1.5">
+                  <Button variant="primary" size="xs">Use this draft</Button>
+                  <Button variant="secondary" size="xs">Regenerate</Button>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
