@@ -301,7 +301,7 @@ function ConversationRow({
     <button
       type="button"
       onClick={onClick}
-      className={`relative flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors duration-150 ${
+      className={`flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors duration-150 ${
         isSelected ? "bg-hover-2" : "hover:bg-hover"
       }`}
     >
@@ -330,7 +330,7 @@ function ConversationRow({
         </div>
       </div>
       {conversation.unread && (
-        <div className="absolute top-3.5 right-4 shrink-0 size-2.5 rounded-full bg-accent" />
+        <div className="self-start mt-1 shrink-0 size-2.5 rounded-full bg-accent" />
       )}
     </button>
   );
