@@ -301,7 +301,7 @@ function ConversationRow({
     <button
       type="button"
       onClick={onClick}
-      className={`flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors duration-150 ${
+      className={`relative flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors duration-150 ${
         isSelected ? "bg-hover-2" : "hover:bg-hover"
       }`}
     >
@@ -330,7 +330,7 @@ function ConversationRow({
         </div>
       </div>
       {conversation.unread && (
-        <div className="mt-1 shrink-0 size-2.5 rounded-full bg-accent" />
+        <div className="absolute top-3.5 right-4 shrink-0 size-2.5 rounded-full bg-accent" />
       )}
     </button>
   );
@@ -563,8 +563,8 @@ export default function MessagesView({
             </Button>
           </div>
           <div className="flex items-center gap-1.5">
-            <Button variant="secondary" size="xs" className="!h-7 !w-7 !rounded-[4px] !p-0 !bg-[#f2f2f3] shadow-btn"><SearchIcon size={15} /></Button>
-            <Button variant="secondary" size="xs" className="!h-7 !w-7 !rounded-[4px] !p-0 !bg-[#f2f2f3] shadow-btn"><FilterIcon size={15} /></Button>
+            <Button variant="secondary" size="xs" className="!h-7 !w-7 !rounded-[4px] !p-0 shadow-btn"><SearchIcon size={15} /></Button>
+            <Button variant="secondary" size="xs" className="!h-7 !w-7 !rounded-[4px] !p-0 shadow-btn"><FilterIcon size={15} /></Button>
           </div>
         </div>
 
