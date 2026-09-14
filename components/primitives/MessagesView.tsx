@@ -553,11 +553,11 @@ export default function MessagesView({
         {/* Filter Bar */}
         <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-2">
           <div className="flex items-center gap-2">
-            <Button variant="secondary" size="xs" className="shadow-[#E0E2E5_0px_0px_0px_1px,#0000000A_0px_0px_4px]">
+            <Button variant="secondary" size="xs" className="shadow-btn">
               <GmailIcon size={13} />
               <span>Gmail</span>
             </Button>
-            <Button variant="secondary" size="xs" className="shadow-[#E0E2E5_0px_0px_0px_1px,#0000000A_0px_0px_4px]">
+            <Button variant="secondary" size="xs" className="shadow-btn">
               <OutlookIcon size={13} />
               <span>Outlook</span>
             </Button>
