@@ -632,7 +632,7 @@ function PropertyConfig({ view, onClose }: { view: string; onClose: () => void }
   );
 }
 
-export default function IceCreamHarness() {
+export default function AtriumLabs() {
   const [chats, setChats] = useState<Chat[]>([{ id: 1, title: null, messages: [] }]);
   const [activeId, setActiveId] = useState(1);
   const [offset, setOffset] = useState(0);

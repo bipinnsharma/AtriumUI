@@ -95,14 +95,14 @@ works in Vue, Svelte, or plain HTML on Tailwind v4.
 
 ## Wiring the harness to a real agent
 
-`components/site/IceCreamHarness.tsx` is a demo: a `SCENARIOS` map turns fake
+`components/site/AtriumLabs.tsx` is a demo: a `SCENARIOS` map turns fake
 prompts into scripted replies built from the primitives. To make it real,
 replace the demo data with your backend — the primitives stay exactly as they
 are; they're just the rendering layer for your agent's output.
 
 | Demo seam | Replace with |
 | --- | --- |
-| `SCENARIOS` / `matchScenario` in `IceCreamHarness.tsx` | your agent request per user message |
+| `SCENARIOS` / `matchScenario` in `AtriumLabs.tsx` | your agent request per user message |
 | `StreamingText` / `StreamLine` | your token stream (SSE or the [AI SDK](https://ai-sdk.dev) `streamText`) |
 | `ThinkingState` | your agent's reasoning / step events |
 | `ToolChips` | your tool-call events and their results |

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import IceCreamHarness from "@/components/site/IceCreamHarness";
+import AtriumLabs from "@/components/site/AtriumLabs";
 
 export const metadata: Metadata = {
   title: "Clinical AI Harness — Atrium Labs",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <IceCreamHarness />;
+  return <AtriumLabs />;
 }
