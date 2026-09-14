@@ -563,8 +563,8 @@ export default function MessagesView({
             </Button>
           </div>
           <div className="flex items-center gap-1.5">
-            <Button variant="secondary" size="xs" className="!h-7 !w-7 !rounded-[4px] !p-0 shadow-[#E0E2E5_0px_0px_0px_1px,#0000000A_0px_0px_4px]"><SearchIcon size={15} /></Button>
-            <Button variant="secondary" size="xs" className="!h-7 !w-7 !rounded-[4px] !p-0 shadow-[#E0E2E5_0px_0px_0px_1px,#0000000A_0px_0px_4px]"><FilterIcon size={15} /></Button>
+            <Button variant="secondary" size="xs" className="!h-7 !w-7 !rounded-[4px] !p-0 !bg-[#f2f2f3] shadow-btn"><SearchIcon size={15} /></Button>
+            <Button variant="secondary" size="xs" className="!h-7 !w-7 !rounded-[4px] !p-0 !bg-[#f2f2f3] shadow-btn"><FilterIcon size={15} /></Button>
           </div>
         </div>
 
