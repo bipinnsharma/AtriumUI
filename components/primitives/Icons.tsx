@@ -106,3 +106,28 @@ export function MailIcon({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+export function UserPlusIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 72 72"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden="true"
+    >
+      <path
+        d="M37.5 20C37.5 14.4772 33.0228 10 27.5 10C21.9772 10 17.5 14.4772 17.5 20C17.5 25.5228 21.9772 30 27.5 30C33.0228 30 37.5 25.5228 37.5 20ZM41.5 20C41.5 27.732 35.232 34 27.5 34C19.768 34 13.5 27.732 13.5 20C13.5 12.268 19.768 6 27.5 6C35.232 6 41.5 12.268 41.5 20Z"
+        fill="currentColor"
+      />
+      <path
+        d="M42.5 46C42.5 42.9624 39.5 42.5 37 42.5H21C15.4772 42.5 11 46.9772 11 52.5V60.5C11 61.6046 10.1046 62.5 9 62.5C7.89543 62.5 7 61.6046 7 60.5V52.5C7 44.768 13.268 38.5 21 38.5H37C42.2467 38.5 46.5 40.7533 46.5 46C46.5 47.1046 45.6046 48 44.5 48C43.3954 48 42.5 47.1046 42.5 46Z"
+        fill="currentColor"
+      />
+      <rect x="51.5" y="43" width="4" height="22" rx="2" fill="currentColor" />
+      <rect x="42.5" y="56" width="4" height="22" rx="2" transform="rotate(-90 42.5 56)" fill="currentColor" />
+    </svg>
+  );
+}

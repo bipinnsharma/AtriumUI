@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { LogOut, Check, ChevronDown, X, Search, Plus, Settings, PanelLeftClose, UserPlus } from "lucide-react";
+import { LogOut, Check, ChevronDown, X, Search, Plus, Settings, PanelLeftClose } from "lucide-react";
 import GlideMenu from "@/components/primitives/GlideMenu";
-import { NewChatIcon, HomeIcon, MailIcon } from "@/components/primitives/Icons";
+import { NewChatIcon, HomeIcon, MailIcon, UserPlusIcon } from "@/components/primitives/Icons";
 import { Switch } from "@/components/atoms/Switch";
 
 /* ─────────────────────────────────────────────────────────
@@ -19,7 +19,7 @@ const WORKSPACE = { key: "clinical", name: "Atrium Labs", monogram: "C" };
 const NAV_ITEMS = [
   { key: "home", label: "Home", icon: <HomeIcon /> },
   { key: "messages", label: "Messages", icon: <MailIcon /> },
-  { key: "invite", label: "Invite users", icon: <UserPlus size={18} />, count: "3/10" },
+  { key: "invite", label: "Invite users", icon: <UserPlusIcon />, count: "3/10" },
 ];
 
 export type SidebarRecent = {
@@ -205,7 +205,7 @@ function WorkspaceMenu({
         {[
           { label: "New workspace", icon: <Plus size={16} /> },
           { label: "Workspace settings", icon: <Settings size={16} /> },
-          { label: "Invite team members", icon: <UserPlus size={16} /> },
+          { label: "Invite team members", icon: <UserPlusIcon /> },
         ].map((item) => (
           <button
             key={item.label}
