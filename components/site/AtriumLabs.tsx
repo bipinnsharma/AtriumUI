@@ -243,12 +243,6 @@ const SCENARIOS: Record<string, Scenario> = {
       </Reply>
     ),
   },
-  "dancing-baby": {
-    prompt: "Can you audit the treatment plan—and put the dancing baby underneath so my attention span stays on payroll?",
-    beat: 18000,
-    loadingVariant: "Surfer",
-    Answer: () => <Reply intro="All done. Thanks for locking in with me." />,
-  },
   "imaging-orders": {
     prompt: "Show me the current imaging orders.",
     beat: 700,
@@ -271,7 +265,6 @@ const KEYWORDS: [ScenarioId, string[]][] = [
   ["notes", ["note", "draft", "discharge", "summary", "patient", "write"]],
   ["guidelines", ["protocol", "guideline", "diabetes", "treatment", "manage"]],
   ["imaging-orders", ["imaging", "order", "orders", "scan", "ct", "mri", "x-ray", "radiology"]],
-  ["dancing-baby", ["audit", "dancing", "baby", "fun"]],
 ];
 
 function matchScenario(text: string): ScenarioId {
@@ -321,7 +314,6 @@ const RECENTS: { id: ScenarioId; label: string; prompt?: string }[] = [
   { id: "notes", label: "Discharge summary draft" },
   { id: "guidelines", label: "Type 2 Diabetes protocol" },
   { id: "imaging-orders", label: "Imaging orders — All departments" },
-  { id: "dancing-baby", label: "Dancing baby", prompt: SCENARIOS["dancing-baby"].prompt },
 ];
 
 /* ── the agent reply — thinks, then builds the answer ─────── */

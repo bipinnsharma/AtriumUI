@@ -23,15 +23,15 @@ const FILTERS: { key: "all" | Status; label: string; dot?: string; count: number
 ];
 
 const ROWS: TableRow[] = [
-  { task: "Restock mango sorbet", date: "Dec 03", status: "todo", owner: "Mango Moon Gelato" },
-  { task: "Churn black sesame", date: "Sep 22", status: "progress", owner: "Kumo Creamery" },
-  { task: "Print summer menu", date: "Jan 02", status: "todo", owner: "Coral Coast Sorbet" },
-  { task: "Taste-test batch 42", date: "Nov 08", status: "progress", owner: "Maple Orbit" },
-  { task: "Order waffle cones", date: "Apr 14", status: "done", owner: "Aurora Scoops" },
+  { task: "Review lab results", date: "Dec 03", status: "todo", owner: "Bed 3B — vitals pending" },
+  { task: "Update medication list", date: "Sep 22", status: "progress", owner: "Bed 5A — antibiotic review" },
+  { task: "Sign discharge summary", date: "Jan 02", status: "todo", owner: "Bed 3B — discharge ready" },
+  { task: "Culture results pending", date: "Nov 08", status: "progress", owner: "Bed 5A — attending update" },
+  { task: "Insurance pre-approval", date: "Apr 14", status: "done", owner: "Cardiology — cleared" },
 ];
 
 const LABELS: FilterTableLabels = {
-  columns: { task: "Task name", date: "Date", status: "Status", owner: "Advisor" },
+  columns: { task: "Task name", date: "Date", status: "Status", owner: "Patient / Ward" },
 };
 
 const PILLS: Record<Status, { label: string; cls: string }> = {

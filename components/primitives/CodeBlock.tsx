@@ -11,15 +11,15 @@ import { useCallback, useState, type ReactNode } from "react";
  * Both share syntax coloring, insets, and wrapping behavior.
  * ───────────────────────────────────────────────────────── */
 
-const FILE = "churn.ts";
+const FILE = "dosage.ts";
 
 const CODE_LINES = [
-  "export async function churnBatch() {",
-  '  const flavor = await getFlavor("pistachio");',
-  "  const base = await dairy.fetch({ flavor });",
-  '  await freezer.store(base, { temp: "-16C" });',
-  "  if (!base.approved) return null;",
-  "  return base.gallons;",
+  "export async function calculateDosage(patient) {",
+  '  const weight = await getWeight(patient.id);',
+  "  const egfr = await getLatestEGFR(patient.id);",
+  '  const dose = weight.kg * 10 * (egfr > 45 ? 1.0 : 0.5);',
+  "  if (dose > 2000) return { maxed: true, dose: 2000 };",
+  "  return { maxed: false, dose: Math.round(dose) };",
   "}",
 ];
 
@@ -40,13 +40,13 @@ type Piece = CodePiece;
 type Row = DiffRow;
 
 const DIFF: Row[] = [
-  { old: 1, cur: 1, type: "ctx", pieces: [{ text: "export async function churnBatch() {" }] },
-  { old: 2, cur: 2, type: "ctx", pieces: [{ text: '  const flavor = await getFlavor("pistachio");' }] },
-  { old: 3, cur: 3, type: "ctx", pieces: [{ text: "  const base = await dairy.fetch({ flavor });" }] },
-  { old: 4, cur: null, type: "del", pieces: [{ text: "  await freezer.store(base, { temp: " }, { text: '"-14C"', change: "del" }, { text: " });" }] },
-  { old: null, cur: 4, type: "add", pieces: [{ text: "  await freezer.store(base, { temp: " }, { text: '"-16C"', change: "add" }, { text: " });" }] },
-  { old: null, cur: 5, type: "add", pieces: [{ text: "  if (!base.approved) return null;" }] },
-  { old: 5, cur: 6, type: "ctx", pieces: [{ text: "  return base.gallons;" }] },
+  { old: 1, cur: 1, type: "ctx", pieces: [{ text: "export async function calculateDosage(patient) {" }] },
+  { old: 2, cur: 2, type: "ctx", pieces: [{ text: "  const weight = await getWeight(patient.id);" }] },
+  { old: 3, cur: 3, type: "ctx", pieces: [{ text: "  const egfr = await getLatestEGFR(patient.id);" }] },
+  { old: 4, cur: null, type: "del", pieces: [{ text: "  const dose = weight.kg * 10 * (egfr > 30 ? 1.0 : " }, { text: "0.3", change: "del" }, { text: ");" }] },
+  { old: null, cur: 4, type: "add", pieces: [{ text: "  const dose = weight.kg * 10 * (egfr > 45 ? 1.0 : " }, { text: "0.5", change: "add" }, { text: ");" }] },
+  { old: null, cur: 5, type: "add", pieces: [{ text: "  if (dose > 2000) return { maxed: true, dose: 2000 };" }] },
+  { old: 5, cur: 6, type: "ctx", pieces: [{ text: "  return { maxed: false, dose: Math.round(dose) };" }] },
   { old: 6, cur: 7, type: "ctx", pieces: [{ text: "}" }] },
 ];
 

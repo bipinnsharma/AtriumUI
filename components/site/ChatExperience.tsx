@@ -169,10 +169,10 @@ export default function ChatExperience() {
               </button>
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="truncate text-[14px] font-semibold text-ink">Pistachio expansion</span>
+                  <span className="truncate text-[14px] font-semibold text-ink">Patient consult</span>
                   <span className="rounded-full bg-green-tint px-2 py-0.5 text-[10.5px] font-medium text-green">Live</span>
                 </div>
-                <span className="block truncate text-[11.5px] text-ink-3">Flavor strategy · updated moments ago</span>
+                <span className="block truncate text-[11.5px] text-ink-3">Ward 3B · updated moments ago</span>
               </div>
             </div>
             <div className="flex items-center gap-1.5">
@@ -191,20 +191,20 @@ export default function ChatExperience() {
               <div className="mx-auto max-w-[820px] px-4 py-8 pb-10 sm:px-8 sm:py-10 lg:px-12">
                 <div className="mb-8 flex justify-end pl-10 sm:pl-24">
                   <div className="rounded-xl bg-field px-3.5 py-2 text-[13px] leading-relaxed text-ink shadow-hairline">
-                    Where should we expand pistachio this summer, and what needs to change before we commit?
+                    Review the medication plan for Bed 5A — are there any interactions I should flag before rounds?
                   </div>
                 </div>
 
-                <AssistantMessage eyebrow="Scoop · analysis complete">
+                <AssistantMessage eyebrow="Consult · analysis complete">
                   <p className="max-w-[620px] text-[14px] leading-[1.65] text-ink">
-                    I pulled together the seasonal signal, supplier context, and the current maker records. Pistachio is the clearest expansion bet, but I’d tighten the cone supply and update the launch set before committing.
+                    I cross-referenced the current med list against the latest lab panel. Bed 5A is on Metformin + Lisinopril — no direct interaction, but the elevated creatinine (1.4 mg/dL) means the Lisinopril dose should be reviewed. I'd also flag the pending culture results before adding any antibiotics.
                   </p>
 
                   <div className="mt-5 rounded-card bg-canvas/70 p-3 shadow-hairline sm:p-4">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <div>
-                        <span className="block text-[12px] font-semibold text-ink">Research run</span>
-                        <span className="block text-[11px] text-ink-3">A small trail of work, kept close to the answer</span>
+                        <span className="block text-[12px] font-semibold text-ink">Clinical run</span>
+                        <span className="block text-[11px] text-ink-3">Drug interaction check + lab correlation</span>
                       </div>
                       <button type="button" aria-expanded={runOpen} onClick={() => setRunOpen((current) => !current)} className="flex h-7 items-center gap-1.5 rounded-control bg-surface px-2 text-[11.5px] font-medium text-ink-2 shadow-btn transition-[background-color,color,transform] duration-150 hover:bg-hover hover:text-ink active:scale-[0.97]">
                         {runOpen ? "Hide details" : "Show details"}
@@ -222,36 +222,36 @@ export default function ChatExperience() {
                             <SectionHeading number="02" title="Tools" detail="4 calls · 2 messages" />
                             <ToolChips />
                           </div>
-                          <LoadingState label="Building the comparison" variant="Dots" />
+                          <LoadingState label="Cross-referencing medications" variant="Dots" />
                         </div>
                       </div>
                     </div>
                   </div>
                 </AssistantMessage>
 
-                <AssistantMessage eyebrow="Scoop · key signal" className="mt-12">
+                <AssistantMessage eyebrow="Consult · key signal" className="mt-12">
                   <div className="max-w-[630px]">
                     <StreamingText />
                   </div>
                   <div className="mt-5">
-                    <SectionHeading number="03" title="Seasonal signal" detail="last 3 summers" />
+                    <SectionHeading number="03" title="Lab trends" detail="last 7 days" />
                     <InsightCards />
                   </div>
                 </AssistantMessage>
 
-                <AssistantMessage eyebrow="Scoop · recommendation" className="mt-12">
-                  <p className="mb-4 max-w-[600px] text-[13px] leading-relaxed text-ink-2">The strongest move is to secure cones from the reliable supplier first, then promote the hero flavor where weekend demand is already doing the work.</p>
+                <AssistantMessage eyebrow="Consult · recommendation" className="mt-12">
+                  <p className="mb-4 max-w-[600px] text-[13px] leading-relaxed text-ink-2">I'd recommend holding the Lisinopril until the nephrology consult comes back. The Metformin is fine to continue — just recheck eGFR in 48 hours.</p>
                   <RecommendationCard />
                 </AssistantMessage>
 
-                <AssistantMessage eyebrow="Scoop · needs your call" className="mt-12">
-                  <p className="mb-4 max-w-[600px] text-[13px] leading-relaxed text-ink-2">Before I write the launch batch, confirm the size of the flavor set and the first market to test.</p>
+                <AssistantMessage eyebrow="Consult · needs your call" className="mt-12">
+                  <p className="mb-4 max-w-[600px] text-[13px] leading-relaxed text-ink-2">Before I update the order set, confirm whether to adjust the Lisinopril dose or switch to an alternative antihypertensive.</p>
                   <ApprovalCard />
                 </AssistantMessage>
 
-                <AssistantMessage eyebrow="Scoop · preparing the change" className="mt-12">
+                <AssistantMessage eyebrow="Consult · preparing the change" className="mt-12">
                   <div className="mb-4 flex items-center justify-between gap-4">
-                    <p className="max-w-[480px] text-[13px] leading-relaxed text-ink-2">I’ll stage the new flavor records, filter the makers that are ready, and leave the proposed edits for review.</p>
+                    <p className="max-w-[480px] text-[13px] leading-relaxed text-ink-2">I’ll stage the medication adjustment, flag the pending cultures, and leave the proposed edits for your review.</p>
                     <span className="hidden rounded-full bg-accent-tint px-2 py-0.5 text-[10.5px] font-medium text-accent-ink sm:block">Draft</span>
                   </div>
                   <div className="flex flex-col gap-6">
@@ -266,26 +266,26 @@ export default function ChatExperience() {
                   </div>
                 </AssistantMessage>
 
-                <AssistantMessage eyebrow="Scoop · maker records" className="mt-12">
-                  <p className="mb-5 max-w-[600px] text-[13px] leading-relaxed text-ink-2">Here’s the working set. The filters and full records table are connected so you can narrow the launch set without leaving the thread.</p>
+                <AssistantMessage eyebrow="Consult · patient records" className="mt-12">
+                  <p className="mb-5 max-w-[600px] text-[13px] leading-relaxed text-ink-2">Here’s the current ward view. The filters are connected so you can narrow by department or status without leaving the thread.</p>
                   <div className="flex flex-col gap-7">
                     <div>
-                      <SectionHeading number="06" title="Launch filter" detail="electric tags" />
+                      <SectionHeading number="06" title="Ward filter" detail="by department" />
                       <div className="overflow-x-auto pb-1"><FilterTable /></div>
                     </div>
                     <div>
-                      <SectionHeading number="07" title="Maker records" detail="26 makers" />
+                      <SectionHeading number="07" title="Patient records" detail="26 makers" />
                       <div className="overflow-x-auto pb-1"><RecordsTable /></div>
                     </div>
                   </div>
                 </AssistantMessage>
 
-                <AssistantMessage eyebrow="Scoop · batch plan" className="mt-12">
-                  <p className="mb-4 max-w-[600px] text-[13px] leading-relaxed text-ink-2">Once the records are approved, this is the small batch function I’ll use to stage the pistachio run.</p>
+                <AssistantMessage eyebrow="Consult · dosage calculation" className="mt-12">
+                  <p className="mb-4 max-w-[600px] text-[13px] leading-relaxed text-ink-2">This is the adjusted dosage function I’ll use to stage the revised orders.</p>
                   <CodeBlock />
                 </AssistantMessage>
 
-                <AssistantMessage eyebrow="Scoop · ready when you are" className="mt-12">
+                <AssistantMessage eyebrow="Consult · ready when you are" className="mt-12">
                   <p className="mb-4 max-w-[600px] text-[13px] leading-relaxed text-ink-2">Everything is staged as a reviewable draft. Ask for a change, or send a new instruction below to keep going.</p>
                   <ChatComposer onSend={() => posthog.capture("chat_composer_prompt_sent")} />
                 </AssistantMessage>
