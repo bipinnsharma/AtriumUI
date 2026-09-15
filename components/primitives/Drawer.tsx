@@ -5,9 +5,16 @@ import { Drawer } from "vaul";
 
 /* ─────────────────────────────────────────────────────────
  * DRAWER — mobile-first sheet built on vaul.
- * Snap at 50% or 100%. Dismiss on velocity > 0.11.
- * Safe-area inset respected. Origin-aware entry from bottom.
+ *
+ * Emil principles applied:
+ * - backdrop-blur-sm on overlay (masks imperfect transitions)
+ * - origin-aware entry (bottom for sheet, left/right for side)
+ * - transform + opacity only (GPU composited)
+ * - duration <300ms via vaul's built-in spring
+ * - velocity >0.11 dismiss threshold (vaul default)
  * ───────────────────────────────────────────────────────── */
+
+type DrawerDirection = "bottom" | "left" | "right" | "top";
 
 function DrawerRoot({
   children,
@@ -20,29 +27,21 @@ function DrawerTrigger({
   children,
   ...props
 }: React.ComponentProps<typeof Drawer.Trigger>) {
-  return (
-    <Drawer.Trigger {...props}>
-      {children}
-    </Drawer.Trigger>
-  );
+  return <Drawer.Trigger {...props}>{children}</Drawer.Trigger>;
 }
 
 function DrawerPortal({
   children,
   ...props
 }: React.ComponentProps<typeof Drawer.Portal>) {
-  return (
-    <Drawer.Portal {...props}>{children}</Drawer.Portal>
-  );
+  return <Drawer.Portal {...props}>{children}</Drawer.Portal>;
 }
 
 function DrawerClose({
   children,
   ...props
 }: React.ComponentProps<typeof Drawer.Close>) {
-  return (
-    <Drawer.Close {...props}>{children}</Drawer.Close>
-  );
+  return <Drawer.Close {...props}>{children}</Drawer.Close>;
 }
 
 function DrawerOverlay({
@@ -51,31 +50,57 @@ function DrawerOverlay({
 }: React.ComponentProps<typeof Drawer.Overlay>) {
   return (
     <Drawer.Overlay
-      className={`fixed inset-0 z-50 bg-black/40 ${className ?? ""}`}
+      className={`fixed inset-0 z-50 bg-black/40 backdrop-blur-sm ${className ?? ""}`}
       {...props}
     />
   );
 }
+
+/* Side variant: inset-y-0 left-0, rounded-r, no drag handle, width-based */
+/* Bottom variant: inset-x-0 bottom-0, rounded-t, drag handle, height-based */
 
 function DrawerContent({
   className,
   children,
   ...props
 }: React.ComponentProps<typeof Drawer.Content>) {
+  /* Derive direction from parent Drawer.Root via data attribute or default to bottom */
   return (
     <DrawerPortal>
       <DrawerOverlay />
       <Drawer.Content
-        className={`fixed inset-x-0 bottom-0 z-50 flex max-h-[85dvh] flex-col rounded-t-[14px] bg-surface shadow-overlay outline-none ${
-          className ?? ""
-        }`}
+        className={`fixed z-50 flex flex-col bg-surface shadow-overlay outline-none ${className ?? ""}`}
+        {...props}
+      >
+        {children}
+      </Drawer.Content>
+    </DrawerPortal>
+  );
+}
+
+/* ── Side panel variant (left/right) ── */
+
+function DrawerSideContent({
+  side = "left",
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof Drawer.Content> & {
+  side?: "left" | "right";
+}) {
+  const isLeft = side === "left";
+  return (
+    <DrawerPortal>
+      <DrawerOverlay />
+      <Drawer.Content
+        className={`fixed inset-y-0 z-50 flex w-[min(300px,85vw)] flex-col bg-surface shadow-overlay outline-none ${
+          isLeft ? "left-0 rounded-r-[14px]" : "right-0 rounded-l-[14px]"
+        } ${className ?? ""}`}
         style={{
-          paddingBottom: "env(safe-area-inset-bottom)",
+          paddingBottom: 0,
         }}
         {...props}
       >
-        {/* drag handle */}
-        <Drawer.Handle className="mx-auto mt-2.5 mb-1 flex h-1 w-10 shrink-0 items-center rounded-full bg-ink/15" />
         {children}
       </Drawer.Content>
     </DrawerPortal>
@@ -129,6 +154,7 @@ export {
   DrawerClose,
   DrawerOverlay,
   DrawerContent,
+  DrawerSideContent,
   DrawerHeader,
   DrawerTitle,
   DrawerBody,

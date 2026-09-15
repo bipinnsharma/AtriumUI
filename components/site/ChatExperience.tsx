@@ -9,6 +9,7 @@ import ContextCards from "@/components/primitives/ContextCards";
 import {
   DrawerRoot,
   DrawerContent,
+  DrawerSideContent,
   DrawerHeader,
   DrawerTitle,
   DrawerBody,
@@ -134,9 +135,9 @@ export default function ChatExperience() {
           <SidebarNav fill />
         </div>
 
-        {/* Mobile sidebar drawer */}
-        <DrawerRoot open={sidebarOpen} onOpenChange={setSidebarOpen}>
-          <DrawerContent className="max-h-[75dvh]">
+        {/* Mobile sidebar — left-side half panel with blur */}
+        <DrawerRoot open={sidebarOpen} onOpenChange={setSidebarOpen} direction="left">
+          <DrawerSideContent side="left">
             <DrawerHeader>
               <DrawerTitle>Navigation</DrawerTitle>
               <DrawerClose asChild>
@@ -148,7 +149,7 @@ export default function ChatExperience() {
             <DrawerBody className="p-0">
               <SidebarNav fill onPick={() => setSidebarOpen(false)} onNewChat={() => setSidebarOpen(false)} />
             </DrawerBody>
-          </DrawerContent>
+          </DrawerSideContent>
         </DrawerRoot>
 
         <section className="flex min-w-0 flex-1 flex-col bg-page">

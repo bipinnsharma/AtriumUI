@@ -11,6 +11,7 @@ import {
   DrawerTrigger,
   DrawerOverlay,
   DrawerContent,
+  DrawerSideContent,
   DrawerHeader,
   DrawerTitle,
   DrawerBody,
@@ -960,9 +961,9 @@ export default function AtriumLabs() {
         />
       </div>
 
-      {/* ── Mobile sidebar drawer ── */}
-      <DrawerRoot open={sidebarOpen} onOpenChange={setSidebarOpen}>
-        <DrawerContent className="max-h-[75dvh]">
+      {/* ── Mobile sidebar — left-side half panel with blur ── */}
+      <DrawerRoot open={sidebarOpen} onOpenChange={setSidebarOpen} direction="left">
+        <DrawerSideContent side="left">
           <DrawerHeader>
             <DrawerTitle>Navigation</DrawerTitle>
             <DrawerClose asChild>
@@ -995,7 +996,7 @@ export default function AtriumLabs() {
               }
             />
           </DrawerBody>
-        </DrawerContent>
+        </DrawerSideContent>
       </DrawerRoot>
 
       {/* ── Mobile workspace options drawer ── */}
