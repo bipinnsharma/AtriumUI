@@ -1577,6 +1577,17 @@ th.is-colsel .records-header-icon {
   }
 }
 
+/* New-chat pencil wiggle on hover */
+@keyframes pencil-wiggle {
+  0%   { transform: translate(20.64px, 20.641px) rotate(0rad) translate(-20.64px, -20.641px); }
+  8%   { transform: translate(20.64px, 20.641px) rotate(0.115rad) translate(-20.64px, -20.641px) translate(-3.387px, 0.065px); }
+  12%  { transform: translate(20.64px, 20.641px) rotate(0.031rad) translate(-20.64px, -20.641px) translate(-4.884px, 0.079px); }
+  20%  { transform: translate(20.64px, 20.641px) rotate(-0.188rad) translate(-20.64px, -20.641px) translate(-0.313px, -2.79px); }
+  30%  { transform: translate(20.64px, 20.641px) rotate(-0.003rad) translate(-20.64px, -20.641px) translate(-0.001px, -0.191px); }
+  31%  { transform: translate(20.64px, 20.641px) rotate(-0.002rad) translate(-20.64px, -20.641px); }
+  100% { transform: translate(20.64px, 20.641px) rotate(-0.002rad) translate(-20.64px, -20.641px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

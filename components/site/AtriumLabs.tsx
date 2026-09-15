@@ -28,6 +28,7 @@ import PatientRecordsTable from "@/components/primitives/PatientRecordsTable";
 import SelectionActions from "@/components/primitives/SelectionActions";
 import SidebarNav from "@/components/primitives/SidebarNav";
 import StreamingText from "@/components/primitives/StreamingText";
+import { NewChatIcon } from "@/components/primitives/Icons";
 import TaskRows from "@/components/primitives/TaskRows";
 import ThinkingState from "@/components/primitives/ThinkingState";
 import ToolChips from "@/components/primitives/ToolChips";
@@ -861,9 +862,9 @@ export default function AtriumLabs() {
         type="button"
         aria-label="New chat"
         onClick={newChat}
-        className="ml-0.5 flex size-7 shrink-0 items-center justify-center rounded-[7px] text-ink-3 transition-colors duration-100 hover:bg-hover hover:text-ink"
+        className="ml-0.5 group flex size-7 shrink-0 items-center justify-center rounded-[7px] text-ink-3 transition-colors duration-100 hover:bg-hover hover:text-ink"
       >
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
+        <NewChatIcon />
       </button>
     </div>
   );
@@ -1039,8 +1040,8 @@ export default function AtriumLabs() {
                 onClick={() => { newChat(); setWorkspaceOptionsOpen(false); }}
                 className="flex items-center gap-2.5 rounded-[10px] px-3 py-2.5 text-left transition-colors duration-100 hover:bg-hover"
               >
-                <span className="flex size-7 shrink-0 items-center justify-center text-ink-2">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14" /></svg>
+                <span className="group flex size-7 shrink-0 items-center justify-center text-ink-2">
+                  <NewChatIcon />
                 </span>
                 <span className="min-w-0 flex-1 truncate text-[14px] text-ink">New chat</span>
               </button>

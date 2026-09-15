@@ -27,6 +27,7 @@ import StreamingText from "@/components/primitives/StreamingText";
 import TaskRows from "@/components/primitives/TaskRows";
 import ThinkingState from "@/components/primitives/ThinkingState";
 import ToolChips from "@/components/primitives/ToolChips";
+import { NewChatIcon } from "@/components/primitives/Icons";
 
 function Spark({ className = "" }: { className?: string }) {
   return (
@@ -176,8 +177,8 @@ export default function ChatExperience() {
               </div>
             </div>
             <div className="flex items-center gap-1.5">
-              <button type="button" className="hidden h-8 items-center gap-1.5 rounded-control bg-field px-2.5 text-[12px] font-medium text-ink-2 shadow-btn transition-[background-color,color,transform] duration-150 hover:bg-hover hover:text-ink active:scale-[0.97] sm:flex">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 3v18M3 12h18" /></svg>
+              <button type="button" className="group hidden h-8 items-center gap-1.5 rounded-control bg-field px-2.5 text-[12px] font-medium text-ink-2 shadow-btn transition-[background-color,color,transform] duration-150 hover:bg-hover hover:text-ink active:scale-[0.97] sm:flex">
+                <NewChatIcon />
                 New chat
               </button>
               <button type="button" aria-label="Share conversation" className="flex size-8 items-center justify-center rounded-control text-ink-3 transition-colors duration-150 hover:bg-hover hover:text-ink">
