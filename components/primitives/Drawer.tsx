@@ -64,14 +64,18 @@ function DrawerContent({
   children,
   ...props
 }: React.ComponentProps<typeof Drawer.Content>) {
-  /* Derive direction from parent Drawer.Root via data attribute or default to bottom */
   return (
     <DrawerPortal>
       <DrawerOverlay />
       <Drawer.Content
-        className={`fixed z-50 flex flex-col bg-surface shadow-overlay outline-none ${className ?? ""}`}
+        className={`fixed inset-x-0 bottom-0 z-50 flex max-h-[85dvh] flex-col rounded-t-[14px] bg-surface shadow-overlay outline-none ${className ?? ""}`}
+        style={{
+          paddingBottom: "env(safe-area-inset-bottom)",
+        }}
         {...props}
       >
+        {/* drag handle */}
+        <Drawer.Handle className="mx-auto mt-2.5 mb-1 flex h-1 w-10 shrink-0 items-center rounded-full bg-ink/15" />
         {children}
       </Drawer.Content>
     </DrawerPortal>

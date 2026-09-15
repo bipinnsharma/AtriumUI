@@ -485,14 +485,14 @@ function EmptyState({ onSend, shuffle, offset }: { onSend: (text: string, id: Sc
             <span className="min-w-0 truncate">{item.label}</span>
           </button>
         ))}
-        <div className="mt-1 flex flex-col gap-1 pl-0.5 text-[11px] leading-[13px] text-ink-3">
+        <div className="mt-1 flex items-center gap-5 pl-0.5 text-[13px] text-ink-3 max-sm:flex-col max-sm:items-start max-sm:gap-1 max-sm:text-[11px] max-sm:leading-[13px]">
           <button type="button" className="flex items-center gap-2 py-1 text-left transition-colors duration-150 hover:text-ink">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden><circle cx="5" cy="12" r="1.7" /><circle cx="12" cy="12" r="1.7" /><circle cx="19" cy="12" r="1.7" /></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden><circle cx="5" cy="12" r="1.7" /><circle cx="12" cy="12" r="1.7" /><circle cx="19" cy="12" r="1.7" /></svg>
             Connect your apps for a better experience
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 12h14M13 6l6 6-6 6" /></svg>
           </button>
           <button type="button" onClick={shuffle} className="flex items-center gap-2 py-1 transition-colors duration-150 hover:text-ink">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6" /></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6" /></svg>
             Shuffle suggestions
           </button>
         </div>
