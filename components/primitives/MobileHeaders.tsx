@@ -27,7 +27,7 @@ export function CenteredHeader({
 }) {
   return (
     <div className="flex justify-center px-1.5 pt-3">
-      <header className="flex h-10 w-full max-w-[378px] items-center justify-between rounded-xl border border-line bg-surface px-1">
+      <header className="flex h-10 w-full max-w-[378px] items-center justify-between rounded-xl px-1">
         <div className="flex items-center gap-0.5">
           <div className="flex size-10 shrink-0 items-center justify-center rounded-control text-ink-3 transition-colors duration-150 hover:bg-hover hover:text-ink">
             {leftAction ?? (
