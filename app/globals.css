@@ -1624,6 +1624,13 @@ th.is-colsel .records-header-icon {
   100%    { height: 16px; }
 }
 
+/* Mail icon star spin on hover */
+@keyframes star-spin {
+  0%     { transform: translate(69.271px, 67.271px) rotate(0rad); }
+  23.91% { transform: translate(69.271px, 67.271px) rotate(1.567rad); }
+  100%   { transform: translate(69.271px, 67.271px) rotate(1.567rad); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
