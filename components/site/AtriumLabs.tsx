@@ -939,8 +939,9 @@ export default function AtriumLabs() {
               onClick={() => setSidebarOpen(true)}
               className="flex size-10 items-center justify-center rounded-control text-ink-3 transition-colors duration-150 hover:bg-hover hover:text-ink"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden>
-                <path d="M4 6h16M4 12h16M4 18h16" />
+              <svg width="18" height="18" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                <path d="M1 1C1 1 17 1 17 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                <path d="M1 11C1 11 13 11 13 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             </button>
           }
@@ -951,10 +952,10 @@ export default function AtriumLabs() {
               onClick={() => setWorkspaceOptionsOpen(true)}
               className="flex size-10 items-center justify-center rounded-control text-ink-3 transition-colors duration-150 hover:bg-hover hover:text-ink"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="1" />
-                <circle cx="19" cy="12" r="1" />
-                <circle cx="5" cy="12" r="1" />
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                <circle cx="3.75" cy="9" r="1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                <circle cx="9" cy="9" r="1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                <circle cx="14.25" cy="9" r="1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             </button>
           }
