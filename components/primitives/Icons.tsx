@@ -35,3 +35,42 @@ export function NewChatIcon({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+export function HomeIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 72 72"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Roof */}
+      <path
+        d="M7 31L32.6395 10.1347C34.8744 8.31602 38.0865 8.34277 40.2908 10.1985L65 31"
+        stroke="currentColor"
+        strokeWidth="4.5"
+        strokeLinecap="round"
+      />
+      {/* House body */}
+      <path
+        d="M60 26.5V45C60 54.4281 60 59.1421 57.0711 62.0711C54.1421 65 49.4281 65 40 65H32C22.5719 65 17.8579 65 14.9289 62.0711C12 59.1421 12 54.4281 12 45L12 26.5"
+        stroke="currentColor"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+      {/* Door — animated fill on group-hover */}
+      <rect
+        x="47"
+        y="36"
+        width="5"
+        height="2"
+        rx="2.5"
+        fill="currentColor"
+        className="origin-[49.5px_44px] group-hover:animate-[door-fill_2s_linear]"
+      />
+    </svg>
+  );
+}

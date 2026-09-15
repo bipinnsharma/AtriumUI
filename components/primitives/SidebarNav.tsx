@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { LogOut, Check, ChevronDown, X, MessagesSquare, Home, Search, Plus, Settings, PanelLeftClose, UserPlus } from "lucide-react";
+import { LogOut, Check, ChevronDown, X, MessagesSquare, Search, Plus, Settings, PanelLeftClose, UserPlus } from "lucide-react";
 import GlideMenu from "@/components/primitives/GlideMenu";
-import { NewChatIcon } from "@/components/primitives/Icons";
+import { NewChatIcon, HomeIcon } from "@/components/primitives/Icons";
 import { Switch } from "@/components/atoms/Switch";
 
 /* ─────────────────────────────────────────────────────────
@@ -17,7 +17,7 @@ import { Switch } from "@/components/atoms/Switch";
 const WORKSPACE = { key: "clinical", name: "Atrium Labs", monogram: "C" };
 
 const NAV_ITEMS = [
-  { key: "home", label: "Home", icon: <Home size={18} /> },
+  { key: "home", label: "Home", icon: <HomeIcon /> },
   { key: "messages", label: "Messages", icon: <MessagesSquare size={18} /> },
   { key: "invite", label: "Invite users", icon: <UserPlus size={18} />, count: "3/10" },
 ];
@@ -393,6 +393,7 @@ export default function SidebarNav({
               label={item.label}
               count={item.count}
               active={currentNav === item.key}
+              className="group"
               onClick={() => selectNav(item.key)}
             />
           ))}
