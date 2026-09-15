@@ -1626,9 +1626,16 @@ th.is-colsel .records-header-icon {
 
 /* Mail icon star spin on hover */
 @keyframes star-spin {
-  0%     { transform: translate(69.271px, 67.271px) rotate(0rad); }
-  23.91% { transform: translate(69.271px, 67.271px) rotate(1.567rad); }
-  100%   { transform: translate(69.271px, 67.271px) rotate(1.567rad); }
+  0%     { transform: rotate(0deg); }
+  23.91% { transform: rotate(90deg); }
+  100%   { transform: rotate(90deg); }
+}
+.mail-icon-star {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.group:hover .mail-icon-star {
+  animation: star-spin 2s linear forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
