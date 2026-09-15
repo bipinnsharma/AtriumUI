@@ -377,7 +377,7 @@ export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick
   }, []);
 
   return (
-    <div className="flex h-full w-full shrink-0 flex-col rounded-[14px] border-l border-line bg-page sm:w-[360px]" style={{ animation: "fade-in 200ms ease both" }}>
+    <div className="hidden h-full shrink-0 flex-col rounded-[14px] border-l border-line bg-page sm:flex sm:w-[360px]" style={{ animation: "fade-in 200ms ease both" }}>
       {/* Header */}
       <div className="flex items-center justify-between border-b border-line px-4 py-2">
         <div className="flex items-center gap-2">
@@ -445,15 +445,19 @@ export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick
   );
 }
 
-function ConversationDetail({ conversation, onGenerateDraft }: {
+function ConversationDetail({ conversation, onGenerateDraft, onBack }: {
   conversation: Conversation;
   onGenerateDraft?: () => void;
+  onBack?: () => void;
 }) {
   return (
     <div className="flex h-full flex-col rounded-[14px] bg-page">
       {/* Toolbar */}
       <div className="flex items-center justify-between border-b border-line px-4 py-2">
         <div className="flex items-center gap-0.5">
+          <Button variant="quiet" size="xs" onClick={onBack} className="sm:hidden mr-1">
+            <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+          </Button>
           <Button variant="quiet" size="xs" title="Archive"><ArchiveIcon size={16} /></Button>
           <Button variant="quiet" size="xs" title="Move to junk"><ArchiveXIcon size={16} /></Button>
           <Button variant="quiet" size="xs" title="Delete"><TrashIcon size={16} /></Button>
@@ -537,12 +541,13 @@ export default function MessagesView({
   selectedConversation
 }: MessagesViewProps) {
   const [selectedId, setSelectedId] = useState<string>("martin");
+  const [mobileShowDetail, setMobileShowDetail] = useState(false);
   const selected = selectedConversation || CONVERSATIONS.find((c) => c.id === selectedId);
 
   return (
     <div className="flex h-full rounded-[14px] bg-page">
       {/* Left Panel — Inbox */}
-      <div className="flex w-full shrink-0 flex-col border-r border-line sm:w-[380px]">
+      <div className={`flex w-full shrink-0 flex-col border-r border-line sm:w-[380px] ${mobileShowDetail ? "hidden sm:flex" : "flex"}`}>
         {/* Header */}
         <div className="shrink-0 border-b border-line px-5 py-3">
           <h1 className="text-[13px] font-semibold text-ink">Messages</h1>
@@ -567,24 +572,28 @@ export default function MessagesView({
         </div>
 
         {/* Conversation List */}
-        <div className="min-h-0 flex-1 overflow-y-auto scroll-hover">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain scroll-hover">
           {CONVERSATIONS.map((conversation) => (
             <ConversationRow
               key={conversation.id}
               conversation={conversation}
               isSelected={selectedId === conversation.id}
-              onClick={() => setSelectedId(conversation.id)}
+              onClick={() => {
+                setSelectedId(conversation.id);
+                setMobileShowDetail(true);
+              }}
             />
           ))}
         </div>
       </div>
 
       {/* Right Panel — Detail */}
-      <div className="min-w-0 flex-1 flex">
+      <div className={`min-w-0 flex-1 flex ${mobileShowDetail ? "flex" : "hidden sm:flex"}`}>
         {selected ? (
           <ConversationDetail
             conversation={selected}
             onGenerateDraft={onGenerateDraft}
+            onBack={() => setMobileShowDetail(false)}
           />
         ) : (
           <EmptyState />
