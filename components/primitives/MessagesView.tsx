@@ -377,7 +377,7 @@ export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick
   }, []);
 
   return (
-    <div className="flex h-full w-full shrink-0 flex-col border-l border-line bg-page sm:w-[360px]" style={{ animation: "fade-in 200ms ease both" }}>
+    <div className="flex h-full w-full shrink-0 flex-col rounded-[14px] border-l border-line bg-page sm:w-[360px]" style={{ animation: "fade-in 200ms ease both" }}>
       {/* Header */}
       <div className="flex items-center justify-between border-b border-line px-4 py-2">
         <div className="flex items-center gap-2">
@@ -540,7 +540,7 @@ export default function MessagesView({
   const selected = selectedConversation || CONVERSATIONS.find((c) => c.id === selectedId);
 
   return (
-    <div className="flex h-full bg-page">
+    <div className="flex h-full rounded-[14px] bg-page">
       {/* Left Panel — Inbox */}
       <div className="flex w-full shrink-0 flex-col border-r border-line sm:w-[380px]">
         {/* Header */}

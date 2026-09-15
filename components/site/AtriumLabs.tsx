@@ -1068,17 +1068,17 @@ export default function AtriumLabs() {
       <div className="flex min-w-0 flex-1 flex-col gap-2.5 rounded-xl p-2.5 lg:p-0">
         {activeNav === "messages" ? (
           /* Messages view */
-          <section className="flex min-h-0 flex-1 flex-row overflow-hidden rounded-[14px] bg-page">
+          <div className="flex min-h-0 flex-1 gap-2">
             <MessagesView
               onGenerateDraft={() => setShowAiPanel(true)}
             />
             {showAiPanel && (
-              <AiAssistantPanel 
-                conversation={{ id: "martin", name: "Martin Johnson" }} 
-                onClose={() => setShowAiPanel(false)} 
+              <AiAssistantPanel
+                conversation={{ id: "martin", name: "Martin Johnson" }}
+                onClose={() => setShowAiPanel(false)}
               />
             )}
-          </section>
+          </div>
         ) : (
         /* panels row — main pane + docked side pane */
         <div className="flex min-h-0 flex-1 gap-2.5">
