@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { LogOut, Check, ChevronDown, X, MessagesSquare, SquarePen, Home, Search, Plus, Settings, PanelLeftClose, UserPlus } from "lucide-react";
+import { LogOut, Check, ChevronDown, X, MessagesSquare, Home, Search, Plus, Settings, PanelLeftClose, UserPlus } from "lucide-react";
 import GlideMenu from "@/components/primitives/GlideMenu";
+import { NewChatIcon } from "@/components/primitives/Icons";
 import { Switch } from "@/components/atoms/Switch";
 
 /* ─────────────────────────────────────────────────────────
@@ -372,7 +373,7 @@ export default function SidebarNav({
 
         <GlideGroup>
           <RailButton
-            icon={<SquarePen size={18} />}
+            icon={<span className="group"><NewChatIcon /></span>}
             label="New chat"
             hoverBg="var(--color-new-chat-hover)"
             hoverColor="#FF4206"
