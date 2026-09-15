@@ -1018,10 +1018,12 @@ export default function AtriumLabs() {
                 <span className="min-w-0 flex-1 truncate text-[14px] font-medium text-ink">Atrium Labs</span>
               </div>
               <div className="mx-3 my-1 h-px bg-line" />
-              <button
-                type="button"
+              <div
+                role="button"
+                tabIndex={0}
                 onClick={toggleTheme}
-                className="flex items-center gap-2.5 rounded-[10px] px-3 py-2.5 text-left transition-colors duration-100 hover:bg-hover"
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") toggleTheme(); }}
+                className="flex items-center gap-2.5 rounded-[10px] px-3 py-2.5 text-left transition-colors duration-100 hover:bg-hover cursor-pointer"
               >
                 <span className="flex size-7 shrink-0 items-center justify-center text-ink-2">
                   {dark ? (
@@ -1032,7 +1034,7 @@ export default function AtriumLabs() {
                 </span>
                 <span className="min-w-0 flex-1 truncate text-[14px] text-ink">{dark ? "Dark" : "Light"} mode</span>
                 <Switch checked={dark} onChange={toggleTheme} label="Toggle dark mode" />
-              </button>
+              </div>
               <div className="mx-3 my-1 h-px bg-line" />
               <button
                 type="button"
