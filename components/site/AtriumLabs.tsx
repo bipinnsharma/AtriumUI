@@ -938,9 +938,8 @@ export default function AtriumLabs() {
               onClick={() => setSidebarOpen(true)}
               className="flex size-10 items-center justify-center rounded-control text-ink-3 transition-colors duration-150 hover:bg-hover hover:text-ink"
             >
-              <svg width="18" height="18" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                <path d="M1 1C1 1 17 1 17 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M1 11C1 11 13 11 13 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                <path d="M3 6.5H15M3 11H12.5" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
               </svg>
             </button>
           }
