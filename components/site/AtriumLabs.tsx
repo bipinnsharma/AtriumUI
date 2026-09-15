@@ -1069,9 +1069,8 @@ export default function AtriumLabs() {
         {activeNav === "messages" ? (
           /* Messages view */
           <section className="flex min-h-0 flex-1 flex-row overflow-hidden rounded-[14px] bg-page">
-            <MessagesView 
-              showAiPanel={showAiPanel} 
-              onShowAiPanelChange={setShowAiPanel} 
+            <MessagesView
+              onGenerateDraft={() => setShowAiPanel(true)}
             />
             {showAiPanel && (
               <AiAssistantPanel 

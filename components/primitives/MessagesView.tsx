@@ -447,7 +447,7 @@ export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick
 
 function ConversationDetail({ conversation, onGenerateDraft }: {
   conversation: Conversation;
-  onGenerateDraft: () => void;
+  onGenerateDraft?: () => void;
 }) {
   return (
     <div className="flex h-full flex-col rounded-[14px] bg-page">
@@ -528,15 +528,13 @@ function EmptyState() {
 }
 
 interface MessagesViewProps {
-  showAiPanel?: boolean;
-  onShowAiPanelChange?: (show: boolean) => void;
+  onGenerateDraft?: () => void;
   selectedConversation?: Conversation;
 }
 
-export default function MessagesView({ 
-  showAiPanel = false, 
-  onShowAiPanelChange,
-  selectedConversation 
+export default function MessagesView({
+  onGenerateDraft,
+  selectedConversation
 }: MessagesViewProps) {
   const [selectedId, setSelectedId] = useState<string>("martin");
   const selected = selectedConversation || CONVERSATIONS.find((c) => c.id === selectedId);
@@ -575,10 +573,7 @@ export default function MessagesView({
               key={conversation.id}
               conversation={conversation}
               isSelected={selectedId === conversation.id}
-              onClick={() => {
-                setSelectedId(conversation.id);
-                onShowAiPanelChange?.(false);
-              }}
+              onClick={() => setSelectedId(conversation.id)}
             />
           ))}
         </div>
@@ -589,7 +584,7 @@ export default function MessagesView({
         {selected ? (
           <ConversationDetail
             conversation={selected}
-            onGenerateDraft={() => onShowAiPanelChange?.(true)}
+            onGenerateDraft={onGenerateDraft}
           />
         ) : (
           <EmptyState />
