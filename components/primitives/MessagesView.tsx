@@ -381,9 +381,6 @@ export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick
       {/* Header */}
       <div className="flex items-center justify-between border-b border-line px-4 py-2">
         <div className="flex items-center gap-2">
-          <div className="flex size-7 items-center justify-center rounded-control bg-orange-tint text-orange">
-            <span className="text-[13px]">✦</span>
-          </div>
           <span className="text-[13px] font-semibold text-ink">AI Assistant</span>
         </div>
         <Button variant="quiet" size="xs" onClick={onClose}>
@@ -404,7 +401,7 @@ export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick
           {/* AI typing indicator */}
           {showTyping && (
             <div className="flex gap-2.5">
-              <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-orange-tint text-orange">
+              <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-accent-tint text-accent">
                 <span className="text-[11px]">✦</span>
               </div>
               <div className="rounded-card rounded-tl-[4px] bg-inset px-4 py-2.5 shadow-hairline">
@@ -416,7 +413,7 @@ export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick
           {/* AI response with streaming — only show after composing animation */}
           {!showTyping && (
             <div className="flex gap-2.5">
-              <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-orange-tint text-orange">
+              <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-accent-tint text-accent">
                 <span className="text-[11px]">✦</span>
               </div>
               <div className="min-w-0 max-w-[280px]">
