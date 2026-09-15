@@ -1615,4 +1615,8 @@ th.is-colsel .records-header-icon {
   .sidebar-header {
     display: none;
   }
+  /* SidebarNav fills drawer width on mobile */
+  [data-sidebar-collapsed] > .flex {
+    width: 100% !important;
+  }
 }
