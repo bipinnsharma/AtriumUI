@@ -974,6 +974,7 @@ export default function AtriumLabs() {
           <DrawerBody className="p-0">
             <SidebarNav
               fill
+              mobile
               recents={RECENTS}
               activeTitle={chat.title}
               activeNav={activeNav}

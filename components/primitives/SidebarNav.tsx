@@ -42,6 +42,7 @@ type SidebarNavProps = {
   activeTitle?: string | null;
   className?: string;
   fill?: boolean;
+  mobile?: boolean;
   onNewChat?: () => void;
   onPick?: (id: string, label: string, prompt?: string) => void;
   /** controlled primary-nav selection (e.g. "home" | "invite") */
@@ -249,6 +250,7 @@ export default function SidebarNav({
   activeTitle,
   className = "",
   fill = false,
+  mobile = false,
   onNewChat,
   onPick,
   activeNav,
@@ -306,7 +308,7 @@ export default function SidebarNav({
       aria-label="Workspace navigation"
       className={`relative flex shrink-0 overflow-hidden transition-[width] ${fill ? "h-full" : "h-[600px]"} ${className}`}
       style={{
-        width: collapsed ? SIDEBAR_MOTION.collapsedWidth : SIDEBAR_MOTION.expandedWidth,
+        width: mobile ? "100%" : collapsed ? SIDEBAR_MOTION.collapsedWidth : SIDEBAR_MOTION.expandedWidth,
         transitionDuration: `${SIDEBAR_MOTION.duration}ms`,
         transitionTimingFunction: SIDEBAR_MOTION.easing,
         "--sidebar-copy-duration": `${SIDEBAR_MOTION.copyDuration}ms`,
@@ -314,7 +316,7 @@ export default function SidebarNav({
         "--sidebar-easing": SIDEBAR_MOTION.easing,
       } as CSSProperties}
     >
-      <div className="flex min-h-0 w-[224px] shrink-0 flex-col">
+        <div className={`flex min-h-0 shrink-0 flex-col ${mobile ? "w-full" : "w-[224px]"}`}>
         <div className="sidebar-header relative mb-2.5 h-10 shrink-0">
           <button
             ref={workspaceButtonRef}
@@ -494,7 +496,7 @@ export default function SidebarNav({
           )}
         </div>
 
-        <div className="sidebar-copy mx-2 mt-3 w-[208px] border-t border-line pt-3">
+        <div className={`sidebar-copy mx-2 mt-3 border-t border-line pt-3 ${mobile ? "w-[calc(100%-16px)]" : "w-[208px]"}`}>
           <button
             type="button"
             onClick={onFooterClick ?? onNewChat}

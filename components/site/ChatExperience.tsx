@@ -147,7 +147,7 @@ export default function ChatExperience() {
               </DrawerClose>
             </DrawerHeader>
             <DrawerBody className="p-0">
-              <SidebarNav fill onPick={() => setSidebarOpen(false)} onNewChat={() => setSidebarOpen(false)} />
+              <SidebarNav fill mobile onPick={() => setSidebarOpen(false)} onNewChat={() => setSidebarOpen(false)} />
             </DrawerBody>
           </DrawerSideContent>
         </DrawerRoot>
