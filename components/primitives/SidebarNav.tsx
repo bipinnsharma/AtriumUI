@@ -98,6 +98,7 @@ function RailButton({
   count,
   hoverBg,
   hoverColor,
+  className = "",
   onClick,
 }: {
   icon: ReactNode;
@@ -106,6 +107,7 @@ function RailButton({
   count?: string;
   hoverBg?: string;
   hoverColor?: string;
+  className?: string;
   onClick?: () => void;
 }) {
   return (
@@ -115,7 +117,7 @@ function RailButton({
       onClick={onClick}
       className={`sidebar-row relative z-10 mx-2 flex h-8 items-center rounded-[8px] px-2 text-left
         transition-[width,background-color,color,transform] duration-150 active:scale-[0.98]
-        ${active ? "bg-hover-2 group-hover/glide:bg-transparent" : ""}`}
+        ${active ? "bg-hover-2 group-hover/glide:bg-transparent" : ""} ${className}`}
       onMouseEnter={(hoverBg || hoverColor) ? (e) => {
         const el = e.currentTarget as HTMLElement;
         if (hoverBg) el.style.backgroundColor = hoverBg;
@@ -373,8 +375,9 @@ export default function SidebarNav({
 
         <GlideGroup>
           <RailButton
-            icon={<span className="group"><NewChatIcon /></span>}
+            icon={<NewChatIcon />}
             label="New chat"
+            className="group"
             hoverBg="var(--color-new-chat-hover)"
             hoverColor="#FF4206"
             onClick={() => {
