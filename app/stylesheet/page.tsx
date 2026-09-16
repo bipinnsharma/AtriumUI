@@ -29,6 +29,11 @@ import FilterTable from "@/components/primitives/FilterTable";
 import InsightCards from "@/components/primitives/InsightCards";
 import CodeBlock from "@/components/primitives/CodeBlock";
 import SelectionActions from "@/components/primitives/SelectionActions";
+import VitalSignsMonitor from "@/components/primitives/VitalSignsMonitor";
+import LabResultPanel from "@/components/primitives/LabResultPanel";
+import MedicationCard from "@/components/primitives/MedicationCard";
+import ClinicalTimeline from "@/components/primitives/ClinicalTimeline";
+import ClinicalAlert from "@/components/primitives/ClinicalAlert";
 
 /* ── Design data ─────────────────────────────────────────── */
 
@@ -960,6 +965,88 @@ export default function StylesheetPage() {
             <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
               <div className="w-full max-w-120 [&>*]:mx-auto">
                 <SelectionActions />
+              </div>
+            </div>
+          </section>
+
+          {/* ── Medical Components (joemedo) ────────────── */}
+
+          {/* 29 VitalSignsMonitor */}
+          <section id="vital-signs" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 0ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">29</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Vital Signs Monitor</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Dense vitals row with sparklines, trend arrows, and reference range bands.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 240 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <VitalSignsMonitor />
+              </div>
+            </div>
+          </section>
+
+          {/* 30 LabResultPanel */}
+          <section id="lab-results" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 60ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">30</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Lab Result Panel</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Lab results with flag badges (H/L/Crit), reference ranges, and expandable trend bars.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <LabResultPanel />
+              </div>
+            </div>
+          </section>
+
+          {/* 31 MedicationCard */}
+          <section id="medication-card" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 120ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">31</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Medication Card</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Drug info with dosing schedule, adherence ring, and interaction warnings.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <MedicationCard />
+              </div>
+            </div>
+          </section>
+
+          {/* 32 ClinicalTimeline */}
+          <section id="clinical-timeline" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 180ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">32</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Clinical Timeline</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Vertical timeline with severity-coded dots and expandable event details.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <ClinicalTimeline />
+              </div>
+            </div>
+          </section>
+
+          {/* 33 ClinicalAlert */}
+          <section id="clinical-alert" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 240ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">33</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Clinical Alert</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Three-tier alert system — critical (blocks), warning (persistent), info (tray).</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <ClinicalAlert />
               </div>
             </div>
           </section>
