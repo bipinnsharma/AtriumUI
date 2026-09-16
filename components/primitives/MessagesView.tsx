@@ -383,7 +383,7 @@ export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick
         <div className="flex items-center gap-2">
           <span className="text-[13px] font-semibold text-ink">AI Assistant</span>
         </div>
-        <Button variant="quiet" size="xs" onClick={onClose}>
+        <Button variant="quiet" size="xs" onClick={onClose} className="w-7 px-0">
           <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
         </Button>
       </div>
@@ -404,7 +404,7 @@ export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick
               <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-accent-tint text-accent">
                 <span className="text-[11px]">✦</span>
               </div>
-              <div className="rounded-card rounded-tl-[4px] bg-inset px-4 py-2.5 shadow-hairline">
+               <div className="px-4 py-2.5">
                 <LoadingState label="Composing" variant="Dots" />
               </div>
             </div>
@@ -417,7 +417,7 @@ export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick
                 <span className="text-[11px]">✦</span>
               </div>
               <div className="min-w-0 max-w-[280px]">
-                <div className="bg-inset px-4 py-3 text-[13px] leading-relaxed text-ink shadow-hairline">
+                <div className="px-4 py-3 text-[13px] leading-relaxed text-ink">
                   <StreamingText text={`Hi ${conversation.name.split(" ")[0]},\n\nThank you for the follow-up. I've reviewed the lab results and agree that a joint consultation is the right approach.\n\nThursday at 2 PM works well for me. I'll have the patient's imaging and history ready for review.\n\nBest,\nDr. Höller`} />
                 </div>
                 <div className="mt-2 flex items-center gap-1.5">
