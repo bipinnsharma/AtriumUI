@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/atoms/Button";
 import { Chip } from "@/components/atoms/Chip";
 import { EntityChip, Monogram } from "@/components/atoms/EntityChip";
@@ -221,6 +221,25 @@ export default function StylesheetPage() {
   const [switchOn, setSwitchOn] = useState(false);
   const [thinkingVariant, setThinkingVariant] = useState<"Steps" | "Reasoning" | "Search" | "Coding">("Steps");
   const [copied, setCopied] = useState(false);
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    try {
+      setDark(localStorage.getItem("bui-theme") !== "light");
+    } catch {}
+  }, []);
+
+  const toggleTheme = () => {
+    const next = !dark;
+    setDark(next);
+    const root = document.documentElement;
+    root.classList.add("theme-switching");
+    root.classList.toggle("dark", next);
+    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("theme-switching")));
+    try {
+      localStorage.setItem("bui-theme", next ? "dark" : "light");
+    } catch {}
+  };
 
   const copyDesignMd = useCallback(() => {
     navigator.clipboard.writeText(DESIGN_MD);
@@ -236,15 +255,36 @@ export default function StylesheetPage() {
           <div className="flex items-center gap-2.5">
             <img src="/Scape.svg" alt="Atrium" className="size-5" />
           </div>
-          <nav className="flex gap-4 text-[12px] text-ink-2">
-            <a href="#palette" className="hover:text-ink transition-colors">Palette</a>
-            <a href="#type" className="hover:text-ink transition-colors">Type</a>
-            <a href="#spacing" className="hover:text-ink transition-colors">Spacing</a>
-            <a href="#radius" className="hover:text-ink transition-colors">Radius</a>
-            <a href="#elevation" className="hover:text-ink transition-colors">Elevation</a>
-            <a href="#motion" className="hover:text-ink transition-colors">Motion</a>
-            <a href="#components" className="hover:text-ink transition-colors">Components</a>
-          </nav>
+          <div className="flex items-center gap-3">
+            <nav className="flex gap-4 text-[12px] text-ink-2">
+              <a href="#palette" className="hover:text-ink transition-colors">Palette</a>
+              <a href="#type" className="hover:text-ink transition-colors">Type</a>
+              <a href="#spacing" className="hover:text-ink transition-colors">Spacing</a>
+              <a href="#radius" className="hover:text-ink transition-colors">Radius</a>
+              <a href="#elevation" className="hover:text-ink transition-colors">Elevation</a>
+              <a href="#motion" className="hover:text-ink transition-colors">Motion</a>
+              <a href="#components" className="hover:text-ink transition-colors">Components</a>
+            </nav>
+            <button
+              onClick={toggleTheme}
+              className="flex h-7 w-7 items-center justify-center rounded-control text-ink-2 transition-colors hover:bg-hover hover:text-ink"
+              aria-label="Toggle dark mode"
+            >
+              {dark ? (
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5"/>
+                  <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                  <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+              ) : (
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
       </header>
 

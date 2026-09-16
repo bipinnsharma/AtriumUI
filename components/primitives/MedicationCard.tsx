@@ -105,7 +105,7 @@ export default function MedicationCard() {
               className="flex w-full items-center gap-3 px-3.5 py-3 text-left transition-colors hover:bg-hover"
             >
               <ProgressRing progress={m.adherence} tone={m.adherence >= 0.9 ? "green" : m.adherence >= 0.7 ? "orange" : "red"} size={36}>
-                <span className="text-[9px] font-semibold">{Math.round(m.adherence * 100)}%</span>
+                <span className="text-[10px] font-semibold">{Math.round(m.adherence * 100)}%</span>
               </ProgressRing>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
