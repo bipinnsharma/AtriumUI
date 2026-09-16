@@ -15,6 +15,20 @@ import { ValuePill } from "@/components/atoms/ValuePill";
 import LoadingState from "@/components/primitives/LoadingState";
 import ThinkingState from "@/components/primitives/ThinkingState";
 import { NewChatIcon, HomeIcon, MailIcon, UserPlusIcon } from "@/components/primitives/Icons";
+import StreamingText from "@/components/primitives/StreamingText";
+import ApprovalCard from "@/components/primitives/ApprovalCard";
+import ToolChips from "@/components/primitives/ToolChips";
+import TaskRows from "@/components/primitives/TaskRows";
+import ChatComposer from "@/components/primitives/ChatComposer";
+import PromptBar from "@/components/primitives/PromptBar";
+import RecommendationCard from "@/components/primitives/RecommendationCard";
+import ContextCards from "@/components/primitives/ContextCards";
+import DiffTable from "@/components/primitives/DiffTable";
+import RecordsTable from "@/components/primitives/RecordsTable";
+import FilterTable from "@/components/primitives/FilterTable";
+import InsightCards from "@/components/primitives/InsightCards";
+import CodeBlock from "@/components/primitives/CodeBlock";
+import SelectionActions from "@/components/primitives/SelectionActions";
 
 /* ── Design data ─────────────────────────────────────────── */
 
@@ -397,197 +411,524 @@ export default function StylesheetPage() {
         </Section>
 
         {/* ── 8. Components ─────────────────────────────────── */}
-        <Section title="Components" id="components">
-          <div className="space-y-10">
+        <div className="pt-10">
+          <h2 className="mb-2 text-[20px] font-semibold text-ink">Components</h2>
+          <p className="mb-8 text-[13px] text-ink-3">Live rendered atoms and primitives from the library.</p>
 
-            {/* ── Atoms ────────────────────────────────────── */}
-            <div>
-              <h3 className="mb-4 text-[14px] font-semibold text-ink">Atoms</h3>
-              <div className="space-y-8">
+          {/* ── Atoms ────────────────────────────────────── */}
+          <h3 className="mb-6 text-[14px] font-semibold text-ink">Atoms</h3>
 
-                {/* Button */}
-                <div>
-                  <div className="mb-2 text-[12px] font-medium text-ink-2">Button</div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Button variant="primary">Primary</Button>
-                    <Button variant="secondary">Secondary</Button>
-                    <Button variant="ghost">Ghost</Button>
-                    <Button variant="accent">Accent</Button>
-                    <Button variant="success">Success</Button>
-                    <Button variant="quiet">Quiet</Button>
-                  </div>
-                  <div className="mt-2 flex flex-wrap items-center gap-2">
-                    <Button variant="secondary" size="xs">xs</Button>
-                    <Button variant="secondary" size="sm">sm</Button>
-                    <Button variant="secondary" size="md">md</Button>
-                  </div>
+          {/* 01 Button */}
+          <section id="button" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 0ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">01</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Button</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Pill-shaped button with 6 variants and 3 sizes.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 200 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto space-y-4">
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  <Button variant="primary">Primary</Button>
+                  <Button variant="secondary">Secondary</Button>
+                  <Button variant="ghost">Ghost</Button>
+                  <Button variant="accent">Accent</Button>
+                  <Button variant="success">Success</Button>
+                  <Button variant="quiet">Quiet</Button>
                 </div>
-
-                {/* Chip */}
-                <div>
-                  <div className="mb-2 text-[12px] font-medium text-ink-2">Chip</div>
-                  <div className="flex flex-wrap gap-2">
-                    <Chip>neutral</Chip>
-                    <Chip tone="accent">accent</Chip>
-                    <Chip tone="orange">orange</Chip>
-                  </div>
-                </div>
-
-                {/* EntityChip + Monogram */}
-                <div>
-                  <div className="mb-2 text-[12px] font-medium text-ink-2">EntityChip + Monogram</div>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <Monogram color="#6366f1">DR</Monogram>
-                    <EntityChip name="Dr. Rivera" color="#6366f1" />
-                    <EntityChip name="Dr. Höller" color="#10b981" monogram="DH" />
-                  </div>
-                </div>
-
-                {/* ProgressRing */}
-                <div>
-                  <div className="mb-2 text-[12px] font-medium text-ink-2">ProgressRing</div>
-                  <div className="flex flex-wrap items-center gap-4">
-                    <ProgressRing progress={0.25} tone="orange"><span className="text-[10px]">25%</span></ProgressRing>
-                    <ProgressRing progress={0.5} tone="accent"><span className="text-[10px]">50%</span></ProgressRing>
-                    <ProgressRing progress={0.75} tone="green"><span className="text-[10px]">75%</span></ProgressRing>
-                    <ProgressRing progress={0.9} tone="red"><span className="text-[10px]">90%</span></ProgressRing>
-                  </div>
-                </div>
-
-                {/* SegmentedControl */}
-                <div>
-                  <div className="mb-2 text-[12px] font-medium text-ink-2">SegmentedControl</div>
-                  <SegmentedControl
-                    options={["Overview", "Details", "History"] as const}
-                    value="Overview"
-                    onChange={() => {}}
-                  />
-                </div>
-
-                {/* Shimmer */}
-                <div>
-                  <div className="mb-2 text-[12px] font-medium text-ink-2">Shimmer</div>
-                  <Shimmer className="text-[14px] font-medium">Processing analysis...</Shimmer>
-                </div>
-
-                {/* StatusPill */}
-                <div>
-                  <div className="mb-2 text-[12px] font-medium text-ink-2">StatusPill</div>
-                  <div className="flex flex-wrap gap-2">
-                    <StatusPill tone="green">Completed</StatusPill>
-                    <StatusPill tone="orange">Pending</StatusPill>
-                    <StatusPill tone="red">Failed</StatusPill>
-                    <StatusPill tone="accent">Active</StatusPill>
-                    <StatusPill tone="neutral">Draft</StatusPill>
-                  </div>
-                </div>
-
-                {/* StreamText */}
-                <div>
-                  <div className="mb-2 text-[12px] font-medium text-ink-2">StreamText</div>
-                  <div className="rounded-card border border-line px-4 py-3 max-w-md">
-                    <StreamText
-                      text="The patient's lab results show improved kidney function. eGFR has increased from 42 to 58 mL/min."
-                      caret
-                    />
-                  </div>
-                </div>
-
-                {/* Switch */}
-                <div>
-                  <div className="mb-2 text-[12px] font-medium text-ink-2">Switch</div>
-                  <div className="flex items-center gap-4">
-                    <Switch checked={false} onChange={() => {}} label="Off" />
-                    <Switch checked onChange={() => {}} label="On" />
-                  </div>
-                </div>
-
-                {/* TextRow */}
-                <div>
-                  <div className="mb-2 text-[12px] font-medium text-ink-2">TextRow</div>
-                  <div className="max-w-sm rounded-card border border-line">
-                    <TextRow label="Medication" value="Lisinopril 10mg" />
-                    <TextRow label="Frequency" value="Once daily" />
-                    <TextRow label="Refill" value="30 tablets" meta="Auto-refill enabled" />
-                  </div>
-                </div>
-
-                {/* ValuePill */}
-                <div>
-                  <div className="mb-2 text-[12px] font-medium text-ink-2">ValuePill</div>
-                  <div className="flex flex-wrap gap-2">
-                    <ValuePill>10mg</ValuePill>
-                    <ValuePill tone="green">Normal</ValuePill>
-                    <ValuePill tone="orange">Elevated</ValuePill>
-                    <ValuePill tone="red">Critical</ValuePill>
-                    <ValuePill tone="accent">Primary</ValuePill>
-                  </div>
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  <Button variant="secondary" size="xs">xs</Button>
+                  <Button variant="secondary" size="sm">sm</Button>
+                  <Button variant="secondary" size="md">md</Button>
                 </div>
               </div>
             </div>
+          </section>
 
-            {/* ── Primitives ────────────────────────────────── */}
-            <div>
-              <h3 className="mb-4 text-[14px] font-semibold text-ink">Primitives</h3>
-              <div className="space-y-8">
-
-                {/* LoadingState */}
-                <div>
-                  <div className="mb-2 text-[12px] font-medium text-ink-2">LoadingState</div>
-                  <div className="flex flex-wrap gap-6">
-                    <LoadingState label="Analyzing" variant="Drive" />
-                    <LoadingState label="Composing" variant="Dots" />
-                    <LoadingState label="Syncing" variant="Orbit" />
-                  </div>
-                </div>
-
-                {/* ThinkingState */}
-                <div>
-                  <div className="mb-2 text-[12px] font-medium text-ink-2">ThinkingState</div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <ThinkingState variant="Steps" />
-                    <ThinkingState variant="Reasoning" />
-                    <ThinkingState variant="Search" />
-                    <ThinkingState variant="Coding" />
-                  </div>
-                </div>
-
-                {/* Icons */}
-                <div>
-                  <div className="mb-2 text-[12px] font-medium text-ink-2">Icons</div>
-                  <div className="flex items-center gap-6">
-                    <div className="group flex flex-col items-center gap-1">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-control bg-hover transition-colors group-hover:bg-accent-tint">
-                        <NewChatIcon />
-                      </div>
-                      <span className="text-[10px] text-ink-3">NewChat</span>
-                    </div>
-                    <div className="group flex flex-col items-center gap-1">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-control bg-hover transition-colors group-hover:bg-accent-tint">
-                        <HomeIcon />
-                      </div>
-                      <span className="text-[10px] text-ink-3">Home</span>
-                    </div>
-                    <div className="group flex flex-col items-center gap-1">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-control bg-hover transition-colors group-hover:bg-accent-tint">
-                        <MailIcon />
-                      </div>
-                      <span className="text-[10px] text-ink-3">Mail</span>
-                    </div>
-                    <div className="group flex flex-col items-center gap-1">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-control bg-hover transition-colors group-hover:bg-accent-tint">
-                        <UserPlusIcon />
-                      </div>
-                      <span className="text-[10px] text-ink-3">UserPlus</span>
-                    </div>
-                  </div>
-                </div>
-
+          {/* 02 Chip */}
+          <section id="chip" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 60ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">02</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Chip</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Monospace token chip for inline code values.</p>
               </div>
             </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 160 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto flex flex-wrap items-center justify-center gap-2">
+                <Chip>neutral</Chip>
+                <Chip tone="accent">accent</Chip>
+                <Chip tone="orange">orange</Chip>
+              </div>
+            </div>
+          </section>
 
-          </div>
-        </Section>
+          {/* 03 EntityChip */}
+          <section id="entity-chip" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 120ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">03</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">EntityChip</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Inline entity reference — monogram disc + name pill.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 160 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto flex flex-wrap items-center justify-center gap-3">
+                <Monogram color="#6366f1">DR</Monogram>
+                <EntityChip name="Dr. Rivera" color="#6366f1" />
+                <EntityChip name="Dr. Höller" color="#10b981" monogram="DH" />
+              </div>
+            </div>
+          </section>
+
+          {/* 04 ProgressRing */}
+          <section id="progress-ring" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 180ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">04</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">ProgressRing</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">SVG progress ring with center content.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 160 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto flex flex-wrap items-center justify-center gap-6">
+                <ProgressRing progress={0.25} tone="orange"><span className="text-[10px]">25%</span></ProgressRing>
+                <ProgressRing progress={0.5} tone="accent"><span className="text-[10px]">50%</span></ProgressRing>
+                <ProgressRing progress={0.75} tone="green"><span className="text-[10px]">75%</span></ProgressRing>
+                <ProgressRing progress={0.9} tone="red"><span className="text-[10px]">90%</span></ProgressRing>
+              </div>
+            </div>
+          </section>
+
+          {/* 05 SegmentedControl */}
+          <section id="segmented-control" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 240ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">05</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">SegmentedControl</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Equal-width segmented control with sliding thumb.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 160 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto flex justify-center">
+                <SegmentedControl options={["Overview", "Details", "History"] as const} value="Overview" onChange={() => {}} />
+              </div>
+            </div>
+          </section>
+
+          {/* 06 Shimmer */}
+          <section id="shimmer" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 300ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">06</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Shimmer</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Shimmering gradient text label for processing states.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 120 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto flex justify-center">
+                <Shimmer className="text-[14px] font-medium">Processing analysis...</Shimmer>
+              </div>
+            </div>
+          </section>
+
+          {/* 07 StatusPill */}
+          <section id="status-pill" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 360ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">07</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">StatusPill</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Status pill with optional leading color dot.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 160 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto flex flex-wrap items-center justify-center gap-2">
+                <StatusPill tone="green">Completed</StatusPill>
+                <StatusPill tone="orange">Pending</StatusPill>
+                <StatusPill tone="red">Failed</StatusPill>
+                <StatusPill tone="accent">Active</StatusPill>
+                <StatusPill tone="neutral">Draft</StatusPill>
+              </div>
+            </div>
+          </section>
+
+          {/* 08 StreamText */}
+          <section id="stream-text" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 420ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">08</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">StreamText</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Character-by-character streaming text reveal with blur edge and caret.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 200 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto max-w-md mx-auto rounded-card border border-line px-4 py-3">
+                <StreamText text="The patient's lab results show improved kidney function. eGFR has increased from 42 to 58 mL/min." caret />
+              </div>
+            </div>
+          </section>
+
+          {/* 09 Switch */}
+          <section id="switch" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 480ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">09</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Switch</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Toggle switch with animated knob.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 120 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto flex items-center justify-center gap-6">
+                <Switch checked={false} onChange={() => {}} label="Off" />
+                <Switch checked onChange={() => {}} label="On" />
+              </div>
+            </div>
+          </section>
+
+          {/* 10 TextRow */}
+          <section id="text-row" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 540ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">10</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">TextRow</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Label-left / value-right row for cards.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 200 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto max-w-sm mx-auto rounded-card border border-line">
+                <TextRow label="Medication" value="Lisinopril 10mg" />
+                <TextRow label="Frequency" value="Once daily" />
+                <TextRow label="Refill" value="30 tablets" meta="Auto-refill enabled" />
+              </div>
+            </div>
+          </section>
+
+          {/* 11 ValuePill */}
+          <section id="value-pill" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 600ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">11</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">ValuePill</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Inline value badge for plain values in prose.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 120 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto flex flex-wrap items-center justify-center gap-2">
+                <ValuePill>10mg</ValuePill>
+                <ValuePill tone="green">Normal</ValuePill>
+                <ValuePill tone="orange">Elevated</ValuePill>
+                <ValuePill tone="red">Critical</ValuePill>
+                <ValuePill tone="accent">Primary</ValuePill>
+              </div>
+            </div>
+          </section>
+
+          {/* ── Primitives ────────────────────────────────── */}
+          <h3 className="mt-10 mb-6 text-[14px] font-semibold text-ink">Primitives</h3>
+
+          {/* 12 LoadingState */}
+          <section id="loading-state" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 0ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">12</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Loading State</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Pixel-grid loader with shimmer and elapsed time.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 272 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto flex flex-wrap items-center justify-center gap-8">
+                <LoadingState label="Analyzing" variant="Drive" />
+                <LoadingState label="Composing" variant="Dots" />
+                <LoadingState label="Syncing" variant="Orbit" />
+              </div>
+            </div>
+          </section>
+
+          {/* 13 ThinkingState */}
+          <section id="thinking-state" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 60ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">13</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Thinking State</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Expandable agent trace with four variants.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto grid gap-4 sm:grid-cols-2">
+                <ThinkingState variant="Steps" />
+                <ThinkingState variant="Reasoning" />
+                <ThinkingState variant="Search" />
+                <ThinkingState variant="Coding" />
+              </div>
+            </div>
+          </section>
+
+          {/* 14 Icons */}
+          <section id="icons" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 120ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">14</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Icons</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Custom SVG icons with hover animations.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 200 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto flex items-center justify-center gap-8">
+                <div className="group flex flex-col items-center gap-2">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-hover transition-colors group-hover:bg-accent-tint">
+                    <NewChatIcon />
+                  </div>
+                  <span className="text-[10px] text-ink-3">NewChat</span>
+                </div>
+                <div className="group flex flex-col items-center gap-2">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-hover transition-colors group-hover:bg-accent-tint">
+                    <HomeIcon />
+                  </div>
+                  <span className="text-[10px] text-ink-3">Home</span>
+                </div>
+                <div className="group flex flex-col items-center gap-2">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-hover transition-colors group-hover:bg-accent-tint">
+                    <MailIcon />
+                  </div>
+                  <span className="text-[10px] text-ink-3">Mail</span>
+                </div>
+                <div className="group flex flex-col items-center gap-2">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-hover transition-colors group-hover:bg-accent-tint">
+                    <UserPlusIcon />
+                  </div>
+                  <span className="text-[10px] text-ink-3">UserPlus</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 15 StreamingText */}
+          <section id="streaming-text" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 180ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">15</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Streaming Text</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Streamed answer with inline sources, actions, and follow-ups.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <StreamingText />
+              </div>
+            </div>
+          </section>
+
+          {/* 16 ApprovalCard */}
+          <section id="approval-card" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 240ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">16</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Approval Card</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Human-in-the-loop questions the agent asks before acting.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto max-w-lg mx-auto">
+                <ApprovalCard />
+              </div>
+            </div>
+          </section>
+
+          {/* 17 ToolChips */}
+          <section id="tool-chips" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 300ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">17</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Tool Chips</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Code edits and tool calls as compact chips.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <ToolChips />
+              </div>
+            </div>
+          </section>
+
+          {/* 18 TaskRows */}
+          <section id="task-rows" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 360ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">18</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Task Rows</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Live agent task status — running, failed, completed.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <TaskRows />
+              </div>
+            </div>
+          </section>
+
+          {/* 19 ChatComposer */}
+          <section id="chat-composer" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 420ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">19</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Chat</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Tabbed chat panel with reasoning replies and a composer.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 500 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <ChatComposer />
+              </div>
+            </div>
+          </section>
+
+          {/* 20 PromptBar */}
+          <section id="prompt-bar" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 480ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">20</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Prompt Bar</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Composer with @ sources, / commands, model picker, and dictation.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <PromptBar />
+              </div>
+            </div>
+          </section>
+
+          {/* 21 RecommendationCard */}
+          <section id="recommendation-card" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 540ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">21</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Recommendation Card</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Agent suggestion with a confidence meter and actions.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto max-w-lg mx-auto">
+                <RecommendationCard />
+              </div>
+            </div>
+          </section>
+
+          {/* 22 ContextCards */}
+          <section id="context-cards" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 600ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">22</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Context Cards</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Retrieved knowledge chunks with their sources.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <ContextCards />
+              </div>
+            </div>
+          </section>
+
+          {/* 23 DiffTable */}
+          <section id="diff-table" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 0ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">23</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Diff Table</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">AI-proposed edits sweeping through tabular data.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <DiffTable />
+              </div>
+            </div>
+          </section>
+
+          {/* 24 RecordsTable */}
+          <section id="records-table" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 60ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">24</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Records Table</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">CRM-style grid with tags, sorting, and relationship status.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 500 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <RecordsTable />
+              </div>
+            </div>
+          </section>
+
+          {/* 25 FilterTable */}
+          <section id="filter-table" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 120ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">25</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Filter Table</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Status chips that reorganize live data.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <FilterTable />
+              </div>
+            </div>
+          </section>
+
+          {/* 26 InsightCards */}
+          <section id="insight-cards" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 180ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">26</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Insight Cards</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Paged agent insights with scrub-ready live charts.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 450 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <InsightCards />
+              </div>
+            </div>
+          </section>
+
+          {/* 27 CodeBlock */}
+          <section id="code-block" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 240ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">27</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Code Block</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">A line-numbered listing and a unified diff.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto grid gap-4 sm:grid-cols-2">
+                <CodeBlock variant="Code" />
+                <CodeBlock variant="Diff" />
+              </div>
+            </div>
+          </section>
+
+          {/* 28 SelectionActions */}
+          <section id="selection-actions" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 300ms both" }}>
+            <div className="mb-3 flex items-start gap-2 sm:items-baseline">
+              <span className="mt-0.5 font-mono text-[11px] text-ink-3 tabular-nums sm:mt-0">28</span>
+              <div className="min-w-0 sm:flex sm:items-baseline sm:gap-2">
+                <h3 className="whitespace-nowrap text-[13px] font-semibold text-ink">Selection Actions</h3>
+                <p className="mt-0.5 text-[12.5px] text-ink-3 text-pretty sm:mt-0 sm:truncate">Highlight a passage and hand it to the agent to rewrite.</p>
+              </div>
+            </div>
+            <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
+              <div className="w-full max-w-120 [&>*]:mx-auto">
+                <SelectionActions />
+              </div>
+            </div>
+          </section>
+
+        </div>
 
       </main>
 
