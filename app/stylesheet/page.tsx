@@ -714,25 +714,25 @@ export default function StylesheetPage() {
             <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 200 }}>
               <div className="w-full max-w-120 [&>*]:mx-auto flex items-center justify-center gap-8">
                 <div className="group flex flex-col items-center gap-2">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white transition-colors group-hover:bg-accent-tint">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white shadow-hairline transition-shadow group-hover:shadow-card">
                     <NewChatIcon />
                   </div>
                   <span className="text-[10px] text-ink-3">NewChat</span>
                 </div>
                 <div className="group flex flex-col items-center gap-2">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white transition-colors group-hover:bg-accent-tint">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white shadow-hairline transition-shadow group-hover:shadow-card">
                     <HomeIcon />
                   </div>
                   <span className="text-[10px] text-ink-3">Home</span>
                 </div>
                 <div className="group flex flex-col items-center gap-2">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white transition-colors group-hover:bg-accent-tint">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white shadow-hairline transition-shadow group-hover:shadow-card">
                     <MailIcon />
                   </div>
                   <span className="text-[10px] text-ink-3">Mail</span>
                 </div>
                 <div className="group flex flex-col items-center gap-2">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white transition-colors group-hover:bg-accent-tint">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white shadow-hairline transition-shadow group-hover:shadow-card">
                     <UserPlusIcon />
                   </div>
                   <span className="text-[10px] text-ink-3">UserPlus</span>
