@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Button } from "@/components/atoms/Button";
 import { Chip } from "@/components/atoms/Chip";
 import { EntityChip, Monogram } from "@/components/atoms/EntityChip";
@@ -211,13 +211,27 @@ function Swatch({ name, cssVar, light, dark }: { name: string; cssVar: string; l
 
 export default function StylesheetPage() {
   const [motionTrack, setMotionTrack] = useState(0);
+  const [buttonSize, setButtonSize] = useState<"xs" | "sm" | "md">("md");
+  const [segmentedValue, setSegmentedValue] = useState("Overview");
+  const [switchOn, setSwitchOn] = useState(false);
+  const [thinkingVariant, setThinkingVariant] = useState<"Steps" | "Reasoning" | "Search" | "Coding">("Steps");
+  const [copied, setCopied] = useState(false);
+
+  const copyDesignMd = useCallback(() => {
+    navigator.clipboard.writeText(DESIGN_MD);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }, []);
 
   return (
     <div className="min-h-screen bg-page">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-line bg-surface/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
-          <h1 className="text-[15px] font-semibold text-ink">Atrium UI — Stylesheet</h1>
+          <div className="flex items-center gap-2.5">
+            <img src="/Scape.svg" alt="Atrium" className="size-5" />
+            <h1 className="text-[15px] font-semibold text-ink">Atrium UI — Stylesheet</h1>
+          </div>
           <nav className="flex gap-4 text-[12px] text-ink-2">
             <a href="#palette" className="hover:text-ink transition-colors">Palette</a>
             <a href="#type" className="hover:text-ink transition-colors">Type</a>
@@ -235,6 +249,25 @@ export default function StylesheetPage() {
         {/* ── 1. Design System (design.md) ──────────────────── */}
         <Section title="Design System" id="design-system">
           <div className="rounded-card border border-line bg-surface p-6">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[11px] font-mono text-ink-3">design.md</span>
+              <button
+                onClick={copyDesignMd}
+                className="flex items-center gap-1.5 rounded-control px-2.5 py-1 text-[11px] font-medium text-ink-2 transition-colors hover:bg-hover hover:text-ink"
+              >
+                {copied ? (
+                  <>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    Copied
+                  </>
+                ) : (
+                  <>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    Copy
+                  </>
+                )}
+              </button>
+            </div>
             <pre className="max-h-[500px] overflow-auto text-[12px] leading-relaxed text-ink font-mono whitespace-pre-wrap scroll-hover">
               {DESIGN_MD}
             </pre>
@@ -415,9 +448,6 @@ export default function StylesheetPage() {
           <h2 className="mb-2 text-[20px] font-semibold text-ink">Components</h2>
           <p className="mb-8 text-[13px] text-ink-3">Live rendered atoms and primitives from the library.</p>
 
-          {/* ── Atoms ────────────────────────────────────── */}
-          <h3 className="mb-6 text-[14px] font-semibold text-ink">Atoms</h3>
-
           {/* 01 Button */}
           <section id="button" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 0ms both" }}>
             <div className="mb-3 flex items-start gap-2 sm:items-baseline">
@@ -437,10 +467,13 @@ export default function StylesheetPage() {
                   <Button variant="success">Success</Button>
                   <Button variant="quiet">Quiet</Button>
                 </div>
-                <div className="flex flex-wrap items-center justify-center gap-2">
-                  <Button variant="secondary" size="xs">xs</Button>
-                  <Button variant="secondary" size="sm">sm</Button>
-                  <Button variant="secondary" size="md">md</Button>
+                <div className="flex items-center justify-center gap-3">
+                  <SegmentedControl
+                    options={["xs", "sm", "md"] as const}
+                    value={buttonSize}
+                    onChange={(v) => setButtonSize(v)}
+                  />
+                  <Button variant="secondary" size={buttonSize}>{buttonSize}</Button>
                 </div>
               </div>
             </div>
@@ -493,10 +526,10 @@ export default function StylesheetPage() {
             </div>
             <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 160 }}>
               <div className="w-full max-w-120 [&>*]:mx-auto flex flex-wrap items-center justify-center gap-6">
-                <ProgressRing progress={0.25} tone="orange"><span className="text-[10px]">25%</span></ProgressRing>
-                <ProgressRing progress={0.5} tone="accent"><span className="text-[10px]">50%</span></ProgressRing>
-                <ProgressRing progress={0.75} tone="green"><span className="text-[10px]">75%</span></ProgressRing>
-                <ProgressRing progress={0.9} tone="red"><span className="text-[10px]">90%</span></ProgressRing>
+                <ProgressRing progress={0.25} tone="orange" size={40}><span className="text-[11px]">25%</span></ProgressRing>
+                <ProgressRing progress={0.5} tone="accent" size={40}><span className="text-[11px]">50%</span></ProgressRing>
+                <ProgressRing progress={0.75} tone="green" size={40}><span className="text-[11px]">75%</span></ProgressRing>
+                <ProgressRing progress={0.9} tone="red" size={40}><span className="text-[11px]">90%</span></ProgressRing>
               </div>
             </div>
           </section>
@@ -512,7 +545,7 @@ export default function StylesheetPage() {
             </div>
             <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 160 }}>
               <div className="w-full max-w-120 [&>*]:mx-auto flex justify-center">
-                <SegmentedControl options={["Overview", "Details", "History"] as const} value="Overview" onChange={() => {}} />
+                <SegmentedControl options={["Overview", "Details", "History"] as const} value={segmentedValue} onChange={setSegmentedValue} />
               </div>
             </div>
           </section>
@@ -580,8 +613,10 @@ export default function StylesheetPage() {
             </div>
             <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 120 }}>
               <div className="w-full max-w-120 [&>*]:mx-auto flex items-center justify-center gap-6">
-                <Switch checked={false} onChange={() => {}} label="Off" />
-                <Switch checked onChange={() => {}} label="On" />
+                <div className="flex items-center gap-3">
+                  <Switch checked={switchOn} onChange={setSwitchOn} label="Toggle" />
+                  <span className="text-[12px] font-medium text-ink-2 tabular-nums">{switchOn ? "On" : "Off"}</span>
+                </div>
               </div>
             </div>
           </section>
@@ -624,9 +659,6 @@ export default function StylesheetPage() {
             </div>
           </section>
 
-          {/* ── Primitives ────────────────────────────────── */}
-          <h3 className="mt-10 mb-6 text-[14px] font-semibold text-ink">Primitives</h3>
-
           {/* 12 LoadingState */}
           <section id="loading-state" className="primitive-showcase group flex w-full scroll-mt-8 flex-col border-b border-dashed border-line px-5 py-8 sm:px-8 sm:py-10" style={{ animation: "fade-up 600ms cubic-bezier(0.23,1,0.32,1) 0ms both" }}>
             <div className="mb-3 flex items-start gap-2 sm:items-baseline">
@@ -655,11 +687,17 @@ export default function StylesheetPage() {
               </div>
             </div>
             <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 400 }}>
-              <div className="w-full max-w-120 [&>*]:mx-auto grid gap-4 sm:grid-cols-2">
-                <ThinkingState variant="Steps" />
-                <ThinkingState variant="Reasoning" />
-                <ThinkingState variant="Search" />
-                <ThinkingState variant="Coding" />
+              <div className="w-full max-w-120 [&>*]:mx-auto space-y-4">
+                <div className="flex justify-center">
+                  <SegmentedControl
+                    options={["Steps", "Reasoning", "Search", "Coding"] as const}
+                    value={thinkingVariant}
+                    onChange={(v) => setThinkingVariant(v)}
+                  />
+                </div>
+                <div className="flex justify-center">
+                  <ThinkingState key={thinkingVariant} variant={thinkingVariant} />
+                </div>
               </div>
             </div>
           </section>
@@ -676,25 +714,25 @@ export default function StylesheetPage() {
             <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 200 }}>
               <div className="w-full max-w-120 [&>*]:mx-auto flex items-center justify-center gap-8">
                 <div className="group flex flex-col items-center gap-2">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-hover transition-colors group-hover:bg-accent-tint">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white transition-colors group-hover:bg-accent-tint">
                     <NewChatIcon />
                   </div>
                   <span className="text-[10px] text-ink-3">NewChat</span>
                 </div>
                 <div className="group flex flex-col items-center gap-2">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-hover transition-colors group-hover:bg-accent-tint">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white transition-colors group-hover:bg-accent-tint">
                     <HomeIcon />
                   </div>
                   <span className="text-[10px] text-ink-3">Home</span>
                 </div>
                 <div className="group flex flex-col items-center gap-2">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-hover transition-colors group-hover:bg-accent-tint">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white transition-colors group-hover:bg-accent-tint">
                     <MailIcon />
                   </div>
                   <span className="text-[10px] text-ink-3">Mail</span>
                 </div>
                 <div className="group flex flex-col items-center gap-2">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-hover transition-colors group-hover:bg-accent-tint">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white transition-colors group-hover:bg-accent-tint">
                     <UserPlusIcon />
                   </div>
                   <span className="text-[10px] text-ink-3">UserPlus</span>
