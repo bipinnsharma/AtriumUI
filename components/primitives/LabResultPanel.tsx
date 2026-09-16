@@ -28,7 +28,6 @@ const RESULTS: LabResult[] = [
   { test: "Creatinine", value: 1.1, unit: "mg/dL", refLow: 0.6, refHigh: 1.2, flag: "normal" },
   { test: "Na⁺", value: 140, unit: "mEq/L", refLow: 136, refHigh: 145, flag: "normal" },
   { test: "K⁺", value: 5.4, unit: "mEq/L", refLow: 3.5, refHigh: 5.0, flag: "high" },
-  { test: "Platelets", value: 138, unit: "K/µL", refLow: 150, refHigh: 400, flag: "low", trend: [198, 176, 162, 148, 138] },
 ];
 
 const FLAG_STYLES: Record<string, { badge: string; row: string; symbol: string }> = {
