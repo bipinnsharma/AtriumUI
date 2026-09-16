@@ -452,21 +452,21 @@ function ConversationDetail({ conversation, onGenerateDraft, onBack }: {
       {/* Toolbar */}
       <div className="flex items-center justify-between border-b border-line px-4 py-2">
         <div className="flex items-center gap-0.5">
-          <Button variant="quiet" size="xs" onClick={onBack} className="sm:hidden mr-1">
+          <Button variant="quiet" size="xs" onClick={onBack} className="sm:hidden mr-1 w-7 px-0">
             <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
           </Button>
-          <Button variant="quiet" size="xs" title="Archive"><ArchiveIcon size={16} /></Button>
-          <Button variant="quiet" size="xs" title="Move to junk"><ArchiveXIcon size={16} /></Button>
-          <Button variant="quiet" size="xs" title="Delete"><TrashIcon size={16} /></Button>
+          <Button variant="quiet" size="xs" title="Archive" className="w-7 px-0"><ArchiveIcon size={16} /></Button>
+          <Button variant="quiet" size="xs" title="Move to junk" className="w-7 px-0"><ArchiveXIcon size={16} /></Button>
+          <Button variant="quiet" size="xs" title="Delete" className="w-7 px-0"><TrashIcon size={16} /></Button>
           <div className="mx-1 h-6 w-px shrink-0 bg-line" />
-          <Button variant="quiet" size="xs" title="Snooze"><ClockIcon size={16} /></Button>
+          <Button variant="quiet" size="xs" title="Snooze" className="w-7 px-0"><ClockIcon size={16} /></Button>
         </div>
         <div className="flex items-center gap-0.5">
-          <Button variant="quiet" size="xs" title="Reply"><ReplyIcon size={16} /></Button>
-          <Button variant="quiet" size="xs" title="Reply all"><ReplyAllIcon size={16} /></Button>
-          <Button variant="quiet" size="xs" title="Forward"><ForwardIcon size={16} /></Button>
+          <Button variant="quiet" size="xs" title="Reply" className="w-7 px-0"><ReplyIcon size={16} /></Button>
+          <Button variant="quiet" size="xs" title="Reply all" className="w-7 px-0"><ReplyAllIcon size={16} /></Button>
+          <Button variant="quiet" size="xs" title="Forward" className="w-7 px-0"><ForwardIcon size={16} /></Button>
           <div className="mx-1 h-6 w-px shrink-0 bg-line" />
-          <Button variant="quiet" size="xs" title="More"><MoreIcon size={16} /></Button>
+          <Button variant="quiet" size="xs" title="More" className="w-7 px-0"><MoreIcon size={16} /></Button>
         </div>
       </div>
 
