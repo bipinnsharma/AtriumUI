@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, useRef, Fragment } from "react";
 import { Button } from "@/components/atoms/Button";
 import PromptBar from "@/components/primitives/PromptBar";
 import LoadingState from "@/components/primitives/LoadingState";
@@ -336,9 +336,11 @@ function ConversationRow({
   );
 }
 
-function StreamingText({ text }: { text: string }) {
+function StreamingText({ text, onDone }: { text: string; onDone?: () => void }) {
   const [displayed, setDisplayed] = useState("");
   const [done, setDone] = useState(false);
+  const onDoneRef = useRef(onDone);
+  onDoneRef.current = onDone;
 
   useEffect(() => {
     let i = 0;
@@ -350,6 +352,7 @@ function StreamingText({ text }: { text: string }) {
       if (i >= text.length) {
         clearInterval(interval);
         setDone(true);
+        onDoneRef.current?.();
       }
     }, 12);
     return () => clearInterval(interval);
@@ -370,6 +373,7 @@ function StreamingText({ text }: { text: string }) {
 
 export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick<Conversation, "id" | "name">; onClose: () => void }) {
   const [showTyping, setShowTyping] = useState(true);
+  const [streamDone, setStreamDone] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowTyping(false), 2000);
@@ -418,12 +422,14 @@ export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick
               </div>
               <div className="min-w-0 max-w-[280px]">
                 <div className="px-1 py-1 text-[13px] leading-relaxed text-ink">
-                  <StreamingText text={`Hi ${conversation.name.split(" ")[0]},\n\nThank you for the follow-up. I've reviewed the lab results and agree that a joint consultation is the right approach.\n\nThursday at 2 PM works well for me. I'll have the patient's imaging and history ready for review.\n\nBest,\nDr. Höller`} />
+                  <StreamingText text={`Hi ${conversation.name.split(" ")[0]},\n\nThank you for the follow-up. I've reviewed the lab results and agree that a joint consultation is the right approach.\n\nThursday at 2 PM works well for me. I'll have the patient's imaging and history ready for review.\n\nBest,\nDr. Höller`} onDone={() => setStreamDone(true)} />
                 </div>
-                <div className="mt-2 flex items-center gap-1.5">
-                  <Button variant="primary" size="xs">Use this draft</Button>
-                  <Button variant="secondary" size="xs">Regenerate</Button>
-                </div>
+                {streamDone && (
+                  <div className="mt-2 flex items-center gap-1.5" style={{ animation: "fade-in 300ms ease both" }}>
+                    <Button variant="primary" size="xs">Use this draft</Button>
+                    <Button variant="secondary" size="xs">Regenerate</Button>
+                  </div>
+                )}
               </div>
             </div>
           )}
