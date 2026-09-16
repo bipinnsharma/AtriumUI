@@ -230,7 +230,6 @@ export default function StylesheetPage() {
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
           <div className="flex items-center gap-2.5">
             <img src="/Scape.svg" alt="Atrium" className="size-5" />
-            <h1 className="text-[15px] font-semibold text-ink">Atrium UI — Stylesheet</h1>
           </div>
           <nav className="flex gap-4 text-[12px] text-ink-2">
             <a href="#palette" className="hover:text-ink transition-colors">Palette</a>
@@ -460,20 +459,19 @@ export default function StylesheetPage() {
             <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 200 }}>
               <div className="w-full max-w-120 [&>*]:mx-auto space-y-4">
                 <div className="flex flex-wrap items-center justify-center gap-2">
-                  <Button variant="primary">Primary</Button>
-                  <Button variant="secondary">Secondary</Button>
-                  <Button variant="ghost">Ghost</Button>
-                  <Button variant="accent">Accent</Button>
-                  <Button variant="success">Success</Button>
-                  <Button variant="quiet">Quiet</Button>
+                  <Button variant="primary" size={buttonSize}>Primary</Button>
+                  <Button variant="secondary" size={buttonSize}>Secondary</Button>
+                  <Button variant="ghost" size={buttonSize}>Ghost</Button>
+                  <Button variant="accent" size={buttonSize}>Accent</Button>
+                  <Button variant="success" size={buttonSize}>Success</Button>
+                  <Button variant="quiet" size={buttonSize}>Quiet</Button>
                 </div>
-                <div className="flex items-center justify-center gap-3">
+                <div className="flex justify-center">
                   <SegmentedControl
                     options={["xs", "sm", "md"] as const}
                     value={buttonSize}
                     onChange={(v) => setButtonSize(v)}
                   />
-                  <Button variant="secondary" size={buttonSize}>{buttonSize}</Button>
                 </div>
               </div>
             </div>
