@@ -46,31 +46,34 @@ const ALERTS: Alert[] = [
   },
 ];
 
-const TIER_STYLES: Record<string, { bg: string; border: string; icon: string; badge: string }> = {
+const TIER_STYLES: Record<string, { bg: string; border: string; iconStroke: string; badge: string; badgeText: string }> = {
   critical: {
     bg: "bg-red-tint/40",
     border: "border-red/30",
-    icon: "text-red",
-    badge: "bg-red text-white",
+    iconStroke: "var(--red)",
+    badge: "bg-red",
+    badgeText: "text-white",
   },
   warning: {
     bg: "bg-orange-tint/40",
     border: "border-orange/30",
-    icon: "text-orange",
-    badge: "bg-orange text-white",
+    iconStroke: "var(--orange)",
+    badge: "bg-orange",
+    badgeText: "text-white",
   },
   info: {
     bg: "bg-accent-tint/40",
     border: "border-accent/20",
-    icon: "text-accent",
-    badge: "bg-accent/20 text-accent",
+    iconStroke: "var(--accent)",
+    badge: "bg-accent/20",
+    badgeText: "text-accent",
   },
 };
 
-function AlertIcon({ tier }: { tier: string }) {
+function AlertIcon({ tier, stroke }: { tier: string; stroke: string }) {
   if (tier === "critical") {
     return (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="shrink-0">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={stroke} strokeWidth="2" strokeLinecap="round" className="shrink-0">
         <circle cx="12" cy="12" r="10" />
         <line x1="12" y1="8" x2="12" y2="12" />
         <line x1="12" y1="16" x2="12.01" y2="16" />
@@ -79,13 +82,13 @@ function AlertIcon({ tier }: { tier: string }) {
   }
   if (tier === "warning") {
     return (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="shrink-0">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={stroke} strokeWidth="2" strokeLinecap="round" className="shrink-0">
         <path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
       </svg>
     );
   }
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="shrink-0">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={stroke} strokeWidth="2" strokeLinecap="round" className="shrink-0">
       <circle cx="12" cy="12" r="10" />
       <line x1="12" y1="16" x2="12" y2="12" />
       <line x1="12" y1="8" x2="12.01" y2="8" />
@@ -108,29 +111,33 @@ export default function ClinicalAlert() {
           <div
             key={a.id}
             className={`rounded-card border ${s.bg} ${s.border} overflow-hidden`}
-            style={{ animation: "fade-up 300ms cubic-bezier(0.23,1,0.32,1) both" }}
+            style={{ animation: "fade-up 300ms var(--ease-out-strong) both" }}
           >
-            <div className="flex items-start gap-2.5 px-3.5 py-3">
-              <div className={`mt-0.5 ${s.icon}`}>
-                <AlertIcon tier={a.tier} />
+            <div className="flex items-start gap-2.5 py-2 px-3.5">
+              <div className="mt-0.5">
+                <AlertIcon tier={a.tier} stroke={s.iconStroke} />
               </div>
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-[12px] font-semibold text-ink">{a.title}</span>
-                  <span className={`inline-flex h-4 items-center rounded-full px-1.5 text-[9px] font-bold uppercase ${s.badge}`}>
-                    {a.tier}
-                  </span>
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base font-medium text-ink">{a.title}</span>
+                    <span className={`inline-flex h-4 items-center rounded-full px-1.5 text-[9px] font-bold uppercase ${s.badge} ${s.badgeText}`}>
+                      {a.tier}
+                    </span>
+                  </div>
+                  {(a.source || a.timestamp) && (
+                    <div className="flex items-center gap-1 shrink-0">
+                      {a.source && <span className="text-xs font-mono text-ink-3">{a.source}</span>}
+                      {a.timestamp && <span className="text-xs font-mono text-ink-3">· {a.timestamp}</span>}
+                    </div>
+                  )}
                 </div>
-                <p className="mt-0.5 text-[11px] leading-relaxed text-ink-2">{a.message}</p>
-                <div className="mt-1.5 flex items-center gap-2 text-[9px] text-ink-3">
-                  {a.source && <span>{a.source}</span>}
-                  {a.timestamp && <span>· {a.timestamp}</span>}
-                </div>
+                <p className="mt-0.5 text-sm leading-[140%] text-ink-2">{a.message}</p>
               </div>
             </div>
             {a.tier === "critical" && !isAcked && (
-              <div className="border-t border-red/20 bg-surface/50 px-3.5 py-2.5 flex items-center justify-between">
-                <span className="text-[10px] text-ink-3">Acknowledgment required</span>
+              <div className="flex items-center justify-between pb-2 px-3.5">
+                <span className="text-xs text-ink-3">Acknowledgment required</span>
                 <div className="flex gap-2">
                   <Button
                     variant="ghost"
@@ -153,7 +160,7 @@ export default function ClinicalAlert() {
               </div>
             )}
             {a.tier !== "critical" && (
-              <div className="border-t border-line/50 bg-surface/50 px-3.5 py-2 flex justify-end">
+              <div className="flex justify-end pb-2 px-3.5">
                 <Button
                   variant="ghost"
                   size="xs"
@@ -168,7 +175,7 @@ export default function ClinicalAlert() {
       })}
       {visible.length === 0 && (
         <div className="rounded-card border border-line bg-surface px-4 py-6 text-center">
-          <span className="text-[12px] text-ink-3">No active alerts</span>
+          <span className="text-md text-ink-3">No active alerts</span>
         </div>
       )}
     </div>

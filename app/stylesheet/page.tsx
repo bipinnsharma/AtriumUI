@@ -448,7 +448,7 @@ export default function StylesheetPage() {
                       <div className="text-[11px] font-medium text-ink">{e.name}</div>
                       <div className="text-[10px] font-mono text-ink-3">{e.usage}</div>
                     </div>
-                    <div className="relative h-2 flex-1 rounded-full bg-line-soft">
+                    <div className="relative h-2 flex-1 rounded-full bg-surface">
                       <div
                         className="absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full bg-accent shadow-sm"
                         style={{
@@ -658,7 +658,7 @@ export default function StylesheetPage() {
               <div className="w-full max-w-120 [&>*]:mx-auto flex items-center justify-center gap-6">
                 <div className="flex items-center gap-3">
                   <Switch checked={switchOn} onChange={setSwitchOn} label="Toggle" />
-                  <span className="text-[12px] font-medium text-ink-2 tabular-nums">{switchOn ? "On" : "Off"}</span>
+
                 </div>
               </div>
             </div>
@@ -757,25 +757,25 @@ export default function StylesheetPage() {
             <div className="primitive-demo-surface relative flex items-center justify-center overflow-hidden rounded-window bg-canvas p-3 shadow-hairline" style={{ minHeight: 200 }}>
               <div className="w-full max-w-120 [&>*]:mx-auto flex items-center justify-center gap-8">
                 <div className="group flex flex-col items-center gap-2">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white shadow-hairline transition-shadow group-hover:shadow-card">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-surface shadow-hairline transition-shadow group-hover:shadow-card">
                     <NewChatIcon />
                   </div>
                   <span className="text-[10px] text-ink-3">NewChat</span>
                 </div>
                 <div className="group flex flex-col items-center gap-2">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white shadow-hairline transition-shadow group-hover:shadow-card">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-surface shadow-hairline transition-shadow group-hover:shadow-card">
                     <HomeIcon />
                   </div>
                   <span className="text-[10px] text-ink-3">Home</span>
                 </div>
                 <div className="group flex flex-col items-center gap-2">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white shadow-hairline transition-shadow group-hover:shadow-card">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-surface shadow-hairline transition-shadow group-hover:shadow-card">
                     <MailIcon />
                   </div>
                   <span className="text-[10px] text-ink-3">Mail</span>
                 </div>
                 <div className="group flex flex-col items-center gap-2">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-white shadow-hairline transition-shadow group-hover:shadow-card">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-control bg-surface shadow-hairline transition-shadow group-hover:shadow-card">
                     <UserPlusIcon />
                   </div>
                   <span className="text-[10px] text-ink-3">UserPlus</span>

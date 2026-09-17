@@ -17,9 +17,9 @@ export type FilterTableLabels = {
 
 const FILTERS: { key: "all" | Status; label: string; dot?: string; count: number }[] = [
   { key: "all", label: "All", count: 5 },
-  { key: "todo", label: "To do", dot: "#f09a2f", count: 2 },
-  { key: "progress", label: "In Progress", dot: "#16a6c7", count: 2 },
-  { key: "done", label: "Completed", dot: "#25a878", count: 1 },
+  { key: "todo", label: "To do", dot: "var(--orange)", count: 2 },
+  { key: "progress", label: "In Progress", dot: "var(--accent)", count: 2 },
+  { key: "done", label: "Completed", dot: "var(--green)", count: 1 },
 ];
 
 const ROWS: TableRow[] = [

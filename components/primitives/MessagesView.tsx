@@ -120,7 +120,7 @@ function FilterIcon({ size = 16 }: { size?: number }) {
 
 function ArchiveIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
       <rect width="20" height="5" x="2" y="3" rx="1" />
       <path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" />
       <path d="M10 12h4" />
@@ -130,7 +130,7 @@ function ArchiveIcon({ size = 16 }: { size?: number }) {
 
 function ArchiveXIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
       <rect width="20" height="5" x="2" y="3" rx="1" />
       <path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" />
       <path d="m9.5 17 5-5" />
@@ -141,7 +141,7 @@ function ArchiveXIcon({ size = 16 }: { size?: number }) {
 
 function TrashIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 6h18" />
       <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
       <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
@@ -153,7 +153,7 @@ function TrashIcon({ size = 16 }: { size?: number }) {
 
 function ClockIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10" />
       <polyline points="12 6 12 12 16 14" />
     </svg>
@@ -162,7 +162,7 @@ function ClockIcon({ size = 16 }: { size?: number }) {
 
 function ReplyIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="9 17 4 12 9 7" />
       <path d="M20 18v-2a4 4 0 0 0-4-4H4" />
     </svg>
@@ -171,7 +171,7 @@ function ReplyIcon({ size = 16 }: { size?: number }) {
 
 function ReplyAllIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="7 17 2 12 7 7" />
       <polyline points="12 17 7 12 12 7" />
       <path d="M22 18v-2a4 4 0 0 0-4-4H7" />
@@ -181,7 +181,7 @@ function ReplyAllIcon({ size = 16 }: { size?: number }) {
 
 function ForwardIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="15 17 20 12 15 7" />
       <path d="M4 18v-2a4 4 0 0 1 4-4h12" />
     </svg>
@@ -190,7 +190,7 @@ function ForwardIcon({ size = 16 }: { size?: number }) {
 
 function MoreIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="1" />
       <circle cx="12" cy="5" r="1" />
       <circle cx="12" cy="19" r="1" />
@@ -388,7 +388,7 @@ export function AiAssistantPanel({ conversation, onClose }: { conversation: Pick
           <span className="text-[13px] font-semibold text-ink">AI Assistant</span>
         </div>
         <Button variant="quiet" size="xs" onClick={onClose} className="w-7 px-0">
-          <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+          <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
         </Button>
       </div>
 
@@ -459,7 +459,7 @@ function ConversationDetail({ conversation, onGenerateDraft, onBack }: {
       <div className="flex items-center justify-between border-b border-line px-4 py-2">
         <div className="flex items-center gap-0.5">
           <Button variant="quiet" size="xs" onClick={onBack} className="sm:hidden mr-1 w-7 px-0">
-            <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+            <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
           </Button>
           <Button variant="quiet" size="xs" title="Archive" className="w-7 px-0"><ArchiveIcon size={16} /></Button>
           <Button variant="quiet" size="xs" title="Move to junk" className="w-7 px-0"><ArchiveXIcon size={16} /></Button>
@@ -515,7 +515,7 @@ function ConversationDetail({ conversation, onGenerateDraft, onBack }: {
           />
         </div>
         <div className="mt-3 flex items-center justify-between">
-          <Button variant="accent" size="sm" onClick={onGenerateDraft}>
+          <Button variant="secondary" size="sm" onClick={onGenerateDraft}>
             <span>✦</span>
             <span>Generate draft</span>
           </Button>

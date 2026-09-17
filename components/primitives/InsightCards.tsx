@@ -11,6 +11,16 @@ import { useEffect, useMemo, useState } from "react";
 
 const EASE = "cubic-bezier(0.16, 1, 0.3, 1)";
 
+function resolveColor(varName: string): string {
+  if (typeof window === "undefined") return varName;
+  const el = document.createElement("div");
+  el.style.color = varName;
+  document.body.appendChild(el);
+  const computed = getComputedStyle(el).color;
+  document.body.removeChild(el);
+  return computed;
+}
+
 const formatPercent = (v: number) => `${v > 0 ? "+" : ""}${v.toFixed(2)}%`;
 const formatMoney = (v: number) => `$${Math.round(v).toLocaleString("en-US")}`;
 /* anchor the snapshot to *call* time (inside each card's mount-time memo) —
@@ -130,7 +140,7 @@ const COMPARE_SERIES: CompareSeries[] = [
     sub: "142 beds occupied",
     tone: "red",
     dot: "bg-orange",
-    color: "#f68f3c",
+    color: "var(--orange)",
     tooltipColor: "var(--orange)",
   },
   {
@@ -139,7 +149,7 @@ const COMPARE_SERIES: CompareSeries[] = [
     sub: "+18 discharges today",
     tone: "green",
     dot: "bg-accent",
-    color: "#3d9aff",
+    color: "var(--accent)",
     tooltipColor: "var(--accent)",
   },
 ];
@@ -161,7 +171,7 @@ function CompareCard({ series = COMPARE_SERIES }: { series?: CompareSeries[] }) 
         label: "",
         data: points[i],
         value: points[i].at(-1)?.value ?? (s.values.at(-1) ?? 0),
-        color: s.color,
+        color: resolveColor(s.color),
       })),
     [series, points],
   );
@@ -304,7 +314,7 @@ function AnomalyCard({ data: anomaly = ANOMALY_DATA }: { data?: AnomalyData }) {
             data={data}
             value={value}
             theme={dark ? "dark" : "light"}
-            color="#ee5c61"
+            color={resolveColor("var(--red)")}
             grid
             scrub={false}
             fill={false}

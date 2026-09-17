@@ -2,7 +2,7 @@
  *  The shared building block for entity chips and monogram headings. */
 export function Monogram({
   children,
-  color = "#e08a3c",
+  color = "var(--orange)",
   className = "",
 }: {
   children: React.ReactNode;
@@ -12,7 +12,7 @@ export function Monogram({
   return (
     <span
       className={`flex size-4 shrink-0 items-center justify-center rounded-full
-        text-[9px] font-semibold leading-none text-white ${className}`}
+        text-2xs font-semibold leading-none text-ink-on-accent ${className}`}
       style={{ background: color }}
     >
       {children}
@@ -40,7 +40,7 @@ export function EntityChip({
         py-px pl-[3px] pr-1.5 align-middle shadow-hairline ${className}`}
     >
       <Monogram color={color}>{monogram ?? name.charAt(0)}</Monogram>
-      <span className="text-[12px] font-medium text-ink">{name}</span>
+      <span className="text-md font-medium text-ink">{name}</span>
     </span>
   );
 }

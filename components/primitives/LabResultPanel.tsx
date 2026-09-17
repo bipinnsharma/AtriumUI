@@ -33,7 +33,7 @@ const RESULTS: LabResult[] = [
 const FLAG_STYLES: Record<string, { badge: string; row: string; symbol: string }> = {
   normal: { badge: "bg-green-tint text-green", row: "", symbol: "—" },
   high: { badge: "bg-orange-tint text-orange", row: "bg-orange-tint/30", symbol: "H" },
-  low: { badge: "bg-[#dbeafe] text-blue", row: "bg-[#dbeafe]/30", symbol: "L" },
+  low: { badge: "bg-accent-tint text-accent", row: "bg-accent-tint/30", symbol: "L" },
   critical: { badge: "bg-red-tint text-red", row: "bg-red-tint/30", symbol: "Crit" },
 };
 
