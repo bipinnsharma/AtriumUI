@@ -38,40 +38,40 @@ import ClinicalAlert from "@/components/primitives/ClinicalAlert";
 /* ── Design data ─────────────────────────────────────────── */
 
 const surfaces = [
-  { name: "--page", light: "oklch(0.985 0.001 286.376)", dark: "oklch(0.209 0.004 264.477)", cssVar: "var(--page)" },
-  { name: "--canvas", light: "oklch(0.961 0.002 247.84)", dark: "oklch(0.231 0.004 264.487)", cssVar: "var(--canvas)" },
-  { name: "--surface", light: "oklch(1 0 0)", dark: "oklch(0.26 0.006 271.191)", cssVar: "var(--surface)" },
-  { name: "--inset", light: "oklch(0.979 0.002 247.839)", dark: "oklch(0.243 0.004 264.492)", cssVar: "var(--inset)" },
-  { name: "--hover", light: "oklch(0.97 0.002 247.839)", dark: "oklch(0.289 0.006 271.22)", cssVar: "var(--hover)" },
-  { name: "--hover-2", light: "oklch(0.933 0.003 247.86)", dark: "oklch(0.318 0.007 274.747)", cssVar: "var(--hover-2)" },
+  { name: "--page", light: "oklch(0.985 0.001 286.376)", dark: "oklch(0.209 0.004 264.477)", warm: "oklch(0.97 0.015 90)", frost: "oklch(0.975 0.006 260)", cssVar: "var(--page)" },
+  { name: "--canvas", light: "oklch(0.961 0.002 247.84)", dark: "oklch(0.231 0.004 264.487)", warm: "oklch(0.95 0.018 95)", frost: "oklch(0.965 0.008 260)", cssVar: "var(--canvas)" },
+  { name: "--surface", light: "oklch(1 0 0)", dark: "oklch(0.26 0.006 271.191)", warm: "oklch(0.99 0.008 85)", frost: "oklch(1 0 0)", cssVar: "var(--surface)" },
+  { name: "--inset", light: "oklch(0.979 0.002 247.839)", dark: "oklch(0.243 0.004 264.492)", warm: "oklch(0.96 0.014 88)", frost: "oklch(0.97 0.006 260)", cssVar: "var(--inset)" },
+  { name: "--hover", light: "oklch(0.97 0.002 247.839)", dark: "oklch(0.289 0.006 271.22)", warm: "oklch(0.94 0.018 92)", frost: "oklch(0.955 0.008 260)", cssVar: "var(--hover)" },
+  { name: "--hover-2", light: "oklch(0.933 0.003 247.86)", dark: "oklch(0.318 0.007 274.747)", warm: "oklch(0.91 0.02 88)", frost: "oklch(0.935 0.01 260)", cssVar: "var(--hover-2)" },
 ];
 
 const inkRamp = [
-  { name: "--ink", light: "oklch(0.247 0.006 258.361)", dark: "oklch(0.964 0.002 247.839)", cssVar: "var(--ink)" },
-  { name: "--ink-2", light: "oklch(0.506 0.01 264.477)", dark: "oklch(0.731 0.008 260.731)", cssVar: "var(--ink-2)" },
-  { name: "--ink-3", light: "oklch(0.695 0.009 264.505)", dark: "oklch(0.541 0.01 264.484)", cssVar: "var(--ink-3)" },
+  { name: "--ink", light: "oklch(0.247 0.006 258.361)", dark: "oklch(0.964 0.002 247.839)", warm: "oklch(0.22 0.02 55)", frost: "oklch(0.145 0.005 260)", cssVar: "var(--ink)" },
+  { name: "--ink-2", light: "oklch(0.506 0.01 264.477)", dark: "oklch(0.731 0.008 260.731)", warm: "oklch(0.45 0.02 60)", frost: "oklch(0.57 0.015 260)", cssVar: "var(--ink-2)" },
+  { name: "--ink-3", light: "oklch(0.695 0.009 264.505)", dark: "oklch(0.541 0.01 264.484)", warm: "oklch(0.62 0.018 65)", frost: "oklch(0.72 0.01 260)", cssVar: "var(--ink-3)" },
 ];
 
 const borders = [
-  { name: "--line", light: "oklch(0.946 0.003 264.542)", dark: "oklch(0.308 0.006 258.354)", cssVar: "var(--line)" },
-  { name: "--line-strong", light: "oklch(0.912 0.005 258.326)", dark: "oklch(0.356 0.007 264.474)", cssVar: "var(--line-strong)" },
-  { name: "--line-soft", light: "oklch(0.966 0.002 264.542)", dark: "oklch(0.278 0.006 258.354)", cssVar: "var(--line-soft)" },
-  { name: "--field", light: "oklch(0.961 0.001 286.375)", dark: "oklch(0.293 0.006 271.223)", cssVar: "var(--field)" },
+  { name: "--line", light: "oklch(0.946 0.003 264.542)", dark: "oklch(0.308 0.006 258.354)", warm: "oklch(0.91 0.015 85)", frost: "oklch(0.925 0.008 260)", cssVar: "var(--line)" },
+  { name: "--line-strong", light: "oklch(0.912 0.005 258.326)", dark: "oklch(0.356 0.007 264.474)", warm: "oklch(0.86 0.018 82)", frost: "oklch(0.89 0.01 260)", cssVar: "var(--line-strong)" },
+  { name: "--line-soft", light: "oklch(0.966 0.002 264.542)", dark: "oklch(0.278 0.006 258.354)", warm: "oklch(0.93 0.012 88)", frost: "oklch(0.945 0.006 260)", cssVar: "var(--line-soft)" },
+  { name: "--field", light: "oklch(0.961 0.001 286.375)", dark: "oklch(0.293 0.006 271.223)", warm: "oklch(0.95 0.014 90)", frost: "oklch(0.965 0.006 260)", cssVar: "var(--field)" },
 ];
 
 const accent = [
-  { name: "--accent", light: "oklch(0.626 0.205 254.947)", dark: "oklch(0.68 0.173 253.301)", cssVar: "var(--accent)" },
-  { name: "--accent-ink", light: "oklch(0.556 0.187 255.617)", dark: "oklch(0.788 0.113 248.33)", cssVar: "var(--accent-ink)" },
-  { name: "--accent-tint", light: "oklch(0.96 0.019 252.878)", dark: "oklch(0.68 0.173 253.301 / 0.16)", cssVar: "var(--accent-tint)" },
+  { name: "--accent", light: "oklch(0.626 0.205 254.947)", dark: "oklch(0.68 0.173 253.301)", warm: "oklch(0.626 0.205 254.947)", frost: "oklch(0.945 0.012 260)", cssVar: "var(--accent)" },
+  { name: "--accent-ink", light: "oklch(0.556 0.187 255.617)", dark: "oklch(0.788 0.113 248.33)", warm: "oklch(0.556 0.187 255.617)", frost: "oklch(0.145 0.005 260)", cssVar: "var(--accent-ink)" },
+  { name: "--accent-tint", light: "oklch(0.96 0.019 252.878)", dark: "oklch(0.68 0.173 253.301 / 0.16)", warm: "oklch(0.96 0.019 252.878)", frost: "oklch(0.945 0.012 260 / 0.15)", cssVar: "var(--accent-tint)" },
 ];
 
 const semantic = [
-  { name: "--green", light: "oklch(0.603 0.155 150.883)", dark: "oklch(0.705 0.154 153.814)", cssVar: "var(--green)" },
-  { name: "--green-tint", light: "oklch(0.958 0.017 159.118)", dark: "oklch(0.705 0.154 153.814 / 0.14)", cssVar: "var(--green-tint)" },
-  { name: "--orange", light: "oklch(0.689 0.179 49.902)", dark: "oklch(0.746 0.156 55.642)", cssVar: "var(--orange)" },
-  { name: "--orange-tint", light: "oklch(0.964 0.021 67.581)", dark: "oklch(0.746 0.156 55.642 / 0.14)", cssVar: "var(--orange-tint)" },
-  { name: "--red", light: "oklch(0.621 0.192 23.042)", dark: "oklch(0.666 0.18 21.433)", cssVar: "var(--red)" },
-  { name: "--red-tint", light: "oklch(0.956 0.017 17.462)", dark: "oklch(0.666 0.18 21.433 / 0.14)", cssVar: "var(--red-tint)" },
+  { name: "--green", light: "oklch(0.603 0.155 150.883)", dark: "oklch(0.705 0.154 153.814)", warm: "oklch(0.603 0.155 150.883)", frost: "oklch(0.603 0.155 150.883)", cssVar: "var(--green)" },
+  { name: "--green-tint", light: "oklch(0.958 0.017 159.118)", dark: "oklch(0.705 0.154 153.814 / 0.14)", warm: "oklch(0.958 0.017 159.118)", frost: "oklch(0.958 0.017 159.118)", cssVar: "var(--green-tint)" },
+  { name: "--orange", light: "oklch(0.689 0.179 49.902)", dark: "oklch(0.746 0.156 55.642)", warm: "oklch(0.689 0.179 49.902)", frost: "oklch(0.689 0.179 49.902)", cssVar: "var(--orange)" },
+  { name: "--orange-tint", light: "oklch(0.964 0.021 67.581)", dark: "oklch(0.746 0.156 55.642 / 0.14)", warm: "oklch(0.964 0.021 67.581)", frost: "oklch(0.964 0.021 67.581)", cssVar: "var(--orange-tint)" },
+  { name: "--red", light: "oklch(0.621 0.192 23.042)", dark: "oklch(0.666 0.18 21.433)", warm: "oklch(0.621 0.192 23.042)", frost: "oklch(0.621 0.192 23.042)", cssVar: "var(--red)" },
+  { name: "--red-tint", light: "oklch(0.956 0.017 17.462)", dark: "oklch(0.666 0.18 21.433 / 0.14)", warm: "oklch(0.956 0.017 17.462)", frost: "oklch(0.956 0.017 17.462)", cssVar: "var(--red-tint)" },
 ];
 
 const typeScale = [10, 10.5, 11, 11.5, 12, 12.5, 13, 14];
@@ -196,7 +196,7 @@ function Section({ title, id, children }: { title: string; id: string; children:
 
 /* ── Swatch ──────────────────────────────────────────────── */
 
-function Swatch({ name, cssVar, light, dark }: { name: string; cssVar: string; light: string; dark: string }) {
+function Swatch({ name, cssVar, light, dark, warm }: { name: string; cssVar: string; light: string; dark: string; warm: string }) {
   return (
     <div className="flex flex-col gap-1.5">
       <div
@@ -207,6 +207,7 @@ function Swatch({ name, cssVar, light, dark }: { name: string; cssVar: string; l
       <div className="text-[10px] text-ink-3 font-mono leading-tight">
         <span className="block">L: {light}</span>
         <span className="block">D: {dark}</span>
+        <span className="block">W: {warm}</span>
       </div>
     </div>
   );
@@ -221,24 +222,29 @@ export default function StylesheetPage() {
   const [switchOn, setSwitchOn] = useState(false);
   const [thinkingVariant, setThinkingVariant] = useState<"Steps" | "Reasoning" | "Search" | "Coding">("Steps");
   const [copied, setCopied] = useState(false);
-  const [dark, setDark] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark" | "warm" | "frost">("light");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     try {
-      setDark(localStorage.getItem("bui-theme") !== "light");
+      const stored = localStorage.getItem("bui-theme");
+      if (stored && ["light", "dark", "warm", "frost"].includes(stored)) {
+        setTheme(stored as typeof theme);
+      }
     } catch {}
   }, []);
 
-  const toggleTheme = () => {
-    const next = !dark;
-    setDark(next);
+  const applyTheme = (next: typeof theme) => {
+    if (next === theme) return;
+    setTheme(next);
     const root = document.documentElement;
     root.classList.add("theme-switching");
-    root.classList.toggle("dark", next);
+    root.dataset.mode = next;
     requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("theme-switching")));
     try {
-      localStorage.setItem("bui-theme", next ? "dark" : "light");
+      localStorage.setItem("bui-theme", next);
     } catch {}
+    setDropdownOpen(false);
   };
 
   const copyDesignMd = useCallback(() => {
@@ -265,25 +271,33 @@ export default function StylesheetPage() {
               <a href="#motion" className="hover:text-ink transition-colors">Motion</a>
               <a href="#components" className="hover:text-ink transition-colors">Components</a>
             </nav>
-            <button
-              onClick={toggleTheme}
-              className="flex h-7 w-7 items-center justify-center rounded-control text-ink-2 transition-colors hover:bg-hover hover:text-ink"
-              aria-label="Toggle dark mode"
-            >
-              {dark ? (
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="5"/>
-                  <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                  <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                </svg>
-              ) : (
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
+            <div className="relative">
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                onBlur={() => setTimeout(() => setDropdownOpen(false), 150)}
+                className="flex h-7 items-center gap-1.5 rounded-control px-2 text-[11px] font-medium text-ink-2 transition-colors hover:bg-hover hover:text-ink"
+                aria-label="Switch theme"
+              >
+                <span className="capitalize">{theme}</span>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M6 9l6 6 6-6" /></svg>
+              </button>
+              {dropdownOpen && (
+                <div className="absolute right-0 top-full z-50 mt-1 w-36 rounded-card border border-line bg-surface py-1 shadow-overlay">
+                  {(["light", "dark", "warm", "frost"] as const).map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => applyTheme(t)}
+                      className={`flex w-full items-center gap-2 px-3 py-1.5 text-[12px] transition-colors hover:bg-hover ${theme === t ? "text-ink font-medium" : "text-ink-2"}`}
+                    >
+                      <span className="capitalize">{t}</span>
+                      {theme === t && (
+                        <svg className="ml-auto" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+                      )}
+                    </button>
+                  ))}
+                </div>
               )}
-            </button>
+            </div>
           </div>
         </div>
       </header>

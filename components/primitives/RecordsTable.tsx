@@ -140,6 +140,7 @@ const TYPE_GLYPHS: Record<string, React.ReactNode> = {
   JSON: <g><path d="M8 4c-2 0-2 2-2 3s.5 3-2 3c2.5 0 2 2 2 3s0 3 2 3" /><path d="M16 4c2 0 2 2 2 3s-.5 3 2 3c-2.5 0-2 2-2 3s0 3-2 3" /></g>,
   "File splitter": <g><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" /></g>,
   Date: <g><rect x="3" y="5" width="18" height="16" rx="2.5" /><path d="M8 3v4M16 3v4M3 10h18" /></g>,
+  Phone: <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />,
 };
 
 const TOOL_GLYPHS: Record<string, React.ReactNode> = {
@@ -154,11 +155,11 @@ type ToolKind = "model" | "web" | "user";
 type ColumnMeta = { type: string; tool: string; toolKind: ToolKind; inputs?: string; prompt?: Prompt };
 
 const COLUMN_META: Record<string, ColumnMeta> = {
-  Company: { type: "Text", tool: "User input", toolKind: "user" },
+  Patient: { type: "Text", tool: "User input", toolKind: "user" },
   Categories: { type: "Multi select", tool: "Sprinkles 5", toolKind: "model", inputs: "Patient", prompt: { before: "Tag each ", chip: "Patient", after: " with their department and ward type." } },
-  "Last interaction": { type: "Date", tool: "User input", toolKind: "user" },
-  "Connection strength": { type: "Single select", tool: "Sprinkles 5", toolKind: "model", inputs: "Last interaction", prompt: { before: "Assess patient stability from ", chip: "Last interaction", after: "." } },
-  Links: { type: "URL", tool: "Web search", toolKind: "web", inputs: "Patient", prompt: { before: "Find contact for ", chip: "Patient", after: "." } },
+  "Last visit": { type: "Date", tool: "User input", toolKind: "user" },
+  "Condition": { type: "Single select", tool: "Sprinkles 5", toolKind: "model", inputs: "Last visit", prompt: { before: "Assess patient stability from ", chip: "Last visit", after: "." } },
+  Contact: { type: "Phone", tool: "User input", toolKind: "user" },
   [AI_LABEL]: { type: "Text", tool: "Web search", toolKind: "web", inputs: "Patient", prompt: { before: "Find care team for ", chip: "Patient" } },
 };
 
@@ -411,8 +412,12 @@ export default function RecordsTable({ rows = INITIAL_ROWS, fill = false }: { ro
   const initialColumnWidthsRef = useRef<Record<ColumnKey, number> | null>(null);
   const tableRef = useRef<HTMLTableElement>(null);
 
-  /* property popover, anchored to the clicked header */
-  const [prop, setProp] = useState<{ col: string; x: number; y: number } | null>(null);
+  /* property popover — anchored to the header cell, positioned relative to the
+   * shell so it stays tucked below the column header while the table scrolls */
+  const [prop, setProp] = useState<{ col: string } | null>(null);
+  const [propPos, setPropPos] = useState<{ x: number; y: number } | null>(null);
+  const propAnchorRef = useRef<HTMLTableCellElement | null>(null);
+  const propPosRef = useRef<{ x: number; y: number } | null>(null);
   const [grounding, setGrounding] = useState(false);
   const [groundingHelpOpen, setGroundingHelpOpen] = useState(false);
   const [configMenu, setConfigMenu] = useState<"type" | "tool" | "inputs" | null>(null);
@@ -488,8 +493,8 @@ export default function RecordsTable({ rows = INITIAL_ROWS, fill = false }: { ro
       ignoreScrollRef.current = true;
       scroller.scrollLeft = scroller.scrollWidth;
     }
-    const rect = aiThRef.current.getBoundingClientRect();
-    setProp({ col: AI_LABEL, x: Math.min(rect.left, window.innerWidth - 336), y: rect.bottom + 6 });
+    propAnchorRef.current = aiThRef.current;
+    setProp({ col: AI_LABEL });
     setPendingOpenAi(false);
   }, [pendingOpenAi, aiAdded]);
 
@@ -520,10 +525,33 @@ export default function RecordsTable({ rows = INITIAL_ROWS, fill = false }: { ro
     setMoreSettingsOpen(false);
     setProp((current) => {
       if (current?.col === col) return null;
-      const rect = th.getBoundingClientRect();
-      return { col, x: Math.min(rect.left, window.innerWidth - 336), y: rect.bottom + 6 };
+      propAnchorRef.current = th;
+      return { col };
     });
   };
+
+  /* position the property popover below its clicked column header and re-track
+   * the anchor every frame — a page or table scroll moves the header, and the
+   * sticky popover follows instead of freezing mid-viewport */
+  useEffect(() => {
+    if (!prop) return;
+    const place = () => {
+      const anchor = propAnchorRef.current;
+      if (!anchor) return;
+      const a = anchor.getBoundingClientRect();
+      if (a.width === 0) return;
+      const x = Math.max(8, Math.min(a.left, window.innerWidth - 320 - 8));
+      const y = a.bottom + 6;
+      if (Math.abs((propPosRef.current?.x ?? -1) - x) < 0.5 && Math.abs((propPosRef.current?.y ?? -1) - y) < 0.5) return;
+      propPosRef.current = { x, y };
+      setPropPos({ x, y });
+    };
+    let raf = 0;
+    const loop = () => { place(); raf = requestAnimationFrame(loop); };
+    place();
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [prop]);
 
   const isCalc = (col: string, index: number) => !!calc && calc.col === col && index >= calc.resolved;
 
@@ -589,7 +617,7 @@ export default function RecordsTable({ rows = INITIAL_ROWS, fill = false }: { ro
       <div
         className="records-scroll"
         tabIndex={0}
-        aria-label="Companies table. Scroll horizontally and vertically to view all columns and records."
+        aria-label="Patients table. Scroll horizontally and vertically to view all columns and records."
         onScroll={() => {
           if (ignoreScrollRef.current) {
             ignoreScrollRef.current = false;
@@ -615,17 +643,17 @@ export default function RecordsTable({ rows = INITIAL_ROWS, fill = false }: { ro
           </colgroup>
           <thead>
             <tr>
-              <th className={`records-header-cell records-sticky-cell ${prop?.col === "Company" ? "is-colsel" : ""}`}>
-                <div className="records-company-header" style={{ cursor: "pointer" }} onClick={(event) => openProp("Company")(event)}>
+              <th className={`records-header-cell records-sticky-cell ${prop?.col === "Patient" ? "is-colsel" : ""}`}>
+                <div className="records-company-header" style={{ cursor: "pointer" }} onClick={(event) => openProp("Patient")(event)}>
                   <Checkbox checked={allSelected} mixed={partiallySelected} onChange={toggleAll} label="Select all patients" />
-                  <span>Company</span>
+                  <span>Patient</span>
                 </div>
-                <span role="separator" aria-orientation="vertical" aria-label="Resize Company column" className={`records-resize-handle ${resizingColumn === "company" ? "is-resizing" : ""}`} onPointerDown={startColumnResize("company", 180)} />
+                <span role="separator" aria-orientation="vertical" aria-label="Resize Patient column" className={`records-resize-handle ${resizingColumn === "company" ? "is-resizing" : ""}`} onPointerDown={startColumnResize("company", 180)} />
               </th>
               <HeaderCell label="Categories" selected={prop?.col === "Categories"} onPick={openProp("Categories")} sort={sort} onSort={toggleSort} onResizeStart={startColumnResize("categories")} resizing={resizingColumn === "categories"} icon={<Icon size={15}>{TYPE_GLYPHS["Multi select"]}</Icon>} />
-              <HeaderCell label="Last interaction" selected={prop?.col === "Last interaction"} onPick={openProp("Last interaction")} sortKey="last" sort={sort} onSort={toggleSort} onResizeStart={startColumnResize("last")} resizing={resizingColumn === "last"} icon={<Icon size={15}>{TYPE_GLYPHS.Date}</Icon>} />
-              <HeaderCell label="Connection strength" selected={prop?.col === "Connection strength"} onPick={openProp("Connection strength")} sortKey="strength" sort={sort} onSort={toggleSort} onResizeStart={startColumnResize("strength")} resizing={resizingColumn === "strength"} icon={<Icon size={15}>{TYPE_GLYPHS["Single select"]}</Icon>} />
-              <HeaderCell label="Links" selected={prop?.col === "Links"} onPick={openProp("Links")} sort={sort} onSort={toggleSort} onResizeStart={startColumnResize("links")} resizing={resizingColumn === "links"} icon={<Icon size={15}>{TYPE_GLYPHS.URL}</Icon>} />
+              <HeaderCell label="Last visit" selected={prop?.col === "Last visit"} onPick={openProp("Last visit")} sortKey="last" sort={sort} onSort={toggleSort} onResizeStart={startColumnResize("last")} resizing={resizingColumn === "last"} icon={<Icon size={15}>{TYPE_GLYPHS.Date}</Icon>} />
+              <HeaderCell label="Condition" selected={prop?.col === "Condition"} onPick={openProp("Condition")} sortKey="strength" sort={sort} onSort={toggleSort} onResizeStart={startColumnResize("strength")} resizing={resizingColumn === "strength"} icon={<Icon size={15}>{TYPE_GLYPHS["Single select"]}</Icon>} />
+              <HeaderCell label="Contact" selected={prop?.col === "Contact"} onPick={openProp("Contact")} sort={sort} onSort={toggleSort} onResizeStart={startColumnResize("links")} resizing={resizingColumn === "links"} icon={<Icon size={15}>{TYPE_GLYPHS.Phone}</Icon>} />
               {aiAdded && (
                 <th ref={aiThRef} className={`records-header-cell ${prop?.col === AI_LABEL ? "is-colsel" : ""}`}>
                   <button type="button" className="records-header-button" onClick={openProp(AI_LABEL)}>
@@ -679,11 +707,11 @@ export default function RecordsTable({ rows = INITIAL_ROWS, fill = false }: { ro
               const selectedRow = selected.has(row.id);
               const strength = STRENGTH[row.strength];
               return <tr key={row.id} className={`records-row ${selectedRow ? "is-selected" : ""}`}>
-                <td className={`records-cell records-sticky-cell records-company-cell ${prop?.col === "Company" ? "is-colsel" : ""}`}><span className="records-rownum">{index + 1}</span><Checkbox checked={selectedRow} onChange={() => toggleRow(row.id)} label={`Select ${row.name}`} /><span className="records-company-mark">{row.name.slice(0, 1).toUpperCase()}</span><a href={row.website ? `https://${row.website}` : "#"} onClick={(event) => !row.website && event.preventDefault()} title={row.name} className={`records-company-name ${row.website ? "has-link" : ""}`}>{row.name}</a></td>
+                <td className={`records-cell records-sticky-cell records-company-cell ${prop?.col === "Patient" ? "is-colsel" : ""}`}><span className="records-rownum">{index + 1}</span><Checkbox checked={selectedRow} onChange={() => toggleRow(row.id)} label={`Select ${row.name}`} /><span className="records-company-mark">{row.name.slice(0, 1).toUpperCase()}</span><span className="records-company-name" title={row.name}>{row.name}</span></td>
                 <td className={`records-cell ${prop?.col === "Categories" ? "is-colsel" : ""}`}>{isCalc("Categories", index) ? <CalcCell /> : <TagList tags={row.tags} />}</td>
-                <td className={`records-cell ${row.last === "No contact" ? "records-muted" : ""} ${prop?.col === "Last interaction" ? "is-colsel" : ""}`}>{isCalc("Last interaction", index) ? <CalcCell /> : row.last}</td>
-                <td className={`records-cell ${prop?.col === "Connection strength" ? "is-colsel" : ""}`}>{isCalc("Connection strength", index) ? <CalcCell /> : <span className="records-strength"><span className="records-strength-dot" style={{ background: strength.color }} />{strength.label}</span>}</td>
-                <td className={`records-cell ${prop?.col === "Links" ? "is-colsel" : ""}`}>{isCalc("Links", index) ? <CalcCell /> : row.website ? <a className="records-link" href={`https://${row.website}`} title={row.website} target="_blank" rel="noreferrer"><span className="records-link-label">{row.website}</span><Icon size={12}><path d="M14 5h5v5M19 5l-8 8" /></Icon></a> : <span className="records-muted">—</span>}</td>
+                <td className={`records-cell ${row.last === "No contact" ? "records-muted" : ""} ${prop?.col === "Last visit" ? "is-colsel" : ""}`}>{isCalc("Last visit", index) ? <CalcCell /> : row.last}</td>
+                <td className={`records-cell ${prop?.col === "Condition" ? "is-colsel" : ""}`}>{isCalc("Condition", index) ? <CalcCell /> : <span className="records-strength"><span className="records-strength-dot" style={{ background: strength.color }} />{strength.label}</span>}</td>
+                <td className={`records-cell ${prop?.col === "Contact" ? "is-colsel" : ""}`}>{isCalc("Contact", index) ? <CalcCell /> : row.website ? <a className="records-link" href={`tel:${row.website.replace(/\s+/g, "")}`} title={row.website}><span className="records-link-label">{row.website}</span><Icon size={12}><path d="M14 5h5v5M19 5l-8 8" /></Icon></a> : <span className="records-muted">—</span>}</td>
                 {aiAdded && (
                   <td className={`records-cell ${prop?.col === AI_LABEL ? "is-colsel" : ""}`}>
                     {calc?.col === AI_LABEL ? (index < calc.resolved ? competitorsFor(index) : <CalcCell />) : aiDone ? competitorsFor(index) : <span className="records-muted">—</span>}
@@ -705,7 +733,7 @@ export default function RecordsTable({ rows = INITIAL_ROWS, fill = false }: { ro
               <td className="records-cell">
                 <span className="records-footer-value records-average"><span className="records-strength-dot" style={{ background: "var(--orange)" }} />{Math.round(rows.reduce((sum, row) => sum + STRENGTH[row.strength].rank, 0) / rows.length / 3 * 100)}% average</span>
               </td>
-              <td className="records-cell"><span className="records-footer-value records-muted">{rows.filter((row) => row.website).length} links</span></td>
+              <td className="records-cell"><span className="records-footer-value records-muted">{rows.filter((row) => row.website).length} contacts</span></td>
               {aiAdded && <td className="records-cell records-muted"><span className="records-footer-value">{aiDone ? `${rows.length} filled` : "—"}</span></td>}
               <td className="records-cell" />
             </tr>
@@ -714,11 +742,11 @@ export default function RecordsTable({ rows = INITIAL_ROWS, fill = false }: { ro
       </div>
 
       {/* ── property configuration popover ─────────────────── */}
-      {prop && meta && (
+      {prop && meta && propPos && (
         <div
           data-recpop
           className="fixed z-50 w-[320px] rounded-[14px] bg-surface px-3 pt-3 pb-1.5 shadow-overlay"
-          style={{ top: prop.y, left: prop.x, animation: "pop-in 160ms cubic-bezier(0.23,1,0.32,1) both", transformOrigin: "top left" }}
+          style={{ top: propPos.y, left: propPos.x, animation: "pop-in 160ms cubic-bezier(0.23,1,0.32,1) both", transformOrigin: "top left" }}
         >
           <div className="pb-2 text-[13.5px] font-medium text-ink">{prop.col}</div>
 

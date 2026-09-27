@@ -178,9 +178,12 @@ type Scenario = {
   /** optional artifact for the right-hand pane */
   paneTitle?: string;
   Pane?: () => ReactNode;
-  /** spreadsheet workspace: the main pane is a live table, the chat docks to the right */
-  Workspace?: () => ReactNode;
-  workspaceTitle?: string;
+   /** spreadsheet workspace: the main pane is a live table, the chat docks to the right */
+   Workspace?: () => ReactNode;
+   workspaceTitle?: string;
+   /** bare view — no chat tabs, no user bubble, no floating composer;
+    *  the answer (fullBleed) owns the whole section at viewport height */
+   noTabs?: boolean;
 };
 
 const SCENARIOS: Record<string, Scenario> = {
@@ -253,6 +256,13 @@ const SCENARIOS: Record<string, Scenario> = {
       </Reply>
     ),
   },
+  records: {
+    prompt: "Show me the full record table.",
+    beat: 600,
+    fullBleed: true,
+    noTabs: true,
+    Answer: () => <RecordsTable fill />,
+  },
 };
 
 type ScenarioId = keyof typeof SCENARIOS;
@@ -266,6 +276,7 @@ const KEYWORDS: [ScenarioId, string[]][] = [
   ["notes", ["note", "draft", "discharge", "summary", "patient", "write"]],
   ["guidelines", ["protocol", "guideline", "diabetes", "treatment", "manage"]],
   ["imaging-orders", ["imaging", "order", "orders", "scan", "ct", "mri", "x-ray", "radiology"]],
+  ["records", ["records", "record", "table"]],
 ];
 
 function matchScenario(text: string): ScenarioId {
@@ -315,11 +326,12 @@ const RECENTS: { id: ScenarioId; label: string; prompt?: string }[] = [
   { id: "notes", label: "Discharge summary draft" },
   { id: "guidelines", label: "Type 2 Diabetes protocol" },
   { id: "imaging-orders", label: "Imaging orders — All departments" },
+  { id: "records", label: "Records", prompt: "Show me the full record table." },
 ];
 
 /* ── the agent reply — thinks, then builds the answer ─────── */
 
-function AssistantResponse({ scenarioId, className = "" }: { scenarioId: ScenarioId; className?: string }) {
+function AssistantResponse({ scenarioId, className = "", bare = false }: { scenarioId: ScenarioId; className?: string; bare?: boolean }) {
   const scenario = SCENARIOS[scenarioId];
   const [answered, setAnswered] = useState(false);
 
@@ -329,9 +341,9 @@ function AssistantResponse({ scenarioId, className = "" }: { scenarioId: Scenari
   }, [scenario.beat]);
 
   return (
-    <article className={`min-w-0 ${className}`} style={{ animation: "fade-up 450ms cubic-bezier(0.23,1,0.32,1) both" }}>
+    <article className={`min-w-0 ${bare ? "flex min-h-0 flex-1 flex-col" : ""} ${className}`} style={{ animation: "fade-up 450ms cubic-bezier(0.23,1,0.32,1) both" }}>
       {answered ? (
-        <div style={{ animation: "fade-in 260ms ease both" }}>{scenario.Answer()}</div>
+        <div className={bare ? "flex min-h-0 flex-1 flex-col" : ""} style={{ animation: "fade-in 260ms ease both" }}>{scenario.Answer()}</div>
       ) : (
         <div className="flex min-h-6 items-center" style={{ animation: "fade-in 200ms ease-out both" }}>
           {scenario.loadingVariant === "Surfer" ? (
@@ -654,26 +666,32 @@ export default function AtriumLabs() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [workspaceOptionsOpen, setWorkspaceOptionsOpen] = useState(false);
   const [artifactSheetOpen, setArtifactSheetOpen] = useState(false);
-  const [dark, setDark] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark" | "warm" | "frost">("light");
+  const [themesOpen, setThemesOpen] = useState(false);
 
-  /* hydrate dark mode from localStorage after mount (avoids SSR document error) */
+  /* hydrate theme from localStorage after mount (avoids SSR document error) */
   useEffect(() => {
     try {
-      setDark(localStorage.getItem("bui-theme") !== "light");
+      const stored = localStorage.getItem("bui-theme");
+      if (stored && ["light", "dark", "warm", "frost"].includes(stored)) {
+        setTheme(stored as typeof theme);
+      }
     } catch {}
   }, []);
 
-  const toggleTheme = () => {
-    const next = !dark;
-    setDark(next);
+  const setMode = (next: typeof theme) => {
+    if (next === theme) return;
+    setTheme(next);
     const root = document.documentElement;
     root.classList.add("theme-switching");
-    root.classList.toggle("dark", next);
+    root.dataset.mode = next;
     requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("theme-switching")));
     try {
-      localStorage.setItem("bui-theme", next ? "dark" : "light");
-    } catch {}
+      localStorage.setItem("bui-theme", next);
+    } catch {};
   };
+
+  const toggleTheme = () => setMode(theme === "dark" ? "light" : "dark");
 
   const chatIdRef = useRef(1);
   const msgIdRef = useRef(0);
@@ -703,6 +721,13 @@ export default function AtriumLabs() {
         m.role === "assistant" && !!SCENARIOS[m.scenarioId].Workspace,
     );
   const workspaceScenario = workspaceMsg ? SCENARIOS[workspaceMsg.scenarioId] : null;
+
+  /* full-bleed table chats hide the chat-tab strip */
+  const noTabs = [...chat.messages].reverse().some(
+    (m) => m.role === "assistant" && SCENARIOS[m.scenarioId].noTabs,
+  );
+  /* bare views (Records) — no chat tabs, no user bubbles, no floating composer */
+  const noChrome = noTabs;
 
   const appendExchange = (target: Chat, text: string, scenarioId: ScenarioId): Chat => ({
     ...target,
@@ -870,24 +895,26 @@ export default function AtriumLabs() {
   );
 
   /* the message thread + composer — reused as the main column (wide) or the
-   * docked assistant panel in spreadsheet mode (narrow) */
+   * docked assistant panel in spreadsheet mode (narrow). Bare views (noChrome)
+   * drop the user bubble, fade, and floating composer — one full-bleed answer. */
   const renderThread = (narrow: boolean) => (
     <div className="relative flex min-h-0 flex-1 flex-col">
       <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
         <div
-          className={`flex flex-col gap-8 pt-8 ${narrow ? "px-4" : "px-4 sm:px-8 lg:px-12"}`}
+          className={`flex flex-col gap-8 ${noChrome ? "pt-4" : "pt-8"} ${narrow ? "px-4" : "px-4 sm:px-8 lg:px-12"}`}
           /* pad the bottom by the floating composer's height so the last message
              can rest flush with the bar and older content scrolls behind it */
-          style={{ paddingBottom: composerH + 16 }}
+          style={noChrome ? { minHeight: "100%" } : { paddingBottom: composerH + 16 }}
         >
           {chat.messages.map((message) => {
             const full = !narrow && message.role === "assistant" && SCENARIOS[message.scenarioId].fullBleed;
+            const bare = noChrome && message.role === "assistant";
             return (
-              <div key={message.id} className={narrow || full ? "w-full" : "mx-auto w-full max-w-[720px]"}>
+              <div key={message.id} className={bare ? "flex min-h-0 flex-1 flex-col" : narrow || full ? "w-full" : "mx-auto w-full max-w-[720px]"}>
                 {message.role === "user" ? (
-                  <UserBubble text={message.text} />
+                  noChrome ? null : <UserBubble text={message.text} />
                 ) : (
-                  <AssistantResponse key={`${message.id}-${replay[chat.id] ?? 0}`} scenarioId={message.scenarioId} />
+                  <AssistantResponse key={`${message.id}-${replay[chat.id] ?? 0}`} scenarioId={message.scenarioId} bare={bare} />
                 )}
               </div>
             );
@@ -895,26 +922,30 @@ export default function AtriumLabs() {
         </div>
       </div>
 
-      {/* soft fade so content dissolves into the bar instead of hard-clipping */}
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0"
-        style={{ height: composerH + 32, background: "linear-gradient(to top, var(--page) 64%, transparent)" }}
-      />
-
-      {/* the composer floats over the thread; content scrolls behind it */}
-      <div
-        ref={composerRef}
-        className={`absolute inset-x-0 bottom-0 ${narrow ? "p-3" : "px-4 pb-6 sm:px-8 lg:px-12"}`}
-      >
-        <div className={narrow ? "" : "mx-auto max-w-[720px]"}>
-          <PromptBar
-            demo={false}
-            tall
-            placeholder="Reply"
-            onSend={(text) => send(text, matchScenario(text))}
+      {!noChrome && (
+        <>
+          {/* soft fade so content dissolves into the bar instead of hard-clipping */}
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0"
+            style={{ height: composerH + 32, background: "linear-gradient(to top, var(--page) 64%, transparent)" }}
           />
-        </div>
-      </div>
+
+          {/* the composer floats over the thread; content scrolls behind it */}
+          <div
+            ref={composerRef}
+            className={`absolute inset-x-0 bottom-0 ${narrow ? "p-3" : "px-4 pb-6 sm:px-8 lg:px-12"}`}
+          >
+            <div className={narrow ? "" : "mx-auto max-w-[720px]"}>
+              <PromptBar
+                demo={false}
+                tall
+                placeholder="Reply"
+                onSend={(text) => send(text, matchScenario(text))}
+              />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 
@@ -1025,15 +1056,41 @@ export default function AtriumLabs() {
                 className="flex items-center gap-2.5 rounded-[10px] px-3 py-2.5 text-left transition-colors duration-100 hover:bg-hover cursor-pointer"
               >
                 <span className="flex size-7 shrink-0 items-center justify-center text-ink-2">
-                  {dark ? (
+                  {theme === "dark" ? (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
                   ) : (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
                   )}
                 </span>
-                <span className="min-w-0 flex-1 truncate text-[14px] text-ink">{dark ? "Dark" : "Light"} mode</span>
-                <Switch checked={dark} onChange={toggleTheme} label="Toggle dark mode" />
+                <span className="min-w-0 flex-1 truncate text-[14px] text-ink">{theme === "dark" ? "Dark" : "Light"} mode</span>
+                <Switch checked={theme === "dark"} onChange={toggleTheme} label="Toggle dark mode" />
               </div>
+              <button
+                type="button"
+                aria-expanded={themesOpen}
+                onClick={() => setThemesOpen((open) => !open)}
+                className="flex items-center gap-2.5 rounded-[10px] px-3 py-2.5 text-left transition-colors duration-100 hover:bg-hover"
+              >
+                <span className="flex size-7 shrink-0 items-center justify-center text-ink-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22a10 10 0 1 1 10-10c0 2.5-2 3-3.5 3H16a2 2 0 0 0-1.5 3.3c.4.5.5 1.7-2.5 1.7z" /><circle cx="7.5" cy="11.5" r="1" fill="currentColor" stroke="none" /><circle cx="11" cy="7.5" r="1" fill="currentColor" stroke="none" /><circle cx="15.5" cy="9" r="1" fill="currentColor" stroke="none" /></svg>
+                </span>
+                <span className="min-w-0 flex-1 truncate text-[14px] text-ink">Themes</span>
+                <svg className={`shrink-0 text-ink-3 transition-transform duration-150 ${themesOpen ? "rotate-90" : ""}`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M9 18l6-6-6-6" /></svg>
+              </button>
+              {themesOpen &&
+                (["light", "dark", "warm", "frost"] as const).map((mode) => (
+                  <button
+                    key={mode}
+                    type="button"
+                    onClick={() => setMode(mode)}
+                    className="flex items-center gap-2.5 rounded-[10px] pl-9 pr-3 py-2.5 text-left transition-colors duration-100 hover:bg-hover"
+                  >
+                    <span className="min-w-0 flex-1 truncate text-[14px] text-ink capitalize">{mode}</span>
+                    {theme === mode && (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-ink"><path d="M20 6L9 17l-5-5" /></svg>
+                    )}
+                  </button>
+                ))}
               <div className="mx-3 my-1 h-px bg-line" />
               <button
                 type="button"
@@ -1138,7 +1195,7 @@ export default function AtriumLabs() {
           ) : (
             <>
               <section className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-[14px] border border-line bg-page">
-                {tabBar}
+                {!noTabs && tabBar}
                 {active ? (
                   renderThread(false)
                 ) : (

@@ -28,7 +28,7 @@ export const buttonVariants = cva(
         xs: "h-7 rounded-full px-2.5 text-md font-normal leading-none gap-1",
         /* canonical action pill — 27px tall, roomy sides */
         sm: "h-[27px] px-3 text-base leading-none rounded-full gap-1.5",
-        md: "px-4 py-[9px] text-sm leading-none rounded-full gap-2",
+        md: "px-4 py-[9px] text-[14px] leading-none rounded-full gap-2",
       },
     },
     defaultVariants: { variant: "secondary", size: "md" },

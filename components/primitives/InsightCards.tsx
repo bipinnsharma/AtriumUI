@@ -1,7 +1,10 @@
 "use client";
 
-import { Liveline, type LivelinePoint, type LivelineSeries } from "liveline";
+import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
+
+const Liveline = dynamic(() => import("liveline").then((m) => m.Liveline), { ssr: false });
+import type { LivelinePoint, LivelineSeries } from "liveline";
 
 /* ─────────────────────────────────────────────────────────
  * INSIGHT CARDS
@@ -75,10 +78,10 @@ function useDarkMode() {
 
   useEffect(() => {
     const root = document.documentElement;
-    const update = () => setDark(root.classList.contains("dark"));
+    const update = () => setDark(root.dataset.mode === "dark");
     update();
     const observer = new MutationObserver(update);
-    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+    observer.observe(root, { attributes: true, attributeFilter: ["data-mode"] });
     return () => observer.disconnect();
   }, []);
 

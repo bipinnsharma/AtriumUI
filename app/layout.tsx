@@ -31,7 +31,7 @@ export const viewport: Viewport = {
   interactiveWidget: "resizes-visual",
 };
 
-const themeScript = `(function(){try{var t=localStorage.getItem("bui-theme");document.documentElement.classList.toggle("dark",t!=="light")}catch(e){document.documentElement.classList.add("dark")}})()`;
+const themeScript = `(function(){try{var t=localStorage.getItem("bui-theme");if(t&&["light","dark","warm","frost"].includes(t)){document.documentElement.dataset.mode=t}else{document.documentElement.dataset.mode="light"}}catch(e){document.documentElement.dataset.mode="light"}})()`;
 
 export default function RootLayout({
   children,

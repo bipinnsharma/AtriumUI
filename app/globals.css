@@ -4,7 +4,7 @@
  * below build on those values so the whole app picks up the smooth shadows. */
 @import "shadow-plugin/unprefixed";
 
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
 
 /* GENERIC FOUNDATION — tokens, @theme, base rules, the primitive-*
  * spacing utilities, and shared keyframes below are needed by EVERY
@@ -72,7 +72,7 @@
   --orange-glow: rgba(238, 114, 13, 0.5);
 }
 
-.dark {
+[data-mode="dark"] {
   --page: oklch(0.209 0.004 264.477);
   --canvas: oklch(0.231 0.004 264.487);
   --surface: oklch(0.26 0.006 271.191);
@@ -121,6 +121,109 @@
   --shadow-overlay:
     0 0 0 1px oklch(1 0 0 / 0.15), 0 8px 28px oklch(0 0 0 / 0.34);
   --shadow-inset-field: inset 0 1px 2px oklch(0 0 0 / 0.4);
+}
+
+/* ─── Warm: yellow-tinted, sunny undertones ─── */
+[data-mode="warm"] {
+  --page: oklch(0.97 0.015 90);
+  --canvas: oklch(0.95 0.018 95);
+  --surface: oklch(0.99 0.008 85);
+  --inset: oklch(0.96 0.014 88);
+  --hover: oklch(0.94 0.018 92);
+  --hover-2: oklch(0.91 0.02 88);
+
+  --ink: oklch(0.22 0.02 55);
+  --ink-2: oklch(0.45 0.02 60);
+  --ink-3: oklch(0.62 0.018 65);
+
+  --line: oklch(0.91 0.015 85);
+  --line-strong: oklch(0.86 0.018 82);
+  --line-soft: oklch(0.93 0.012 88);
+  --field: oklch(0.95 0.014 90);
+  --stripe: oklch(0.5 0.02 80 / 0.07);
+  --stripe-bg: oklch(0.95 0.015 90);
+
+  --accent: oklch(0.626 0.205 254.947);
+  --accent-ink: oklch(0.556 0.187 255.617);
+  --accent-tint: oklch(0.96 0.019 252.878);
+
+  --green: oklch(0.603 0.155 150.883);
+  --green-tint: oklch(0.958 0.017 159.118);
+  --orange: oklch(0.689 0.179 49.902);
+  --orange-tint: oklch(0.964 0.021 67.581);
+  --red: oklch(0.621 0.192 23.042);
+  --red-tint: oklch(0.956 0.017 17.462);
+
+  --tooltip-bg: oklch(0.28 0.015 60);
+  --tooltip-fg: oklch(0.95 0.015 90);
+  --tooltip-muted: oklch(0.68 0.015 75);
+  --tooltip-border: oklch(0.35 0.015 62);
+
+  --shadow-hairline: 0 0 0 1px var(--line);
+  --shadow-btn: 0 0 0 1px var(--line-strong), 0 1px 2px oklch(0.6 0.04 90 / 0.1);
+  --shadow-card: 0 0 0 1px var(--line), 0 1px 3px oklch(0.6 0.04 90 / 0.08);
+  --shadow-raised: 0 0 0 1px var(--line), 0 2px 8px oklch(0.6 0.04 90 / 0.1);
+  --shadow-overlay: 0 0 0 1px var(--line), 0 8px 24px oklch(0.6 0.04 90 / 0.14);
+  --shadow-inset-field: inset 0 1px 2px oklch(0.5 0.03 85 / 0.12);
+}
+
+/* ─── Frost: icy blue-grey, cool and clinical ─── */
+[data-mode="frost"] {
+  --page: oklch(0.975 0.006 260);
+  --canvas: oklch(0.965 0.008 260);
+  --surface: oklch(1 0 0);
+  --inset: oklch(0.97 0.006 260);
+  --hover: oklch(0.955 0.008 260);
+  --hover-2: oklch(0.935 0.01 260);
+
+  --ink: oklch(0.145 0.005 260);
+  --ink-2: oklch(0.57 0.015 260);
+  --ink-3: oklch(0.72 0.01 260);
+
+  --line: oklch(0.925 0.008 260);
+  --line-strong: oklch(0.89 0.01 260);
+  --line-soft: oklch(0.945 0.006 260);
+  --field: oklch(0.965 0.006 260);
+  --stripe: oklch(0.55 0.01 260 / 0.06);
+  --stripe-bg: oklch(0.965 0.006 260);
+
+  --accent: oklch(0.945 0.012 260);
+  --accent-ink: oklch(0.145 0.005 260);
+  --accent-tint: oklch(0.945 0.012 260 / 0.15);
+
+  --green: oklch(0.603 0.155 150.883);
+  --green-tint: oklch(0.958 0.017 159.118);
+  --orange: oklch(0.689 0.179 49.902);
+  --orange-tint: oklch(0.964 0.021 67.581);
+  --red: oklch(0.621 0.192 23.042);
+  --red-tint: oklch(0.956 0.017 17.462);
+
+  --tooltip-bg: oklch(0.2 0.005 260);
+  --tooltip-fg: oklch(0.965 0.008 260);
+  --tooltip-muted: oklch(0.65 0.01 260);
+  --tooltip-border: oklch(0.28 0.005 260);
+
+  --shadow-hairline: 0 0 0 1px var(--line);
+  --shadow-btn:
+    0 0 0 1px var(--line),
+    0 1px 1px -0.5px oklch(0 0 0 / 0.04),
+    0 2px 2px -1px oklch(0 0 0 / 0.02);
+  --shadow-card:
+    0 0 0 1px var(--line),
+    0 1px 2px -0.5px oklch(0 0 0 / 0.05),
+    0 3px 3px -1px oklch(0 0 0 / 0.03),
+    0 6px 5px -2px oklch(0 0 0 / 0.02);
+  --shadow-raised:
+    0 0 0 1px var(--line),
+    0 1px 2px -0.5px oklch(0 0 0 / 0.06),
+    0 4px 4px -2px oklch(0 0 0 / 0.03),
+    0 8px 4px -3px oklch(0 0 0 / 0.01);
+  --shadow-overlay:
+    0 0 0 1px var(--line),
+    0 2px 3px -1px oklch(0 0 0 / 0.06),
+    0 8px 8px -2px oklch(0 0 0 / 0.04),
+    0 20px 25px -5px oklch(0 0 0 / 0.03);
+  --shadow-inset-field: inset 0 1px 2px oklch(0 0 0 / 0.06);
 }
 
 @theme inline {

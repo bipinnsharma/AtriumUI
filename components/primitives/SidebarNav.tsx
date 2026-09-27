@@ -157,24 +157,31 @@ function WorkspaceMenu({
   position: { top: number; left: number };
   onClose: () => void;
 }) {
-  const [dark, setDark] = useState<boolean>(() => {
+  const [theme, setTheme] = useState<"light" | "dark" | "warm" | "frost">(() => {
     try {
-      return localStorage.getItem("bui-theme") !== "light";
-    } catch {
-      return document.documentElement.classList.contains("dark");
-    }
+      const stored = localStorage.getItem("bui-theme");
+      if (stored && ["light", "dark", "warm", "frost"].includes(stored)) {
+        return stored as "light" | "dark" | "warm" | "frost";
+      }
+    } catch {}
+    return "light";
   });
+  const [themesOpen, setThemesOpen] = useState(false);
 
-  function toggleTheme() {
-    const next = !dark;
-    setDark(next);
+  function setMode(next: "light" | "dark" | "warm" | "frost") {
+    if (next === theme) return;
+    setTheme(next);
     const root = document.documentElement;
     root.classList.add("theme-switching");
-    root.classList.toggle("dark", next);
+    root.dataset.mode = next;
     requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("theme-switching")));
     try {
-      localStorage.setItem("bui-theme", next ? "dark" : "light");
+      localStorage.setItem("bui-theme", next);
     } catch {}
+  }
+
+  function toggleTheme() {
+    setMode(theme === "dark" ? "light" : "dark");
   }
 
   return createPortal(
@@ -224,15 +231,41 @@ function WorkspaceMenu({
           className="relative z-10 flex h-9 w-full items-center gap-1.5 rounded-[8px] px-2"
         >
           <span className="flex size-5 shrink-0 items-center justify-center text-ink-2">
-            {dark ? (
+            {theme === "dark" ? (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
             ) : (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
             )}
           </span>
-          <span className="min-w-0 flex-1 truncate text-[13.5px] text-ink">{dark ? "Dark" : "Light"} mode</span>
-          <Switch checked={dark} onChange={toggleTheme} label="Toggle dark mode" />
+          <span className="min-w-0 flex-1 truncate text-[13.5px] text-ink">{theme === "dark" ? "Dark" : "Light"} mode</span>
+          <Switch checked={theme === "dark"} onChange={toggleTheme} label="Toggle dark mode" />
         </div>
+        <button
+          data-menu-row
+          type="button"
+          aria-expanded={themesOpen}
+          onClick={() => setThemesOpen((open) => !open)}
+          className="relative z-10 flex h-9 w-full items-center gap-1.5 rounded-[8px] px-2 text-left"
+        >
+          <span className="flex size-5 shrink-0 items-center justify-center text-ink-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22a10 10 0 1 1 10-10c0 2.5-2 3-3.5 3H16a2 2 0 0 0-1.5 3.3c.4.5.5 1.7-2.5 1.7z" /><circle cx="7.5" cy="11.5" r="1" fill="currentColor" stroke="none" /><circle cx="11" cy="7.5" r="1" fill="currentColor" stroke="none" /><circle cx="15.5" cy="9" r="1" fill="currentColor" stroke="none" /></svg>
+          </span>
+          <span className="min-w-0 flex-1 truncate text-[13.5px] text-ink">Themes</span>
+          <svg className={`shrink-0 text-ink-3 transition-transform duration-150 ${themesOpen ? "rotate-90" : ""}`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M9 18l6-6-6-6" /></svg>
+        </button>
+        {themesOpen &&
+          (["light", "dark", "warm", "frost"] as const).map((mode) => (
+            <button
+              key={mode}
+              data-menu-row
+              type="button"
+              onClick={() => setMode(mode)}
+              className="relative z-10 flex h-9 w-full items-center gap-1.5 rounded-[8px] pl-8 pr-2 text-left"
+            >
+              <span className="min-w-0 flex-1 truncate text-[13.5px] text-ink capitalize">{mode}</span>
+              {theme === mode && <Check size={16} className="shrink-0 text-ink" />}
+            </button>
+          ))}
         <div className="my-1 h-px bg-line" />
         <button
           data-menu-row
